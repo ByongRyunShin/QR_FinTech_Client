@@ -7,11 +7,11 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="상점관리" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="상품관리" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
@@ -22,16 +22,28 @@
             android:title="Tools" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="상점관리">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_regStore"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="상점등록" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_chkStore"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="상점조회" />
+        </menu>
+    </item>
+    <item android:title="상품관리">
+        <menu>
+            <item
+                android:id="@+id/nav_regItem"
+                android:icon="@drawable/ic_menu_share"
+                android:title="상품등록" />
+            <item
+                android:id="@+id/nav_chkItem"
+                android:icon="@drawable/ic_menu_send"
+                android:title="상품조회" />
         </menu>
     </item>
 
