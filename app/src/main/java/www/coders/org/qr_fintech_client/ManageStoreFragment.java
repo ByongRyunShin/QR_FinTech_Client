@@ -53,6 +53,8 @@ public class ManageStoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Manage Store Fragment");
+
         return inflater.inflate(R.layout.fragment_manage_store, container, false);
     }
 

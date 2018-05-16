@@ -5,11 +5,11 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_manageStore"
             android:icon="@drawable/ic_menu_camera"
             android:title="상점관리" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_manageItem"
             android:icon="@drawable/ic_menu_gallery"
             android:title="상품관리" />
         <item
@@ -22,29 +22,31 @@
             android:title="Tools" />
     </group>
 
-    <item android:title="상점관리">
-        <menu>
-            <item
-                android:id="@+id/nav_regStore"
-                android:icon="@drawable/ic_menu_share"
-                android:title="상점등록" />
-            <item
-                android:id="@+id/nav_chkStore"
-                android:icon="@drawable/ic_menu_send"
-                android:title="상점조회" />
-        </menu>
-    </item>
-    <item android:title="상품관리">
-        <menu>
-            <item
-                android:id="@+id/nav_regItem"
-                android:icon="@drawable/ic_menu_share"
-                android:title="상품등록" />
-            <item
-                android:id="@+id/nav_chkItem"
-                android:icon="@drawable/ic_menu_send"
-                android:title="상품조회" />
-        </menu>
-    </item>
 
+    <!--
+        <item android:title="상점관리">
+            <menu>
+                <item
+                    android:id="@+id/nav_regStore"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="상점등록" />
+                <item
+                    android:id="@+id/nav_chkStore"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="상점조회" />
+            </menu>
+        </item>
+        <item android:title="상품관리">
+            <menu>
+                <item
+                    android:id="@+id/nav_regItem"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="상품등록" />
+                <item
+                    android:id="@+id/nav_chkItem"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="상품조회" />
+            </menu>
+        </item>
+-->
 </menu>

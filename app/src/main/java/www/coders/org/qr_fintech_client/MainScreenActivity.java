@@ -5,6 +5,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +21,9 @@ public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ImageView userimg;
+
+    private ManageStoreFragment manageStoreFragment;
+    private ManageItemFragment manageItemFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,12 @@ public class MainScreenActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        manageStoreFragment = new ManageStoreFragment();
+        manageItemFragment = new ManageItemFragment();
+
         userimg =(ImageView)findViewById(R.id.UserImage);
+
 
     }
 
@@ -88,23 +97,20 @@ public class MainScreenActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        if (id == R.id.nav_manageStore) {
+            transaction.replace(R.id.container, manageStoreFragment);
+        } else if (id == R.id.nav_manageItem) {
+            transaction.replace(R.id.container, manageItemFragment);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_regStore) {
-
-        } else if (id == R.id.nav_chkStore) {
-
-        } else if (id == R.id.nav_regItem) {
-
-        } else if (id == R.id.nav_chkItem) {
-
         }
+
+        transaction.addToBackStack(null);
+        transaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
