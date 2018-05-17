@@ -7,6 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
 
 public class ManageStoreFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -17,6 +25,8 @@ public class ManageStoreFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    TextView tv;
 
     public ManageStoreFragment() {
         // Required empty public constructor
@@ -54,8 +64,34 @@ public class ManageStoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         getActivity().setTitle("Manage Store Fragment");
+        View view = inflater.inflate(R.layout.fragment_manage_store, container, false);
+        tv=view.findViewById(R.id.tv1);
+        Button bt=view.findViewById(R.id.button);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Send", Toast.LENGTH_LONG).show();
 
-        return inflater.inflate(R.layout.fragment_manage_store, container, false);
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.accumulate("id", "nj298@naver.com");
+                    jsonObject.accumulate("pw", "1231234");
+
+                    HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
+                    String result = httpTask.execute("http://192.168.0.26:3000/mobile/user").get();
+                    tv.setText(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        return view;
     }
 
 }
