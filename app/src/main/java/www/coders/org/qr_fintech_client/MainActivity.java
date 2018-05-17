@@ -11,5 +11,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startActivity(new Intent(MainActivity.this, MainScreenActivity.class));
+        // 자라나라 머리머리
     }
 }
