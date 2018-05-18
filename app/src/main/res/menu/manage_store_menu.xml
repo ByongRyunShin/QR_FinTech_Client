@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.ch9_popup_menu.Popupmenu" >
+
+    <item android:id="@+id/popup_red"
+        android:title="Back-Red"/>
+
+    <item android:id="@+id/popup_green"
+        android:title="Back-Green"/>
+
+    <item android:id="@+id/popup_blue"
+        android:title="Back-Blue"/>
+
+    <item android:id="@+id/popup_text"
+        android:title="TextColor">
+
+        <menu>
+
+            <item android:id="@+id/popup_black"
+                android:title="Text-Black"/>
+
+            <item android:id="@+id/popup_white"
+                android:title="Text-White"/>
+
+            <item android:id="@+id/popup_gray"
+                android:title="Text-Gray"/>
+
+        </menu>
+    </item>
+</menu>
