@@ -35,7 +35,7 @@ public class ManageStoreFragment extends Fragment {
     TextView tv;
 
     ArrayList<String> stores;
-
+    ArrayList<StoreObject> storeList;
     Handler handler;
     public ManageStoreFragment() {
         // Required empty public constructor
@@ -47,7 +47,7 @@ public class ManageStoreFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.setArguments(args
         return fragment;
     }
 
@@ -61,8 +61,12 @@ public class ManageStoreFragment extends Fragment {
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                String result = (String) msg.obj;
+                int num = ((StoreObject) msg.obj).getNum();
+                String name = ((StoreObject) msg.obj).getName();
+                //super.handleMessage(msg);
+                //String result = (String) msg.obj;
+
+
             }
         };
     }

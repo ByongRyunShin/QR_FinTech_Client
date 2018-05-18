@@ -1,14 +1,24 @@
 package www.coders.org.qr_fintech_client;
 
 public class StoreObject {
-    private String name, place, about;
+    private int num;
+    private String name, marketplace, about;
     private int balance;
 
-    public StoreObject(String name, String place, String about, int balance) {
+    public StoreObject(int num, String name, String marketplace, String about, int balance) {
+        this.num = num;
         this.name = name;
-        this.place = place;
+        this.marketplace = marketplace;
         this.about = about;
         this.balance = balance;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public String getName() {
@@ -19,12 +29,12 @@ public class StoreObject {
         this.name = name;
     }
 
-    public String getPlace() {
-        return place;
+    public String getMarketplace() {
+        return marketplace;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setMarketplace(String marketplace) {
+        this.marketplace = marketplace;
     }
 
     public String getAbout() {
