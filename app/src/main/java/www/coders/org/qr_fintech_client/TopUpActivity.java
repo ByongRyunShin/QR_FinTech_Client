@@ -61,7 +61,7 @@ public class TopUpActivity extends AppCompatActivity {
 
                     //개인 계좌에 충전하기
 
-                    String result = httpTask.execute("http://192.168.0.2:3000/mobile/charge/" + id_text.getText()).get();
+                    String result = httpTask.execute(R.string.server_ip + "/mobile/charge/" + id_text.getText()).get();
 
 
                     JSONObject json = new JSONObject(result);

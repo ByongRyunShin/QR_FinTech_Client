@@ -50,7 +50,7 @@ public class SendMoneyActivity extends AppCompatActivity {
                     HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
 
 
-                    String result = httpTask.execute("http://192.168.0.2:3000/mobile/send/" + id_text.getText() + "$"+ send_to_text.getText()).get();
+                    String result = httpTask.execute(R.string.server_ip + "/mobile/send/" + id_text.getText() + "$"+ send_to_text.getText()).get();
 
 
                     JSONObject json = new JSONObject(result);
