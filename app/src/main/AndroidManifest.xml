@@ -21,7 +21,10 @@
         <activity
             android:name=".MainScreenActivity"
             android:label="@string/title_activity_main_screen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".TopUpActivity" />
+        <activity android:name=".SendMoneyActivity"></activity>
     </application>
 
 </manifest>

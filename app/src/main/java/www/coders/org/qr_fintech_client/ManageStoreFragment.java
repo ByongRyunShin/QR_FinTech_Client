@@ -74,12 +74,18 @@ public class ManageStoreFragment extends Fragment {
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.accumulate("id", "nj298@naver.com");
+                    jsonObject.accumulate("id", "hendel95@nate.com");
+                    jsonObject.accumulate("pw", "123123");
+
+                    HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
+                    String result = httpTask.execute("http://192.168.0.2:3000/mobile/user").get();
+
+                   /* jsonObject.accumulate("id", "nj298@naver.com");
                     jsonObject.accumulate("pw", "1231234");
 
                     HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
                     String result = httpTask.execute("http://192.168.0.26:3000/mobile/user").get();
-                    tv.setText(result);
+                    tv.setText(result);*/
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
