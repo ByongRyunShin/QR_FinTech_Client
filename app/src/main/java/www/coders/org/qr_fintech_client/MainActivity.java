@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         id = sharedpreferences.getString(TAG_ID, null);
         type = sharedpreferences.getString(TAG_TYPE, null);
 
-        if (!session) {
-            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+        if (session) {
+            Intent intent = new Intent(MainActivity.this, MainScreenActivity.class);
             intent.putExtra(TAG_ID, id);
             //intent.putExtra(TAG_TYPE, type);
             finish();
