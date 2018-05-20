@@ -30,7 +30,7 @@ public class ManageShopFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public static final String PATH = R.string.server_ip + "/shop_list/";
+    public static final String PATH = R.string.server_ip+"/shop_list/";
     public  static final int STORE_OBJ = 1;
     public static final int MODE_APPLY = 1;
     public static final int MODE_MODIFY = 2;
