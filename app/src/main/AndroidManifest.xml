@@ -24,7 +24,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".TopUpActivity" />
-        <activity android:name=".SendMoneyActivity"></activity>
+        <activity android:name=".SendMoneyActivity" />
+        <activity android:name=".ManageShopDetail" />
+        <activity android:name=".ManageProductDetail" />
+        <activity android:name=".ManageProductSuperDetail"></activity>
     </application>
 
 </manifest>

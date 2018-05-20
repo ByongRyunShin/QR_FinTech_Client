@@ -22,8 +22,8 @@ public class MainScreenActivity extends AppCompatActivity
 
     ImageView userimg;
 
-    private ManageStoreFragment manageStoreFragment;
-    private ManageItemFragment manageItemFragment;
+    private ManageShopFragment manageStoreFragment;
+    private ManageProductFragment manageItemFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +51,8 @@ public class MainScreenActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        manageStoreFragment = new ManageStoreFragment();
-        manageItemFragment = new ManageItemFragment();
+        manageStoreFragment = new ManageShopFragment();
+        manageItemFragment = new ManageProductFragment();
 
         userimg =(ImageView)findViewById(R.id.UserImage);
 
