@@ -1,5 +1,6 @@
 package www.coders.org.qr_fintech_client;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ public class ManageProductDetail extends AppCompatActivity {
     public static final int MODE_APPLY = 1;
     public static final int MODE_MODIFY = 2;
 
-    private static final String PATH = R.string.server_ip + "/product_list";
+    private String PATH;
     String userid = "chulsoo@a.a", userpw = "dudgml";
     ArrayList<ProductObject> products;
 
@@ -39,6 +40,10 @@ public class ManageProductDetail extends AppCompatActivity {
         userid = intent.getStringExtra("id");
         userpw = intent.getStringExtra("pw");
         name = intent.getStringExtra("name");
+
+        Context context = this;
+        PATH = context.getString(R.string.server_ip) + "/product_list";
+
 
         getProducts();
         ListView productList = (ListView) findViewById(R.id.item_listView);

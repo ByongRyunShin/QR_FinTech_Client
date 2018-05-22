@@ -1,5 +1,6 @@
 package www.coders.org.qr_fintech_client;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -27,9 +28,9 @@ public class ManageShopDetail extends AppCompatActivity {
     EditText place_editText;
     EditText about_editText;
     Button product_button;
-    private static final String PATH_READ = R.string.server_ip + "/shop_detail";
-    private static final String PATH_APPLY = R.string.server_ip + "/shop_insert";
-    private static final String PATH_DELETE = R.string.server_ip + "/shop_delete";
+    private String PATH_READ;
+    private String PATH_APPLY;
+    private String PATH_DELETE ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,11 @@ public class ManageShopDetail extends AppCompatActivity {
         product_button = (Button) findViewById(R.id.product_button);
         product_button.setOnClickListener(mProductClickListener);
 
+
+        Context context = this;
+        PATH_READ = context.getString(R.string.server_ip) + "/shop_detail";
+        PATH_APPLY = context.getString(R.string.server_ip) + "/shop_insert";
+        PATH_DELETE = context.getString(R.string.server_ip) + "/shop_delete";
 
         intent = getIntent();
         mode = intent.getIntExtra("mode", 0);

@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     int success;
     ConnectivityManager conMgr;
 
-    private String url = R.string.server_ip + "/mobile/user_insert";
+    private String url;
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
@@ -79,6 +79,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Toast.LENGTH_LONG).show();
             }
         }
+        Context context = this;
+        url = context.getString(R.string.server_ip) + "/mobile/user_insert";
 
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_register = (Button) findViewById(R.id.btn_register);

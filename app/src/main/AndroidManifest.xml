@@ -42,6 +42,7 @@
         <activity android:name=".ManageProductDetail" />
         <activity android:name=".ManageProductSuperDetail" />
         <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".qrReader"></activity>
     </application>
 
 </manifest>

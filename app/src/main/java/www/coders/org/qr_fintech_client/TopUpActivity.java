@@ -1,5 +1,6 @@
 package www.coders.org.qr_fintech_client;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,7 @@ public class TopUpActivity extends AppCompatActivity {
 
         topup_btn = (Button)findViewById(R.id.topup_btn);
 
+        final Context context = this;
 
         topup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +63,7 @@ public class TopUpActivity extends AppCompatActivity {
 
                     //개인 계좌에 충전하기
 
-                    String result = httpTask.execute(R.string.server_ip + "/charge/" + id_text.getText()).get();
+                    String result = httpTask.execute(context.getString(R.string.server_ip) + "/charge/" + id_text.getText()).get();
 
 
                     JSONObject json = new JSONObject(result);

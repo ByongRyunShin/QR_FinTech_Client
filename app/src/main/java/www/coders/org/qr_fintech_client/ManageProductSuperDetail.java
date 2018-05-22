@@ -1,5 +1,6 @@
 package www.coders.org.qr_fintech_client;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,8 +27,8 @@ public class ManageProductSuperDetail extends AppCompatActivity {
     EditText about_editText;
     Button product_button;
 
-    private static final String PATH_READ = R.string.server_ip + "/product_detail";
-    private static final String PATH_APPLY = R.string.server_ip + "/product_insert";
+    private String PATH_READ;
+    private String PATH_APPLY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,11 @@ public class ManageProductSuperDetail extends AppCompatActivity {
         place_editText = findViewById(R.id.place_editText);
         place_editText.setText(intent.getStringExtra("name"));
 
+        Context context = this;
+
+
+        PATH_READ = context.getString(R.string.server_ip) + "/product_insert";
+        PATH_APPLY = context.getString(R.string.server_ip) + "/product_detail";
         readProductInfo();
     }
 

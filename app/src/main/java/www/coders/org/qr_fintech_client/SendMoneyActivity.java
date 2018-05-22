@@ -1,5 +1,6 @@
 package www.coders.org.qr_fintech_client;
 
+        import android.content.Context;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.view.View;
@@ -34,6 +35,7 @@ public class SendMoneyActivity extends AppCompatActivity {
 
         send_btn = (Button)findViewById(R.id.send_btn);
 
+        final Context context = this;
 
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +52,7 @@ public class SendMoneyActivity extends AppCompatActivity {
                     HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
 
 
-                    String result = httpTask.execute(R.string.server_ip + "/send/" + id_text.getText() + "$"+ send_to_text.getText()).get();
+                    String result = httpTask.execute(context.getString(R.string.server_ip) + "/send/" + id_text.getText() + "$"+ send_to_text.getText()).get();
 
 
                     JSONObject json = new JSONObject(result);

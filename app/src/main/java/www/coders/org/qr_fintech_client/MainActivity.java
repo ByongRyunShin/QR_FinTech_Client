@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     int success;
     ConnectivityManager conMgr; // Network 연결 확인 class
 
-    private String url = R.string.server_ip+"/login";
+    private String url;
 
     //json tag--------------------------------------------
 
@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         }
+
+        Context context = this;
+        url= context.getString(R.string.server_ip) +"/login";
 
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_register = (Button) findViewById(R.id.btn_register);
