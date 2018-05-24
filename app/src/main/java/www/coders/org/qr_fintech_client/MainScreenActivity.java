@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -26,7 +29,14 @@ public class MainScreenActivity extends AppCompatActivity
 
     private ManageShopFragment manageStoreFragment;
     private ManageProductFragment manageItemFragment;
-    private FloatingActionButton qrButton;
+    private SendMoneyFragment sendMoneyFragment;
+
+    private Boolean isFabOpen = false;
+
+    private FloatingActionButton floatingButton, buyButton, sellButton;
+
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,15 +56,56 @@ public class MainScreenActivity extends AppCompatActivity
 
         manageStoreFragment = new ManageShopFragment();
         manageItemFragment = new ManageProductFragment();
+        sendMoneyFragment = new SendMoneyFragment();
 
-        qrButton = (FloatingActionButton)findViewById(R.id.fab);
-        qrButton.setOnClickListener(new View.OnClickListener() {
+        floatingButton = (FloatingActionButton)findViewById(R.id.fab);
+        buyButton = (FloatingActionButton)findViewById(R.id.fab1);
+        sellButton = (FloatingActionButton)findViewById(R.id.fab2);
+
+        floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(isFabOpen){
+
+                    floatingButton.startAnimation(rotate_backward);
+                    buyButton.startAnimation(fab_close);
+                    sellButton.startAnimation(fab_close);
+                    buyButton.setClickable(false);
+                    sellButton.setClickable(false);
+                    isFabOpen = false;
+                    Log.d("Raj", "close");
+
+                } else {
+
+                    floatingButton.startAnimation(rotate_forward);
+                    buyButton.startAnimation(fab_open);
+                    sellButton.startAnimation(fab_open);
+                    buyButton.setClickable(true);
+                    sellButton.setClickable(true);
+                    isFabOpen = true;
+                    Log.d("Raj","open");
+
+                }
+
                 IntentIntegrator integrator = new IntentIntegrator(MainScreenActivity.this);
                 integrator.setCaptureActivity( qrReader.class );
                 integrator.setOrientationLocked(false);
                 integrator.initiateScan();
+            }
+        });
+
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "구매 버튼 클릭", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        sellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "판매 버튼 클릭", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -104,7 +155,8 @@ public class MainScreenActivity extends AppCompatActivity
             transaction.replace(R.id.container, manageStoreFragment);
         } else if (id == R.id.nav_manageItem) {
             transaction.replace(R.id.container, manageItemFragment);
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_sendMoney) {
+            transaction.replace(R.id.container, sendMoneyFragment);
 
         } else if (id == R.id.nav_manage) {
 
