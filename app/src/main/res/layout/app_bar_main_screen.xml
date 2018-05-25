@@ -32,7 +32,7 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:src="@drawable/ic_menu_send"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorFAB2"
+        app:backgroundTint="@color/colorAccent"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp" />
 
@@ -45,7 +45,7 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:src="@drawable/ic_menu_share"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorFAB1"
+        app:backgroundTint="@color/colorAccent"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp" />
 
@@ -55,11 +55,9 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom|end"
         app:elevation="6dp"
-        app:backgroundTint="@color/colorAccent"
         app:pressedTranslationZ="12dp"
         android:layout_margin="@dimen/fab_margin"
-        android:background="@color/colorPoint"
-        app:backgroundTint="@color/colorPoint"
+        app:backgroundTint="@color/colorAccent"
         app:srcCompat="@drawable/app_bar_icon" />
 
 </android.support.design.widget.CoordinatorLayout>

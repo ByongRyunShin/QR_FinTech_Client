@@ -34,7 +34,7 @@ public class MainScreenActivity extends AppCompatActivity
 
     private Boolean isFabOpen = false;
 
-    private FloatingActionButton floatingButton, buyButton, sellButton;
+    private FloatingActionButton floatingButton, buyButton, sellButton, topupButton;
 
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
@@ -63,9 +63,8 @@ public class MainScreenActivity extends AppCompatActivity
         buyButton = (FloatingActionButton)findViewById(R.id.fab1);
         sellButton = (FloatingActionButton)findViewById(R.id.fab2);
 
-<<<<<<< HEAD
-        qrButton = (FloatingActionButton)findViewById(R.id.fab);
-        qrButton.setOnClickListener(new View.OnClickListener(){
+        topupButton = (FloatingActionButton)findViewById(R.id.fab);
+        topupButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 startActivity(new Intent(MainScreenActivity.this, TopUpActivity.class));
@@ -75,9 +74,9 @@ public class MainScreenActivity extends AppCompatActivity
 
         /*
         qrButton.setOnClickListener(new View.OnClickListener() {
-=======
+
         floatingButton.setOnClickListener(new View.OnClickListener() {
->>>>>>> 2a6960c23cbbe398197456db6571790684251d90
+
             @Override
             public void onClick(View view) {
 
