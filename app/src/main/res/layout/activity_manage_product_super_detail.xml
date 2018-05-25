@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManageProductSuperDetail">
+    tools:context=".ManageProductSuperDetail"
+    android:background="@android:color/white">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,7 +16,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:background="@drawable/user_icon_main" />
 
     <EditText
         android:id="@+id/name_textEdit"
@@ -26,6 +27,8 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="물건이름"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,6 +42,8 @@
         android:editable="false"
         android:ems="10"
         android:hint="가격"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="62dp" />
@@ -52,6 +57,8 @@
         android:layout_marginTop="152dp"
         android:ems="10"
         android:hint="시장"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,31 +72,37 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="설명"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/place_editText" />
 
     <Button
         android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="16dp"
-        android:text="삭제"
+
+        android:layout_marginLeft="96dp"
+        android:layout_marginStart="96dp"
+        android:background="@drawable/delete_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/modify_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="저장"
+        android:background="@drawable/save_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toEndOf="@+id/cancel_button" />
 
 </android.support.constraint.ConstraintLayout>

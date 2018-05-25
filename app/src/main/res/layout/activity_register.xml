@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:padding="16dp">
 
     <ScrollView
@@ -17,12 +18,19 @@
             android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:background="@drawable/arrow_icon"
+                 />
+
             <ImageView
                 android:id="@+id/profile_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/eximg" />
+                app:srcCompat="@drawable/user_img" />
 
             <TextView
                 android:id="@+id/TextView2"
@@ -30,121 +38,266 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_gravity="left"
-                android:layout_marginTop="30dip"
+                android:layout_marginTop="30dp"
                 android:text="회원 구분"
-                android:textSize="16dip" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"/>
 
             <RadioGroup
                 android:id="@+id/radioGroup1"
                 android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_gravity="left"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:theme="@style/MyRadioButton"
+                >
 
                 <RadioButton
                     android:id="@+id/radio0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
+                    android:textColor="@color/colorDark"
                     android:text="개인" />
 
                 <RadioButton
                     android:id="@+id/radio1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorDark"
                     android:text="업체" />
             </RadioGroup>
+
+            <TextView
+                android:text= "아이디"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/txt_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
                 android:hint="아이디를 입력하세요"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/colorDark"
+                android:textColorHint="@color/colorDark"
                 android:inputType="textEmailAddress"
                 android:singleLine="true" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorDark" />
+
+            <TextView
+                android:text= "비밀번호"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/txt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:hint="비밀번호를 입력하세요"
+                android:textColorHint="@color/colorDark"
+                android:textColor="@color/colorDark"
                 android:password="true"
                 android:singleLine="true" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorDark" />
+
+            <TextView
+                android:text= "비밀번호 재입력"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/txt_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorDark"
+                android:textColorHint="@color/colorDark"
                 android:hint="비밀번호 확인을 위해 다시 입력해주세요"
                 android:password="true" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorDark" />
+            <TextView
+                android:text= "이름"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/txt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:hint="이름을 입력하세요"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="이름을 입력해주세요"
+                android:textColor="@color/colorDark"
+                android:textColorHint="@color/colorDark"
                 android:inputType="text"
                 android:singleLine="true" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorDark" />
+
+            <TextView
+                android:text= "닉네임"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/txt_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:hint="닉네임을 입력하세요"
+                android:textColor="@color/colorDark"
+                android:textColorHint="@color/colorDark"
                 android:inputType="text"
                 android:singleLine="true" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorDark" />
+            <TextView
+                android:text= "휴대폰번호"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/txt_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:hint="휴대폰 번호를 입력해주세요"
+                android:textColor="@color/colorDark"
+                android:textColorHint="@color/colorDark"
                 android:inputType="phone"
                 android:singleLine="true" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorDark" />
+            <TextView
+                android:text= "자기소개"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/txt_about"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:hint="자기소개를 입력하세요"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="자기소개를 입력해주세요"
+                android:textColor="@color/colorDark"
+                android:textColorHint="@color/colorDark"
                 android:inputType="textMultiLine"
                 android:singleLine="true" />
 
-            <Button
-                android:id="@+id/btn_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="15dp"
-                android:background="#448AFF"
-                android:text="Register"
-                android:textColor="#fff"
-                android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorDark" />
 
             <Button
-                android:id="@+id/btn_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn_register"
+                android:layout_width="250dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="15dp"
-                android:background="#00555555"
-                android:text="Login"
-                android:textStyle="bold" />
+                android:background="@drawable/signup_btn" />
+
+
 
         </LinearLayout>
     </ScrollView>

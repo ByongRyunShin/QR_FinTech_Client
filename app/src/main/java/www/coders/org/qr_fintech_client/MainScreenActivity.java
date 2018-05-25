@@ -1,5 +1,6 @@
 package www.coders.org.qr_fintech_client;
 
+import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
@@ -48,6 +49,15 @@ public class MainScreenActivity extends AppCompatActivity
         manageItemFragment = new ManageProductFragment();
 
         qrButton = (FloatingActionButton)findViewById(R.id.fab);
+        qrButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainScreenActivity.this, TopUpActivity.class));
+
+            }
+        });
+
+        /*
         qrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +66,7 @@ public class MainScreenActivity extends AppCompatActivity
                 integrator.setOrientationLocked(false);
                 integrator.initiateScan();
             }
-        });
+        });*/
 
     }
 
