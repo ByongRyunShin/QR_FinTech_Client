@@ -31,6 +31,7 @@ public class MainScreenActivity extends AppCompatActivity
     private ManageShopFragment manageStoreFragment;
     private ManageProductFragment manageItemFragment;
     private SendMoneyFragment sendMoneyFragment;
+    private SendListFragment sendListFragment;
 
     private Boolean isFabOpen = false;
 
@@ -58,10 +59,14 @@ public class MainScreenActivity extends AppCompatActivity
         manageStoreFragment = new ManageShopFragment();
         manageItemFragment = new ManageProductFragment();
         sendMoneyFragment = new SendMoneyFragment();
+        sendListFragment = new SendListFragment();
+
 
         floatingButton = (FloatingActionButton)findViewById(R.id.fab);
         buyButton = (FloatingActionButton)findViewById(R.id.fab1);
         sellButton = (FloatingActionButton)findViewById(R.id.fab2);
+
+
 
         topupButton = (FloatingActionButton)findViewById(R.id.fab);
         topupButton.setOnClickListener(new View.OnClickListener(){
@@ -172,8 +177,8 @@ public class MainScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_sendMoney) {
             transaction.replace(R.id.container, sendMoneyFragment);
 
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_sendList) {
+            transaction.replace(R.id.container, sendListFragment);
         }
 
         transaction.addToBackStack(null);
