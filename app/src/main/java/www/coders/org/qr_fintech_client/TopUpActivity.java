@@ -23,7 +23,7 @@ public class TopUpActivity extends AppCompatActivity {
     TextView text_result;
 
 
-    public static final String my_shared_preferences = "my_shared_preferences";
+    public static final String my_shared_preferences = "login_information";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

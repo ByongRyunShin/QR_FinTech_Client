@@ -29,4 +29,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
 }

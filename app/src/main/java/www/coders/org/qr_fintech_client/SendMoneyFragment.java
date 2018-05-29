@@ -24,7 +24,7 @@ public class SendMoneyFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public static final String my_shared_preferences = "my_shared_preferences";
+    public static final String my_shared_preferences = "login_information";
 
 
     EditText money_text, id_text, pw_text, send_to_text;

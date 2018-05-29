@@ -38,7 +38,7 @@ public class SendListFragment extends Fragment {
     private String mParam2;
 
 
-    public static final String my_shared_preferences = "my_shared_preferences";
+    public static final String my_shared_preferences = "login_information";
 
 
     public SendListFragment() {
