@@ -45,6 +45,7 @@
         <activity android:name=".UserShowQRActivity" />
         <activity android:name=".ShopSellActivity" />
         <activity android:name=".UserBuyActivity"></activity>
+        
     </application>
 
 </manifest>
