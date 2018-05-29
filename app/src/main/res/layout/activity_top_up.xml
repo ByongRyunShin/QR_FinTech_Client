@@ -36,34 +36,6 @@
 
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="충전 계정(아이디)"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/money_text"
-        />
-
-    <EditText
-        android:id="@+id/id_text"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="아이디를 입력하세요"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/colorDark"
-        android:textColorHint="@color/colorDark"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
         android:id="@+id/textView4"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -75,7 +47,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_text"
+        app:layout_constraintTop_toBottomOf="@+id/money_text"
         />
 
     <EditText

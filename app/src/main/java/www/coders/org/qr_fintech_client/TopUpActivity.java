@@ -1,6 +1,8 @@
 package www.coders.org.qr_fintech_client;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,10 +18,12 @@ import java.util.concurrent.ExecutionException;
 
 public class TopUpActivity extends AppCompatActivity {
 
-    EditText money_text, id_text, pw_text;
+    EditText money_text, pw_text;
     Button topup_btn;
     TextView text_result;
 
+
+    public static final String my_shared_preferences = "my_shared_preferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +31,14 @@ public class TopUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_top_up);
 
 
-        id_text = (EditText)findViewById(R.id.id_text);
         money_text = (EditText)findViewById(R.id.money_text);
         pw_text = (EditText)findViewById(R.id.password);
 
         text_result = (TextView)findViewById(R.id.text_result) ;
 
         topup_btn = (Button)findViewById(R.id.topup_btn);
+
+
 
         final Context context = this;
 
@@ -45,8 +50,13 @@ public class TopUpActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject();
                 try {
 
+                    //기존 로그인 된 정보를 불러오기
+                    SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
 
-                    jsonObject.accumulate("id", id_text.getText());
+                    String loginID = sp.getString("id", null);
+
+                   // jsonObject.accumulate("id", id_text.getText());
+                    jsonObject.accumulate("id", loginID);
                     jsonObject.accumulate("pw", pw_text.getText());
                     jsonObject.accumulate("cost", money_text.getText());
                     HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
@@ -63,14 +73,14 @@ public class TopUpActivity extends AppCompatActivity {
 
                     //개인 계좌에 충전하기
 
-                    String result = httpTask.execute(context.getString(R.string.server_ip) + "/charge/" + id_text.getText()).get();
+                    String result = httpTask.execute(context.getString(R.string.server_ip) + "/charge/" + loginID).get();
 
 
                     JSONObject json = new JSONObject(result);
 
                     String result1 = json.getString("result");
 
-                    if(result1.equals("1")){
+                    if(result1.equals("1")){ //충전 성공했을 경우
 
                         String balance = json.getString("balance");
 
@@ -78,9 +88,16 @@ public class TopUpActivity extends AppCompatActivity {
 
                         text_result.setText("잔액: " + balance + "원");
 
+                        money_text.setText("");
+                        pw_text.setText("");
+
+                       // Intent intent = new Intent(TopUpActivity.this, TopUpFinishActivity.class);
+
+                        //finish();
+                        //startActivity(intent); // 충전 완료 -> 잔액 화면 뜨게!
 
                     }
-                    else {
+                    else { //충전 실패했을 경우
 
                         String msg = json.getString("msg");
                         Toast.makeText(TopUpActivity.this, msg, Toast.LENGTH_SHORT).show();

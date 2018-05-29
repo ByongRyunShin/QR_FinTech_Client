@@ -1,6 +1,7 @@
 package www.coders.org.qr_fintech_client;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,9 @@ public class SendMoneyFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    public static final String my_shared_preferences = "my_shared_preferences";
+
 
     EditText money_text, id_text, pw_text, send_to_text;
     Button send_btn;
@@ -69,7 +73,7 @@ public class SendMoneyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_send_money, container, false);
         // Inflate the layout for this fragment
         send_to_text = (EditText)view.findViewById(R.id.send_id_text);
-        id_text = (EditText)view.findViewById(R.id.my_id_text);
+        //id_text = (EditText)view.findViewById(R.id.my_id_text);
         money_text = (EditText)view.findViewById(R.id.send_money_text);
         pw_text = (EditText)view.findViewById(R.id.send_password);
 
@@ -86,15 +90,20 @@ public class SendMoneyFragment extends Fragment {
 
                 JSONObject jsonObject = new JSONObject();
                 try {
+                    //로그인 아이디 받아오기
+                    SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
 
+                    String loginID = sp.getString("id", null);
 
-                    jsonObject.accumulate("id", id_text.getText());
+                    //  jsonObject.accumulate("id", id_text.getText());
+                    jsonObject.accumulate("id", loginID);
                     jsonObject.accumulate("pw", pw_text.getText());
                     jsonObject.accumulate("cost", money_text.getText());
                     HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
 
+                    String result = httpTask.execute(getContext().getString(R.string.server_ip) + "/send/" + loginID + "$"+ send_to_text.getText()).get();
 
-                    String result = httpTask.execute(getContext().getString(R.string.server_ip) + "/send/" + id_text.getText() + "$"+ send_to_text.getText()).get();
+                    //String result = httpTask.execute(getContext().getString(R.string.server_ip) + "/send/" + id_text.getText() + "$"+ send_to_text.getText()).get();
 
 
                     JSONObject json = new JSONObject(result);
@@ -110,7 +119,9 @@ public class SendMoneyFragment extends Fragment {
                         Toast.makeText(getActivity(), cost + "원 " +"송금이 완료되었습니다. 잔액: " + balance + "원", Toast.LENGTH_SHORT).show();
 
                         text_result.setText(cost + "원 " +"송금, 잔액: " + balance + "원");
-
+                        send_to_text.setText("");
+                        money_text.setText("");
+                        pw_text.setText("");
 
                     }
 
@@ -136,5 +147,6 @@ public class SendMoneyFragment extends Fragment {
 
         return view;
     }
+
 
 }
