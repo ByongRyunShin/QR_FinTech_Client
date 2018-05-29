@@ -44,7 +44,7 @@ public class MainScreenActivity extends AppCompatActivity
 
     private FloatingActionButton floatingButton, buyButton, sellButton, topupButton;
 
-    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    private Animation fab_open, fab_close, rotate_forward, rotate_backward;
 
     ///
     private String id, type, user_name;
@@ -79,13 +79,12 @@ public class MainScreenActivity extends AppCompatActivity
         sendListFragment = new SendListFragment();
 
 
-        floatingButton = (FloatingActionButton)findViewById(R.id.fab);
-        buyButton = (FloatingActionButton)findViewById(R.id.fab1);
-        sellButton = (FloatingActionButton)findViewById(R.id.fab2);
+        floatingButton = (FloatingActionButton) findViewById(R.id.fab);
+        buyButton = (FloatingActionButton) findViewById(R.id.fab1);
+        sellButton = (FloatingActionButton) findViewById(R.id.fab2);
 
 
-
-        topupButton = (FloatingActionButton)findViewById(R.id.fab);
+        topupButton = (FloatingActionButton) findViewById(R.id.fab);
         topupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,80 +176,78 @@ public class MainScreenActivity extends AppCompatActivity
                 });
 
             }
+        });
 
-            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-                MainScreenActivity.super.onActivityResult(requestCode, resultCode, data);
-
-                // QR코드/ 바코드를 스캔한 결과
-                IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-                // result.getFormatName() : 바코드 종류
-                // result.getContents() : 바코드 값
-                Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
-                intent.putExtra(TAG_RESULT, result.getContents());
-                startActivity(intent);
-                //Toast.makeText(getApplicationContext(), result.getContents(),Toast.LENGTH_LONG).show();
-            }
-
-            public void onBackPressed() {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                } else {
-                    MainScreenActivity.super.onBackPressed();
-                }
-            }
-
-            public boolean onCreateOptionsMenu(Menu menu) {
-                // Inflate the menu; this adds items to the action bar if it is present.
-                getMenuInflater().inflate(R.menu.main_screen, menu);
-                return true;
-            }
-
-            public boolean onOptionsItemSelected(MenuItem item) {
-                // Handle action bar item clicks here. The action bar will
-                // automatically handle clicks on the Home/Up button, so long
-                // as you specify a parent activity in AndroidManifest.xml.
-                int id = item.getItemId();
-
-                //noinspection SimplifiableIfStatement
-                if (id == R.id.action_settings) {
-                    return true;
-                }
-
-                return MainScreenActivity.super.onOptionsItemSelected(item);
-            }
-
-            @SuppressWarnings("StatementWithEmptyBody")
-            public boolean onNavigationItemSelected(MenuItem item) {
-                // Handle navigation view item clicks here.
-                int id = item.getItemId();
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                if (id == R.id.nav_manageStore) {
-                    transaction.replace(R.id.container, manageStoreFragment);
-                } else if (id == R.id.nav_manageItem) {
-                    transaction.replace(R.id.container, manageItemFragment);
-                } else if (id == R.id.nav_sendMoney) {
-                    transaction.replace(R.id.container, sendMoneyFragment);
-
-                } else if (id == R.id.nav_sendList) {
-                    transaction.replace(R.id.container, sendListFragment);
-                }
-
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        }   );
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        MainScreenActivity.super.onActivityResult(requestCode, resultCode, data);
+
+        // QR코드/ 바코드를 스캔한 결과
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        // result.getFormatName() : 바코드 종류
+        // result.getContents() : 바코드 값
+        Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
+        intent.putExtra(TAG_RESULT, result.getContents());
+        startActivity(intent);
+        //Toast.makeText(getApplicationContext(), result.getContents(),Toast.LENGTH_LONG).show();
     }
+
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            MainScreenActivity.super.onBackPressed();
+        }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_screen, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return MainScreenActivity.super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if (id == R.id.nav_manageStore) {
+            transaction.replace(R.id.container, manageStoreFragment);
+        } else if (id == R.id.nav_manageItem) {
+            transaction.replace(R.id.container, manageItemFragment);
+        } else if (id == R.id.nav_sendMoney) {
+            transaction.replace(R.id.container, sendMoneyFragment);
+
+        } else if (id == R.id.nav_sendList) {
+            transaction.replace(R.id.container, sendListFragment);
+        }
+
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+
 }
 
