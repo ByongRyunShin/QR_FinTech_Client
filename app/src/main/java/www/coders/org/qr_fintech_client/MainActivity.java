@@ -7,15 +7,23 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.JsonObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,10 +32,7 @@ public class MainActivity extends AppCompatActivity {
     EditText txt_id, txt_password;
     Intent intent;
 
-    int success;
     ConnectivityManager conMgr; // Network 연결 확인 class
-
-    private String url;
 
     //json tag--------------------------------------------
 
@@ -37,14 +42,15 @@ public class MainActivity extends AppCompatActivity {
     public final static String TAG_ID = "id";
     public final static String TAG_PASSWORD = "pw";
     public final static String TAG_TYPE = "type"; // 개인 0, 상인 1
+    public final static String TAG_USER_NAME = "name";
     //------------------------------
 
     String tag_json_obj = "json_obj_req";
 
     SharedPreferences sharedpreferences; //안드로이드 Data 저장 class
-    Boolean session = false;
+    //Boolean session = false;
     String id, type ;
-    public static final String my_shared_preferences = "my_shared_preferences";
+    public static final String my_shared_preferences = "login_information";
     public static final String session_status = "session_status";
 
     @Override
@@ -64,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Context context = this;
-        url= context.getString(R.string.server_ip) +"/login";
 
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_register = (Button) findViewById(R.id.btn_register);
@@ -72,17 +77,18 @@ public class MainActivity extends AppCompatActivity {
         txt_password = (EditText) findViewById(R.id.txt_password);
 
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-        session = sharedpreferences.getBoolean(session_status, false);
+        //session = sharedpreferences.getBoolean(session_status, false);
         id = sharedpreferences.getString(TAG_ID, null);
         type = sharedpreferences.getString(TAG_TYPE, null);
 
+        /*
         if (session) {
             Intent intent = new Intent(MainActivity.this, MainScreenActivity.class);
             intent.putExtra(TAG_ID, id);
             //intent.putExtra(TAG_TYPE, type);
             finish();
             startActivity(intent);
-        }
+        }*/
 
 
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     if (conMgr.getActiveNetworkInfo() != null
                             && conMgr.getActiveNetworkInfo().isAvailable()
                             && conMgr.getActiveNetworkInfo().isConnected()) {
+                        //postToken(id,password); 서버 구현후 주석 제거
                         checkLogin(id, password);
                     } else {
                         Toast.makeText(getApplicationContext() ,"인터넷 연결을 확인해 주세요", Toast.LENGTH_LONG).show();
@@ -121,62 +128,94 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // 네트워크 연결했을때
     private void checkLogin(final String id, final String password) {
         //로딩창 띄우기
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("로그인 중 ...");
         showDialog();
-        JSONObject jObj = null;
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.accumulate(TAG_ID, id);
-            jsonObject.accumulate(TAG_PASSWORD, password);
+        NetRetrofit.getEndPoint().do_login(id,password).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    Log.e("login", "Success");
+                    Log.e("content",response.body().toString());
+                    int success = 0;
+                    try {
+                        JSONObject jObj = new JSONObject(response.body().toString());
+                        success = jObj.getInt("result");
+                        if(success == 1)
+                        {
+                            // 세션 값, id, 안드로이드에 data 저장
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            //editor.putBoolean(session_status, true);
+                            String user_name = jObj.getString("name");
+                            editor.putString(TAG_ID, id);
+                            editor.putString(TAG_PASSWORD, password);
+                            editor.putString(TAG_USER_NAME,user_name);
+                            editor.commit();
+                            hideDialog();
 
-            HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
-            String response = httpTask.execute(url).get();
-            jObj = new JSONObject(response);
-            int success = jObj.getInt(TAG_RESULT);
+                            // 로그인 후 화면 열기 id  반환
+                            Toast.makeText(getApplicationContext(), id + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainActivity.this, MainScreenActivity.class);
+                            intent.putExtra(TAG_ID, id);
+                            //intent.putExtra(TAG_TYPE, type);
+                            finish();
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), jObj.getString("msg"), Toast.LENGTH_LONG).show();
+                            hideDialog();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-            if(success == 1)
-            {
-                // 세션 값, id, 안드로이드에 data 저장
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(session_status, true);
-                editor.putString(TAG_ID, id);
-                //editor.putString(TAG_TYPE, type);
-                editor.commit();
-                hideDialog();
-
-                // 로그인 후 화면 열기 id  반환
-                Toast.makeText(getApplicationContext(), id + "님 환영합니다.", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(MainActivity.this, MainScreenActivity.class);
-                intent.putExtra(TAG_ID, id);
-                //intent.putExtra(TAG_TYPE, type);
-                finish();
-                startActivity(intent);
+                } else {
+                    Log.e("login", "Failed");
+                    Toast.makeText(getApplicationContext() ,"지금은 서버 점검중입니다.", Toast.LENGTH_LONG).show();
+                    hideDialog();
+                }
             }
-            else
-            {
-                Toast.makeText(getApplicationContext(),jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("login", "Failed");
+                Toast.makeText(getApplicationContext() ,"지금은 서버 점검중입니다.", Toast.LENGTH_LONG).show();
                 hideDialog();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"로그인 에러", Toast.LENGTH_LONG).show();
-            hideDialog();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"로그인 에러", Toast.LENGTH_LONG).show();
-            hideDialog();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"로그인 에러", Toast.LENGTH_LONG).show();
-            hideDialog();
-        }
+        });
+    }
 
+    private void postToken(final String id, final String password) {
+        String token = FirebaseInstanceId.getInstance().getToken();
+        NetRetrofit.getEndPoint().do_gcm(id,password,token).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        Log.e("token gcm", "Success" + response.body().toString());
+                        JSONObject upload = new JSONObject(response.body().toString());
+                        if(upload.getInt(TAG_RESULT) == 1)
+                        {
+                            Log.e("token gcm", "apply Success");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e("token gcm", "apply Failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("token gcm", "Failed");
+            }
+        });
     }
 
     private void showDialog() {

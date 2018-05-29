@@ -40,8 +40,11 @@
         <activity android:name=".ManageShopDetail" />
         <activity android:name=".ManageProductDetail" />
         <activity android:name=".ManageProductSuperDetail" />
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".qrReader"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".qrReader" />
+        <activity android:name=".UserShowQRActivity" />
+        <activity android:name=".ShopSellActivity" />
+        <activity android:name=".UserBuyActivity"></activity>
     </application>
 
 </manifest>

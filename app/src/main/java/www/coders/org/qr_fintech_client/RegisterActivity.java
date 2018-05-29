@@ -5,16 +5,19 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -23,14 +26,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,8 +66,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     int success;
     ConnectivityManager conMgr;
-
-    private String url;
 
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
@@ -79,8 +90,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Toast.LENGTH_LONG).show();
             }
         }
-        Context context = this;
-        url = context.getString(R.string.server_ip) + "/mobile/user_insert";
 
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_register = (Button) findViewById(R.id.btn_register);
@@ -139,61 +148,87 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         showDialog();
 
         ///
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("id", id);
-        params.put("pw", password);
-        params.put("name", txt_name.getText().toString());
-        params.put("nickname", txt_nickname.getText().toString());
-        params.put("phone_number", txt_phone.getText().toString());
-        params.put("about", txt_about.getText().toString());
-        params.put("balance", String.valueOf(0));
+        HashMap<String, RequestBody> params = new HashMap<String, RequestBody>();
+        params.put("id", RequestBody.create(MediaType.parse("text/plain"),id));
+        params.put("pw", RequestBody.create(MediaType.parse("text/plain"),password));
+        params.put("name", RequestBody.create(MediaType.parse("text/plain"),txt_name.getText().toString()));
+        params.put("nickname", RequestBody.create(MediaType.parse("text/plain"),txt_nickname.getText().toString()));
+        params.put("phone_number", RequestBody.create(MediaType.parse("text/plain"),txt_phone.getText().toString()));
+        params.put("about", RequestBody.create(MediaType.parse("text/plain"),txt_about.getText().toString()));
+        params.put("balance", RequestBody.create(MediaType.parse("text/plain"),String.valueOf(0)));
 
-        Map<String, String> files = new HashMap<String, String>();
+        File file = null;
+        if(imagePath != null) {
+            file = new File(imagePath);
+        }else
+        {
+            Resources res = getApplicationContext().getResources();
+            int r_id = R.drawable.eximg;
+            Drawable drawable = res.getDrawable(r_id);
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
-        if(imagePath!=null){
-            files.put("img",imagePath);
+            String fileName ="baseImage.jpg";
+            try {
+                FileOutputStream out=openFileOutput(fileName, Context.MODE_PRIVATE);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+                file =getFileStreamPath(fileName);
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        JSONObject jObj = new JSONObject();
-        try {
-            MultipartUpload multipartUpload = new MultipartUpload(url,"UTF-8");
-            jObj = multipartUpload.execute(params,files).get();
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("img", file.getName(),
+                RequestBody.create(MediaType.parse("image/*"), file));
 
-            success = jObj.getInt(TAG_SUCCESS);
+        NetRetrofit.getEndPoint().do_register(params,filePart).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.isSuccessful()){
+                    try {
+                        JSONObject jObj = new JSONObject(response.body().toString());
+                        success = jObj.getInt(TAG_SUCCESS);
 
-            if (success == 1) {
+                        if (success == 1) {
+                            hideDialog();
+                            Log.e("Successfully Register!", jObj.toString());
 
-                Log.e("Successfully Register!", jObj.toString());
+                            Toast.makeText(getApplicationContext(),
+                                    "계정 등록이 완료되었습니다.", Toast.LENGTH_LONG).show();
 
-                Toast.makeText(getApplicationContext(),
-                        "계정 등록이 완료되었습니다.", Toast.LENGTH_LONG).show();
+                            txt_id.setText("");
+                            txt_password.setText("");
+                            txt_confirm_password.setText("");
+                            txt_name.setText("");
+                            txt_nickname.setText("");
+                            txt_phone.setText("");
+                            txt_about.setText("");
 
-                txt_id.setText("");
-                txt_password.setText("");
-                txt_confirm_password.setText("");
-                txt_name.setText("");
-                txt_nickname.setText("");
-                txt_phone.setText("");
-                txt_about.setText("");
+                            intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            finish();
+                            startActivity(intent);
 
-                intent = new Intent(RegisterActivity.this, MainActivity.class);
-                finish();
-                startActivity(intent);
-
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                        } else {
+                            hideDialog();
+                            Toast.makeText(getApplicationContext(),
+                                    jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        hideDialog();
+                        e.printStackTrace();
+                    }
+                }
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                hideDialog();
+                Log.e("model", "Failed");
+            }
+        });
     }
 
     private void showDialog() {
@@ -234,11 +269,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
         image_profile.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
-        //baos = new ByteArrayOutputStream();
-        //bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
-        //byte[] imageBytes = baos.toByteArray();
-        //imageString = Base64.encodeToString(imageBytes,Base64.DEFAULT);
-
     }
 
     private int exifOrientationToDegrees(int exifOrientation) {
