@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     EditText txt_id, txt_password;
     Intent intent;
 
+    int success;
     ConnectivityManager conMgr; // Network 연결 확인 class
 
     //json tag--------------------------------------------
