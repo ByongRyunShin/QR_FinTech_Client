@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SendMoneyFragment"
     style="@style/EditTextStyle">
-
-    <android.support.constraint.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".SendMoneyActivity">
 
 
         <TextView
@@ -32,8 +26,8 @@
             android:id="@+id/send_money_text"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="송금금액을 입력하세요"
             android:ems="10"
+            android:hint="송금금액을 입력하세요"
             android:inputType="number"
             android:textColor="@color/colorDark"
             android:textColorHint="@color/colorDark"
@@ -54,15 +48,14 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/send_money_text"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/send_money_text" />
 
         <EditText
             android:id="@+id/send_id_text"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="받는 사람 아이디를 입력하세요"
             android:ems="10"
+            android:hint="받는 사람 아이디를 입력하세요"
             android:inputType="textEmailAddress"
             android:textColor="@color/colorDark"
             android:textColorHint="@color/colorDark"
@@ -83,16 +76,15 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/send_id_text"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/send_id_text" />
 
         <EditText
             android:id="@+id/send_password"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword"
             android:hint="비밀번호를를 입력하세요"
+            android:inputType="textPassword"
             android:textColor="@color/colorDark"
             android:textColorHint="@color/colorDark"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -103,7 +95,7 @@
         <TextView
             android:id="@+id/send_result"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="18dp"
             android:layout_marginTop="24dp"
             android:text="결과창"
             android:textColor="@color/colorDark"
@@ -116,7 +108,6 @@
             android:id="@+id/send_btn"
             android:layout_width="250dp"
             android:layout_height="70dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="116dp"
             android:background="@drawable/send_money_icon"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -126,5 +117,4 @@
             app:layout_constraintVertical_bias="0.01" />
 
 
-    </android.support.constraint.ConstraintLayout>
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

@@ -3,10 +3,7 @@ package www.coders.org.qr_fintech_client;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-<<<<<<< HEAD
 import android.net.Uri;
-=======
->>>>>>> f9bd00770d7bae1e03ba4e08d3315e12ddccbf9d
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;

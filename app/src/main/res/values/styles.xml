@@ -30,7 +30,7 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
 
     </style>
-    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+    <style name="EditTextStyle" parent="Widget.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/colorDark</item>
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="android:textColor">@color/colorDark</item>
