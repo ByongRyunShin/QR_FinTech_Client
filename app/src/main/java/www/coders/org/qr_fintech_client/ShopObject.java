@@ -11,9 +11,7 @@ public class ShopObject {
     String num, userId, name, about, marketplace, img, balance, isDelete;
 
     @Override
-    public String toString() {
-        return name + " / " + num;
-    }
+    public String toString() { return name; }
 
 
     public ShopObject(JSONObject jsonObject) throws JSONException {
@@ -34,7 +32,6 @@ public class ShopObject {
         this.balance = balance;
         this.isDelete = isDelete;
     }
-
 
     public String getNum() {
         return num;

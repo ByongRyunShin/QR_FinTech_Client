@@ -3,18 +3,21 @@ package www.coders.org.qr_fintech_client;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class ProductObject {
-    private String num, name, price, img, init_date, del_date, owner_id, owner_shop, isDelete;
-    //??
-    @Override
-    public String toString() {
-        return name + "\t\t" + price + "\\";
+
+    private String num, name, price, img, init_date, del_date, owner_id, pNum, isDelete, pName;
+
+    public ProductObject(String pName, String price, String name) {
+        this.pName = pName;
+        this.price = price;
+        this.name = name;
     }
-
-
     public ProductObject(JSONObject jsonObject) throws JSONException {
-        this.num = jsonObject.getString("num");
-        this.name = jsonObject.getString("name");
+        this.pNum = jsonObject.getString("num");
+        this.num = jsonObject.getString("owner_shop");
+        this.pName = jsonObject.getString("name");
         this.price = jsonObject.getString("price");
 
         //// 정보없는거넘어오면 안됨
@@ -76,12 +79,12 @@ public class ProductObject {
         this.owner_id = owner_id;
     }
 
-    public String getOwner_shop() {
-        return owner_shop;
+    public String getpNum() {
+        return pNum;
     }
 
-    public void setOwner_shop(String owner_shop) {
-        this.owner_shop = owner_shop;
+    public void setpNum(String pNum) {
+        this.pNum = pNum;
     }
 
     public String getIsDelete() {
@@ -90,5 +93,13 @@ public class ProductObject {
 
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public String getpName() {
+        return pName;
+    }
+
+    public void setpName(String pName) {
+        this.pName = pName;
     }
 }

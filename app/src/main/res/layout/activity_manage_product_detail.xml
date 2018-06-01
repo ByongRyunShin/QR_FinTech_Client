@@ -4,36 +4,117 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManageProductDetail">
-    <ListView
-        android:id="@+id/item_listView"
-        android:layout_width="match_parent"
-        android:layout_height="463dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    tools:context=".ManageProductDetail"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="122dp"
+        android:layout_height="118dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/user_icon_main" />
+
+    <EditText
+        android:id="@+id/name_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="물건이름"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/title_textView"
+    <EditText
+        android:id="@+id/price_editText"
+        android:layout_width="216dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="76dp"
+        android:editable="false"
+        android:ems="10"
+        android:hint="가격"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/place_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="OOO의 제품목록"
+        android:layout_marginTop="152dp"
+        android:ems="10"
+        android:hint="시장"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/apply_button"
+    <EditText
+        android:id="@+id/detail_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="설명"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/place_editText" />
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+
+        android:layout_marginLeft="96dp"
+        android:layout_marginStart="96dp"
+        android:background="@drawable/delete_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/modify_button"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:text="상품 등록"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/save_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintHorizontal_bias="0.16"
+        app:layout_constraintStart_toEndOf="@+id/delete_button" />
+
+    <Button
+        android:id="@+id/select_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="152dp"
+        android:text="상점 선택"
+        app:layout_constraintStart_toEndOf="@+id/place_editText"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

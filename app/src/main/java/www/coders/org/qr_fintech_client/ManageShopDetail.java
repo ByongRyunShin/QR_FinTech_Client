@@ -1,5 +1,8 @@
 package www.coders.org.qr_fintech_client;
 
+import android.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,7 +44,7 @@ public class ManageShopDetail extends AppCompatActivity {
         place_editText = findViewById(R.id.place_exitText);
         about_editText = findViewById(R.id.about_editText);
 
-        delete_button = (Button) findViewById(R.id.cancel_button);
+        delete_button = (Button) findViewById(R.id.delete_button);
         delete_button.setOnClickListener(mDeleteClickListener);
 
         modify_button = (Button) findViewById(R.id.modify_button);
@@ -63,13 +66,13 @@ public class ManageShopDetail extends AppCompatActivity {
 
         switch (mode)
         {
-            case ManageShopFragment.MODE_MODIFY:
+            case CONST.MODE_UPDATE:
                 num = intent.getStringExtra("item");
                 delete_button_str = "삭제";
                 readStoreInfo();
                 break;
 
-            case ManageShopFragment.MODE_APPLY:
+            case CONST.MODE_CREATE:
                 delete_button_str = "취소";
                 delete_button.setText(delete_button_str);
                 break;
@@ -81,12 +84,24 @@ public class ManageShopDetail extends AppCompatActivity {
     View.OnClickListener mProductClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getApplicationContext(), ManageProductDetail.class);
+
+            /*
+            Intent intent = new Intent(getApplicationContext(), ManageProductFragment.class);
             intent.putExtra("num", num);
-            intent.putExtra("name", name_editText.getText().toString());// 이름을 넘겨받게 수정해야함
             intent.putExtra("id", userid);
             intent.putExtra("pw", userpw);
             startActivity(intent);
+            */
+            // 액티비티 새로만들거나 없애거나 해야할듯
+            Toast.makeText(getApplicationContext(), "액티비티 새로만들거나 없애거나 해야할듯 시간이많다면 완성예정...", Toast.LENGTH_LONG).show();
+
+            /*
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_namagement_product_c_layout, new ManageProductFragment());
+            fragmentTransaction.commit();
+            */
         }
     };
 
@@ -100,8 +115,7 @@ public class ManageShopDetail extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (mode == ManageShopFragment.MODE_MODIFY)
-                            {
+                            if (mode == CONST.MODE_UPDATE) {
                                 deleteStoreInfo();
                             }
                         }
@@ -121,11 +135,11 @@ public class ManageShopDetail extends AppCompatActivity {
         public void onClick(View v) {
             switch (mode)
             {
-                case ManageShopFragment.MODE_APPLY:
-                    applyStoreInfo();
+                case CONST.MODE_CREATE:
+                    createStoreInfo();
                     break;
-                case ManageShopFragment.MODE_MODIFY:
-                    modifyStoreInfo();
+                case CONST.MODE_UPDATE:
+                    updateStoreInfo();
                     break;
             }
             finish();
@@ -143,14 +157,14 @@ public class ManageShopDetail extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (mode)
                         {
-                            case ManageShopFragment.MODE_APPLY:
-                                applyStoreInfo();
+                            case CONST.MODE_CREATE:
+                                createStoreInfo();
                                 break;
-                            case ManageShopFragment.MODE_MODIFY:
-                                modifyStoreInfo();
+                            case CONST.MODE_UPDATE:
+                                updateStoreInfo();
                                 break;
                         }
-                        finish();
+                        finishWithResult();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener(){
@@ -162,7 +176,7 @@ public class ManageShopDetail extends AppCompatActivity {
                 .show();
     }
 
-    private int applyStoreInfo()
+    private int createStoreInfo()
     {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -181,10 +195,12 @@ public class ManageShopDetail extends AppCompatActivity {
             {
                 case 1:
                     Toast.makeText(getApplicationContext(), "등록 완료!", Toast.LENGTH_LONG).show();
-                    finish();
+                    finishWithResult();
+                    break;
                 case -1:
                     Toast.makeText(getApplicationContext(), "로그인 되어있지 않습니다.", Toast.LENGTH_LONG).show();
                     finish();
+                    break;
             }
 
         } catch (JSONException e) {
@@ -197,11 +213,42 @@ public class ManageShopDetail extends AppCompatActivity {
         return -3;
     }
 
-    private void modifyStoreInfo()
+    private int updateStoreInfo()
     {
-        Toast.makeText(getApplicationContext(), "수정은 불가능.", Toast.LENGTH_LONG).show();
-        // 방법으로는 수정 불가능.
-        finish();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
+            jsonObject.accumulate("pw", userpw);
+            jsonObject.accumulate("num", num);
+            jsonObject.accumulate("name", name_editText.getText().toString());
+            jsonObject.accumulate("about", about_editText.getText().toString());
+            HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
+            String result = httpTask.execute(PATH_APPLY).get();
+
+            // Log.e("hihi3333",result);
+
+            JSONObject store = new JSONObject(result);
+            int r = Integer.parseInt(store.getString("result"));
+            switch (r)
+            {
+                case 1:
+                    Toast.makeText(getApplicationContext(), "수정 완료!", Toast.LENGTH_LONG).show();
+                    finishWithResult();
+                    break;
+                case -1:
+                    Toast.makeText(getApplicationContext(), "로그인 되어있지 않습니다.", Toast.LENGTH_LONG).show();
+                    finish();
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return -3;
     }
 
     private void deleteStoreInfo()
@@ -224,10 +271,12 @@ public class ManageShopDetail extends AppCompatActivity {
             {
                 case 1:
                     Toast.makeText(getApplicationContext(), "삭제 완료!", Toast.LENGTH_LONG).show();
-                    finish();
+                    finishWithResult();
+                    break;
                 case -1:
                     Toast.makeText(getApplicationContext(), "로그인 되어있지 않습니다.", Toast.LENGTH_LONG).show();
                     finish();
+                    break;
                 case -2:
                     Toast.makeText(getApplicationContext(), "삭제 불가능 : 잔액이 남아있습니다.", Toast.LENGTH_LONG).show();
                     break;
@@ -281,5 +330,12 @@ public class ManageShopDetail extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    void finishWithResult() {
+        Intent intent = new Intent();
+        intent.putExtra("num", num);
+        setResult(CONST.RESULT_UPDATED, intent);
+        finish();
     }
 }

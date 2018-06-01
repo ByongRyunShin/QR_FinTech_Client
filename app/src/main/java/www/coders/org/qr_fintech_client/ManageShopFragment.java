@@ -31,16 +31,13 @@ public class ManageShopFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String PATH;
-    public  static final int STORE_OBJ = 1;
-    public static final int MODE_APPLY = 1;
-    public static final int MODE_MODIFY = 2;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     Button apply_button;
     TextView title_textView;
     String userid = "chulsoo@a.a", userpw = "dudgml";
-
+    ListView storeList;
     // ArrayList<String> stores;
     ArrayList<ShopObject> stores;
 
@@ -67,7 +64,7 @@ public class ManageShopFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        PATH = getContext().getString(R.string.server_ip)+"/shop_list/";
+        PATH = getContext().getString(R.string.server_ip) + "/shop_list";
     }
 
     @Override
@@ -92,12 +89,12 @@ public class ManageShopFragment extends Fragment {
 
 
         apply_button = (Button) layout.findViewById(R.id.apply_button);
-        apply_button.setOnClickListener(mClickListener);
+        apply_button.setOnClickListener(mCreateClickListener);
 
         getStores();
-        ListView storeList = (ListView) layout.findViewById(R.id.store_listView);
+        storeList = (ListView) layout.findViewById(R.id.store_listView);
 
-        updateList(storeList);
+        updateList();
 
 
         return layout;
@@ -132,34 +129,36 @@ public class ManageShopFragment extends Fragment {
         }
     }
 
-    public void updateList (ListView lv) {
+    public void updateList () {
         final ArrayAdapter<ShopObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, stores);
-        lv.setAdapter(adapter);
+        storeList.setAdapter(adapter);
 
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        storeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(getActivity(), (String) parent.getItemAtPosition(position), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getActivity(), ManageShopDetail.class);
-                intent.putExtra("mode", MODE_MODIFY);
+
+                Intent intent = new Intent(getContext(), ManageShopDetail.class);
+                intent.putExtra("mode", CONST.MODE_UPDATE);
+
                 intent.putExtra("item", ((ShopObject) adapter.getItem(position)).getNum());
                 intent.putExtra("id", userid);
                 intent.putExtra("pw", userpw);
-                startActivity(intent);
+                startActivityForResult(intent, CONST.REQUEST_UPDATE);
             }
         });
     }
 
-    View.OnClickListener mClickListener = new View.OnClickListener() {
+    View.OnClickListener mCreateClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             // todo
-            Intent intent = new Intent(getActivity(), ManageShopDetail.class);
-            intent.putExtra("mode", MODE_APPLY);
+            Intent intent = new Intent(getContext(), ManageShopDetail.class);
+            intent.putExtra("mode", CONST.MODE_CREATE);
             intent.putExtra("id", userid);
             intent.putExtra("pw", userpw);
-            startActivity(intent);
+            startActivityForResult(intent, CONST.REQUEST_UPDATE);
         }
     };
 
@@ -173,4 +172,13 @@ public class ManageShopFragment extends Fragment {
             pDialog.dismiss();
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        getStoreList();
+        updateList();
+
+    }
 }
