@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -165,12 +166,13 @@ public class MainScreenActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         // QR코드/ 바코드를 스캔한 결과
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        // result.getFormatName() : 바코드 종류
-        // result.getContents() : 바코드 값
-        Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
-        intent.putExtra(TAG_RESULT, result.getContents());
-        startActivity(intent);
+        /*
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
+            intent.putExtra(TAG_RESULT, result.getContents());
+            startActivity(intent);
+            */
+
         //Toast.makeText(getApplicationContext(), result.getContents(),Toast.LENGTH_LONG).show();
     }
 
