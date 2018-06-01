@@ -93,14 +93,6 @@
                 android:inputType="textEmailAddress"
                 android:singleLine="true" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorDark" />
 
             <TextView
                 android:text= "비밀번호"
@@ -125,15 +117,6 @@
                 android:password="true"
                 android:singleLine="true" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorDark" />
-
             <TextView
                 android:text= "비밀번호 재입력"
                 android:layout_marginLeft="10dp"
@@ -155,14 +138,7 @@
                 android:textColorHint="@color/colorDark"
                 android:hint="비밀번호 확인을 위해 다시 입력해주세요"
                 android:password="true" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorDark" />
+
             <TextView
                 android:text= "이름"
                 android:layout_marginLeft="10dp"
@@ -186,14 +162,6 @@
                 android:inputType="text"
                 android:singleLine="true" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorDark" />
 
             <TextView
                 android:text= "닉네임"
@@ -218,14 +186,6 @@
                 android:inputType="text"
                 android:singleLine="true" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorDark" />
             <TextView
                 android:text= "휴대폰번호"
                 android:layout_marginLeft="10dp"
@@ -249,14 +209,6 @@
                 android:inputType="phone"
                 android:singleLine="true" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorDark" />
             <TextView
                 android:text= "자기소개"
                 android:layout_marginLeft="10dp"
@@ -280,14 +232,6 @@
                 android:inputType="textMultiLine"
                 android:singleLine="true" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorDark" />
 
             <Button
                 android:id="@+id/btn_register"

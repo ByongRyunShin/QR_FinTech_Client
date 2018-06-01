@@ -36,6 +36,7 @@
 
     <EditText
         android:id="@+id/txt_id"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -47,14 +48,7 @@
         android:singleLine="true"
         android:textColor="@color/colorDark"
         />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorDark" />
+
     <TextView
         android:text= "비밀번호"
         android:layout_marginLeft="10dp"
@@ -66,6 +60,7 @@
 
     <EditText
         android:id="@+id/txt_password"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -77,14 +72,6 @@
         android:singleLine="true"
         android:textColor="@color/colorDark"
         />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorDark" />
 
     <Button
         android:id="@+id/btn_login"

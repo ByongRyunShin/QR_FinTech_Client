@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Context context = this;
-
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_register = (Button) findViewById(R.id.btn_register);
         txt_id = (EditText) findViewById(R.id.txt_id);
@@ -158,9 +157,10 @@ public class MainActivity extends AppCompatActivity {
                             hideDialog();
 
                             // 로그인 후 화면 열기 id  반환
-                            Toast.makeText(getApplicationContext(), id + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), user_name + "님 환영합니다.", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(MainActivity.this, MainScreenActivity.class);
                             intent.putExtra(TAG_ID, id);
+
                             //intent.putExtra(TAG_TYPE, type);
                             finish();
                             startActivity(intent);

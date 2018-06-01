@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -44,14 +43,16 @@ public class MainScreenActivity extends AppCompatActivity
 
     private FloatingActionButton floatingButton, buyButton, sellButton, topupButton;
 
-    private Animation fab_open, fab_close, rotate_forward, rotate_backward;
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
     ///
-    private String id, type, user_name;
+    private String id, type, name;
     private TextView textView_id, textView_name;
     public final static String TAG_ID = "id";
-    public final static String TAG_TYPE = "type"; // 개인 0, 상인 1
-    public final static String USER_NAME = "name";
+    public final static String TAG_TYPE = "type";// 개인 0, 상인 1
+    public final static String TAG_USER_NAME = "name";
+
+
     ///
 
     @Override
@@ -68,120 +69,100 @@ public class MainScreenActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //////////////////////////////////////////////////////////////////////////////////////
+
+        sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        id = sharedpreferences.getString(TAG_ID, null);
+        name = sharedpreferences.getString(TAG_USER_NAME, null);
+        type = sharedpreferences.getString(TAG_TYPE, null);
+
+        View headerLayout = navigationView.getHeaderView(0);
+        textView_id = (TextView)headerLayout.findViewById(R.id.nav_header_id);
+        textView_name = (TextView)headerLayout.findViewById(R.id.nav_header_name);
+        textView_id.setText(id);
+        textView_name.setText(name + "님");
+        /////////////////////////////////////////////////////////////////////////////////////
 
         manageStoreFragment = new ManageShopFragment();
         manageItemFragment = new ManageProductFragment();
         sendMoneyFragment = new SendMoneyFragment();
         sendListFragment = new SendListFragment();
 
-
-        floatingButton = (FloatingActionButton) findViewById(R.id.fab);
-        buyButton = (FloatingActionButton) findViewById(R.id.fab1);
-        sellButton = (FloatingActionButton) findViewById(R.id.fab2);
-
-
-        topupButton = (FloatingActionButton) findViewById(R.id.fab);
-        topupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainScreenActivity.this, TopUpActivity.class));
-
-                sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-                id = sharedpreferences.getString(TAG_ID, null);
-                type = sharedpreferences.getString(TAG_TYPE, null);
-                user_name = sharedpreferences.getString(USER_NAME, null);
-                View headerLayout = navigationView.getHeaderView(0);
-
-                textView_name = (TextView) headerLayout.findViewById(R.id.nav_header_name);
-                textView_id = (TextView) headerLayout.findViewById(R.id.nav_header_id);
-                textView_id.setText(id);
-                textView_name.setText(user_name);
-
-                /////////////////////////////////////////////////////////////////////////////////////
-
-                manageStoreFragment = new ManageShopFragment();
-                manageItemFragment = new ManageProductFragment();
-                sendMoneyFragment = new SendMoneyFragment();
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
 
 
-                fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-                fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
-                rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
-                rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
+        floatingButton = (FloatingActionButton)findViewById(R.id.fab);
+        buyButton = (FloatingActionButton)findViewById(R.id.fab1); //내 QR 보여주기
+        sellButton = (FloatingActionButton)findViewById(R.id.fab2); //물건 QR 찍기
+        topupButton = (FloatingActionButton)findViewById(R.id.fab3); //잔액 충전하기
 
 
-                floatingButton = (FloatingActionButton) findViewById(R.id.fab);
-                buyButton = (FloatingActionButton) findViewById(R.id.fab1); //내 QR 보여주기
-                sellButton = (FloatingActionButton) findViewById(R.id.fab2); //물건 QR 찍기
-                topupButton = (FloatingActionButton) findViewById(R.id.fab3);
-
-
-                floatingButton.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        switch (v.getId()) {
-                            case R.id.fab:
-                                if (!isFabOpen) {
-                                    topupButton.startAnimation(fab_open);
-                                    sellButton.startAnimation(fab_open);
-                                    buyButton.startAnimation(fab_open);
-                                    floatingButton.startAnimation(rotate_forward);
-                                    topupButton.setClickable(true);
-                                    sellButton.setClickable(true);
-                                    buyButton.setClickable(true);
-                                    isFabOpen = true;
-                                } else {
-                                    topupButton.startAnimation(fab_close);
-                                    sellButton.startAnimation(fab_close);
-                                    buyButton.startAnimation(fab_close);
-                                    floatingButton.startAnimation(rotate_backward);
-                                    topupButton.setClickable(false);
-                                    sellButton.setClickable(false);
-                                    buyButton.setClickable(false);
-                                    isFabOpen = false;
-                                }
-                                break;
+        floatingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.fab:
+                        if (!isFabOpen) {
+                            topupButton.startAnimation(fab_open);
+                            sellButton.startAnimation(fab_open);
+                            buyButton.startAnimation(fab_open);
+                            floatingButton.startAnimation(rotate_forward);
+                            topupButton.setClickable(true);
+                            sellButton.setClickable(true);
+                            buyButton.setClickable(true);
+                            isFabOpen = true;
+                        } else {
+                            topupButton.startAnimation(fab_close);
+                            sellButton.startAnimation(fab_close);
+                            buyButton.startAnimation(fab_close);
+                            floatingButton.startAnimation(rotate_backward);
+                            topupButton.setClickable(false);
+                            sellButton.setClickable(false);
+                            buyButton.setClickable(false);
+                            isFabOpen = false;
                         }
-                    }
-                });
+                        break;
+                }
+            }
+        });
 
-                buyButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(MainScreenActivity.this, UserShowQRActivity.class));
-                    }
-                });
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreenActivity.this, UserShowQRActivity.class));
+            }
+        });
 
-                sellButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //IntentIntegrator integrator = new IntentIntegrator(MainScreenActivity.this);
-                        //integrator.setCaptureActivity( qrReader.class );
-                        //integrator.setOrientationLocked(false);
-                        //integrator.initiateScan();
-                        Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
-                        intent.putExtra(TAG_RESULT, "14");
-                        startActivity(intent);
-                    }
-                });
+        sellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //IntentIntegrator integrator = new IntentIntegrator(MainScreenActivity.this);
+                //integrator.setCaptureActivity( qrReader.class );
+                //integrator.setOrientationLocked(false);
+                //integrator.initiateScan();
+                Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
+                intent.putExtra(TAG_RESULT, "14");
+                startActivity(intent);
+            }
+        });
 
-                topupButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(MainScreenActivity.this, TopUpActivity.class));
-                    }
-                });
-
+        topupButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainScreenActivity.this, TopUpActivity.class));
             }
         });
 
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        MainScreenActivity.super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
 
         // QR코드/ 바코드를 스캔한 결과
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -193,21 +174,24 @@ public class MainScreenActivity extends AppCompatActivity
         //Toast.makeText(getApplicationContext(), result.getContents(),Toast.LENGTH_LONG).show();
     }
 
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            MainScreenActivity.super.onBackPressed();
+            super.onBackPressed();
         }
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_screen, menu);
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -219,10 +203,11 @@ public class MainScreenActivity extends AppCompatActivity
             return true;
         }
 
-        return MainScreenActivity.super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -247,7 +232,4 @@ public class MainScreenActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 }
-

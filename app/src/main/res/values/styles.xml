@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@color/colorDark</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -27,5 +29,11 @@
         <item name="colorControlNormal">#506E8D</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat</item>
 
+    </style>
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="colorControlNormal">@color/colorDark</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorDark</item>
+        <item name="android:textColorHint">@color/colorDark</item>
     </style>
 </resources>

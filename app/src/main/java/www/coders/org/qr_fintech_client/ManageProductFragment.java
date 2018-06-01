@@ -2,6 +2,7 @@ package www.coders.org.qr_fintech_client;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,7 +34,10 @@ public class ManageProductFragment extends Fragment {
     public static final int MODE_APPLY = 1;
     public static final int MODE_MODIFY = 2;
 
-    String userid = "chulsoo@a.a", userpw = "dudgml";
+    public static final String my_shared_preferences = "login_information";
+
+
+    //String userid = "chulsoo@a.a", userpw = "dudgml";
 
     ArrayList<ShopObject> stores;
 
@@ -87,6 +91,11 @@ public class ManageProductFragment extends Fragment {
     {
         JSONObject jsonObject = new JSONObject();
         try {
+            SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
+
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
@@ -124,8 +133,8 @@ public class ManageProductFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ManageProductDetail.class);
                 intent.putExtra("num", ((ShopObject) adapter.getItem(position)).getNum());
                 intent.putExtra("name", ((ShopObject) adapter.getItem(position)).getName());
-                intent.putExtra("id", userid);
-                intent.putExtra("pw", userpw);
+             //   intent.putExtra("id", userid);
+             //   intent.putExtra("pw", userpw);
                 startActivity(intent);
             }
         });
