@@ -90,6 +90,8 @@ public class SendListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_send_list, container, false);
 
+        getActivity().setTitle("                거래 내역");
+
         ListView listView = (ListView)view.findViewById(R.id.send_listView);
         TextView balance = (TextView)view.findViewById(R.id.balance_send);
 
@@ -104,12 +106,10 @@ public class SendListFragment extends Fragment {
         try {
             //로그인 아이디 받아오기
 
-            //  jsonObject.accumulate("id", id_text.getText());
             jsonObject.accumulate("id", loginID);
             jsonObject.accumulate("pw", password);
             HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
 
-           // String result = httpTask.execute(getContext().getString(R.string.server_ip) + "/send/list/" + loginID).get();
             String result = httpTask.execute(getContext().getString(R.string.server_ip) + "/user/").get();
 
             JSONObject json = new JSONObject(result);
@@ -182,6 +182,7 @@ public class SendListFragment extends Fragment {
 
                     if(from_val.equals("-1")){ // 충전 (채움)
                         String tmp = moneyFormatToWon(bal);
+                        from_user_id = "잔액 충전";
                         to_user_id = "+" + tmp_val;
                         bal = tmp + "원";
                         state = "채움";

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,8 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
+import static android.content.Intent.getIntent;
+
 public class SendMoneyFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,8 +33,11 @@ public class SendMoneyFragment extends Fragment {
 
 
     EditText money_text, id_text, pw_text, send_to_text;
-    Button send_btn;
+    Button send_btn, ok_send_btn;
     TextView text_result;
+private  View sendMoneyFragmentView;
+
+    FinishSendFragment finishSendFragment;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -71,7 +79,10 @@ public class SendMoneyFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_send_money, container, false);
+        sendMoneyFragmentView = view;
         // Inflate the layout for this fragment
+        getActivity().setTitle("                송금 하기");
+
         send_to_text = (EditText)view.findViewById(R.id.send_id_text);
         //id_text = (EditText)view.findViewById(R.id.my_id_text);
         money_text = (EditText)view.findViewById(R.id.send_money_text);
@@ -122,6 +133,18 @@ public class SendMoneyFragment extends Fragment {
                         send_to_text.setText("");
                         money_text.setText("");
                         pw_text.setText("");
+
+
+                        //finish fragment 화면 전환되게 
+                        View v = LayoutInflater.from(getContext()).inflate(R.layout.fragment_finish_send, null);
+                        ConstraintLayout base = (ConstraintLayout)sendMoneyFragmentView.findViewById(R.id.baseLayout);
+
+                        ConstraintLayout parentLayout = (ConstraintLayout)sendMoneyFragmentView.findViewById(R.id.parentLayout);
+                        base.removeView(parentLayout);
+                        ConstraintLayout.LayoutParams clpcontactUs = new ConstraintLayout.LayoutParams(
+                                ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT);
+                        base.addView(v, clpcontactUs);
+
 
                     }
 

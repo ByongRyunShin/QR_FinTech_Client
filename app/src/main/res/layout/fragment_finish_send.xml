@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".FinishSendFragment">
+    tools:context=".FinishSendFragment"
+    android:id="@+id/finishSend">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -32,12 +33,16 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView1" />
 
     <Button
+        android:id="@+id/ok_send_btn"
         android:layout_width="250dp"
         android:layout_height="70dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="112dp"
         android:background="@drawable/ok_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
