@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,10 +19,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +33,8 @@ public class MainScreenActivity extends AppCompatActivity
     private ManageProductFragment manageItemFragment;
     private SendMoneyFragment sendMoneyFragment;
     private SendListFragment sendListFragment;
+    private SalesListFragment salseListFragment;
+    private ManageOrderFragment manageOrderFragment;
 
 
     private Boolean isFabOpen = false;
@@ -91,6 +88,8 @@ public class MainScreenActivity extends AppCompatActivity
         manageItemFragment = new ManageProductFragment();
         sendMoneyFragment = new SendMoneyFragment();
         sendListFragment = new SendListFragment();
+        salseListFragment = new SalesListFragment();
+        manageOrderFragment = new ManageOrderFragment();
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -222,9 +221,12 @@ public class MainScreenActivity extends AppCompatActivity
             transaction.replace(R.id.container, manageItemFragment);
         } else if (id == R.id.nav_sendMoney) {
             transaction.replace(R.id.container, sendMoneyFragment);
-
         } else if (id == R.id.nav_sendList) {
             transaction.replace(R.id.container, sendListFragment);
+        } else if (id == R.id.nav_salseList) {
+            transaction.replace(R.id.container, salseListFragment);
+        } else if (id == R.id.nav_manageOrder) {
+            transaction.replace(R.id.container, manageOrderFragment);
         }
 
         transaction.addToBackStack(null);

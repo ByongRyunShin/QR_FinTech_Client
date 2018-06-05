@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -102,6 +103,12 @@ public class ManageShopFragment extends Fragment {
     }
     void getStores()
     {
+
+        //SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+        //String userid = sp.getString("id", null);
+        //String userpw = sp.getString("pw", null);
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함

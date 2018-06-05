@@ -44,7 +44,9 @@
         <activity android:name=".UserShowQRActivity" />
         <activity android:name=".ShopSellActivity" />
         <activity android:name=".UserBuyActivity" />
-        <activity android:name=".ShopSelectMenu"></activity>
+        <activity android:name=".ShopSelectMenu" />
+        <activity android:name=".SalesListFragment" />
+        <activity android:name=".ManageOrderFragment"></activity>
     </application>
 
 </manifest>

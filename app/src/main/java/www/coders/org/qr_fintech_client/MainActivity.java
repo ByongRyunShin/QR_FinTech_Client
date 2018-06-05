@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     public final static String TAG_PASSWORD = "pw";
     public final static String TAG_TYPE = "type"; // 개인 0, 상인 1
     public final static String TAG_USER_NAME = "name";
+
+    public final static int a = 0;
     //------------------------------
 
     String tag_json_obj = "json_obj_req";

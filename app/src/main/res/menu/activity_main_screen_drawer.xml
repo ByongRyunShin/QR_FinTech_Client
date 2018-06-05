@@ -28,6 +28,18 @@
             android:title="송금 내역"
             app:itemTextColor="@color/colorDark"
             app:itemIconTint="@color/colorDark"/>
+        <item
+            android:id="@+id/nav_salseList"
+            android:icon="@drawable/send_dash_icon"
+            android:title="판매 내역"
+            app:itemTextColor="@color/colorDark"
+            app:itemIconTint="@color/colorDark"/>
+        <item
+            android:id="@+id/nav_manageOrder"
+            android:icon="@drawable/send_dash_icon"
+            android:title="주문 관리"
+            app:itemTextColor="@color/colorDark"
+            app:itemIconTint="@color/colorDark"/>
     </group>
 
 

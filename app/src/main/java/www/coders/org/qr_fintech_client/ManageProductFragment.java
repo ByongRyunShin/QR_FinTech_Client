@@ -3,7 +3,6 @@ package www.coders.org.qr_fintech_client;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,8 +20,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import static www.coders.org.qr_fintech_client.MainActivity.TAG_ID;
-import static www.coders.org.qr_fintech_client.MainActivity.TAG_PASSWORD;
+import static www.coders.org.qr_fintech_client.MainActivity.*;
+//import static www.coders.org.qr_fintech_client.MainActivity.TAG_PASSWORD;
 
 public class ManageProductFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -41,7 +40,7 @@ public class ManageProductFragment extends Fragment {
 
 
     ListView productAll_listView;
-    Adapter adapter;
+    ProductListAdapter adapter;
     ArrayList<ProductObject> products;
     ArrayList<ShopObject> shops;
     Button select_button, create_button;
@@ -78,7 +77,6 @@ public class ManageProductFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
         sharedpreferences = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         id = sharedpreferences.getString(TAG_ID, null);
         password = sharedpreferences.getString(TAG_PASSWORD, null);
@@ -209,7 +207,7 @@ public class ManageProductFragment extends Fragment {
     }
 
     public void connectListViewWithAdapter () {
-        adapter = new Adapter(getActivity(), products);
+        adapter = new ProductListAdapter(getActivity(), products);
         productAll_listView.setAdapter(adapter);
 
         productAll_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
