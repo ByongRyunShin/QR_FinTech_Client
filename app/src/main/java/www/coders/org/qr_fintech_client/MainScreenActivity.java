@@ -23,7 +23,6 @@ import android.widget.TextView;
 public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG_RESULT = "item_code";
     public static final String my_shared_preferences = "login_information";
     SharedPreferences sharedpreferences;
 
@@ -146,8 +145,8 @@ public class MainScreenActivity extends AppCompatActivity
                 //integrator.setOrientationLocked(false);
                 //integrator.initiateScan();
                 Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
-                intent.putExtra(TAG_RESULT, "14");
                 startActivity(intent);
+                finish();
             }
         });
 
