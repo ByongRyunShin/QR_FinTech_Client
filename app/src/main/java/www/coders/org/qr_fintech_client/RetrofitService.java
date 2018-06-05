@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -18,6 +19,10 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("user")
     Call<JsonObject> do_login(@Field("id") String id, @Field("pw") String pw);
+
+    @FormUrlEncoded
+    @POST("qrcode")
+    Call<ResponseBody> do_qrCode(@Field("id") String id, @Field("pw") String pw);
 
     @FormUrlEncoded
     @POST("gcm_insert")
@@ -34,4 +39,6 @@ public interface RetrofitService {
     @Multipart
     @POST("user_insert")
     Call<JsonObject> do_register(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
+
+
 }

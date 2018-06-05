@@ -17,6 +17,9 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,20 +29,23 @@ public class UserBuyActivity extends AppCompatActivity {
     private static final String TAG_RESULT = "item_code";
     public static final String my_shared_preferences = "login_information";
     int amount;
+    private JSONObject item_info;
     SharedPreferences sharedpreferences; //안드로이드 Data 저장 class
 
     private String id, password, name;
     private int price;
     public final static String TAG_ID = "id";
     public final static String TAG_PASSWORD = "pw";
+    public final static String TAG_ITEM = "item";
 
     private TextView item_name, item_price, item_count, total_price;
-    private Button plus, minus, cancel, add_shoplist;
+    private Button plus, minus, cancel, add_shoplist, payment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_buy);
+        final DBHelper db = DBHelper.getInstance(this);
 
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         id = sharedpreferences.getString(TAG_ID, null);
@@ -49,25 +55,13 @@ public class UserBuyActivity extends AppCompatActivity {
         minus = (Button) findViewById(R.id.buy_decrease);
         cancel = (Button) findViewById(R.id.user_buy_cancel_button);
         add_shoplist = (Button) findViewById(R.id.add_shoplist_button);
+        payment = (Button)findViewById(R.id.payment_button);
         item_name = (TextView) findViewById(R.id.user_buy_item_name);
         item_price = (TextView) findViewById(R.id.user_buy_item_price);
         item_count = (TextView) findViewById(R.id.item_count);
         total_price = (TextView) findViewById(R.id.buy_item_total_price);
 
-        final String item_code;
-
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                item_code= null;
-            } else {
-                item_code= extras.getString(TAG_RESULT);
-            }
-        } else {
-            item_code= (String) savedInstanceState.getSerializable(TAG_RESULT);
-        }
-
-        product_detail("a@a","a","17","15");
+        product_detail("a@a","a","1","2");
 
         //// plus 카운트 추가할것
         plus.setOnClickListener(new View.OnClickListener() {
@@ -106,10 +100,41 @@ public class UserBuyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                add_shopList(id,password,item_code,Integer.toString(amount));
+                Intent intent = new Intent(UserBuyActivity.this, Shopping_list_acticity.class);
+                ItemObject item = null;
+                //디비에추가할것
+                try {
+                    int item_num = item_info.getInt("num");
+                    String item_name = item_info.getString("name");
+                    int price = item_info.getInt("price");
+                    String init_date = item_info.getString("init_date");
+                    String owner_id = item_info.getString("owner_id");
+                    int owner_shop = item_info.getInt("owner_shop");
+                    item = new ItemObject(item_num,item_name,price,init_date,owner_id,owner_shop);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                long now = System.currentTimeMillis();
+                Date date = new Date(now);
+                SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                String formatDate = sdfNow.format(date);
+                ShoppingListObject shoppingListObject = new ShoppingListObject(item,Integer.parseInt(item_count.getText().toString()),id,formatDate);
+                db.addShoppingList(shoppingListObject);
+
+                Log.e("add","success");
+                finish();
+                startActivity(intent);
             }
         });
 
+        payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                product_payment(id,password,"1",Integer.toString(amount));
+            }
+        });
     }
 
     private void product_detail(final String id, final String password, String num, String pNum) {
@@ -132,6 +157,7 @@ public class UserBuyActivity extends AppCompatActivity {
                         success = jObj.getInt("result");
                         if(success == 1)
                         {
+                            item_info = jObj.getJSONArray("rows").getJSONObject(0);
                             name = jObj.getJSONArray("rows").getJSONObject(0).getString("name");
                             price = jObj.getJSONArray("rows").getJSONObject(0).getInt("price");
 
@@ -166,11 +192,11 @@ public class UserBuyActivity extends AppCompatActivity {
         });
     }
 
-    private void add_shopList(final String id, final String password, String item_code, String amount) {
+    private void product_payment(final String id, final String password, String item_code, String amount) {
         //로딩창 띄우기
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-        pDialog.setMessage("장바구니에 추가중 ...");
+        pDialog.setMessage("결제중 ...");
         showDialog();
 
         NetRetrofit.getEndPoint().do_buy(id,password,item_code,amount).enqueue(new Callback<JsonObject>() {
@@ -186,23 +212,22 @@ public class UserBuyActivity extends AppCompatActivity {
                         success = jObj.getInt("result");
                         if(success == 1)
                         {
-                            hideDialog();
-                            Toast.makeText(getApplicationContext(), "상품이 추가 되었습니다", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
-                            finish();
-                            startActivity(intent);
+                            Toast.makeText(getApplicationContext(), "상품이 결제 되었습니다", Toast.LENGTH_LONG).show();
                         }
                         else
                         {
                             Toast.makeText(getApplicationContext(), jObj.getString("msg"), Toast.LENGTH_LONG).show();
-                            hideDialog();
                         }
+                        hideDialog();
+                        Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
+                        finish();
+                        startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                 } else {
-                    Log.e("add_shoplist", "Failed");
+                    Log.e("item buy", "Failed");
                     Toast.makeText(getApplicationContext() ,"지금은 서버 점검중입니다.", Toast.LENGTH_LONG).show();
                     hideDialog();
                 }
@@ -210,7 +235,7 @@ public class UserBuyActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("add_shoplist", "Failed");
+                Log.e("item_buy", "Failed");
                 Toast.makeText(getApplicationContext() ,"지금은 서버 점검중입니다.", Toast.LENGTH_LONG).show();
                 hideDialog();
             }

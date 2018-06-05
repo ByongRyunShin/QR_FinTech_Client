@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     if (conMgr.getActiveNetworkInfo() != null
                             && conMgr.getActiveNetworkInfo().isAvailable()
                             && conMgr.getActiveNetworkInfo().isConnected()) {
-                        //postToken(id,password); 서버 구현후 주석 제거
+                        postToken(id,password);
                         checkLogin(id, password);
                     } else {
                         Toast.makeText(getApplicationContext() ,"인터넷 연결을 확인해 주세요", Toast.LENGTH_LONG).show();

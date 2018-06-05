@@ -184,7 +184,7 @@
 
                 <Button
                     android:id="@+id/user_buy_cancel_button"
-                    android:layout_width="400px"
+                    android:layout_width="200px"
                     android:layout_height="wrap_content"
                     android:text="취소" />
 
@@ -194,10 +194,21 @@
 
                 <Button
                     android:id="@+id/add_shoplist_button"
-                    android:layout_width="400px"
+                    android:layout_width="300px"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/buy_increase"
                     android:text="장바구니에 등록" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="0dp" />
+
+                <Button
+                    android:id="@+id/payment_button"
+                    android:layout_width="200px"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/buy_increase"
+                    android:text="결제" />
 
             </LinearLayout>
         </LinearLayout>

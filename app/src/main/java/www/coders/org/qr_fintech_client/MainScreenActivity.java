@@ -227,7 +227,12 @@ public class MainScreenActivity extends AppCompatActivity
             transaction.replace(R.id.container, salseListFragment);
         } else if (id == R.id.nav_manageOrder) {
             transaction.replace(R.id.container, manageOrderFragment);
+        }else if (id == R.id.nav_shoppingList) {
+            Intent intent = new Intent(MainScreenActivity.this, Shopping_list_acticity.class);
+            finish();
+            startActivity(intent);
         }
+
 
         transaction.addToBackStack(null);
         transaction.commit();

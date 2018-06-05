@@ -28,7 +28,7 @@ public class qrReader extends CaptureActivity{
         Reader reader = new MultiFormatReader();// use this otherwise ChecksumException
         try {
             Result result = reader.decode(bitmap);
-            contents = byteArrayToHex(result.getRawBytes());
+            contents = result.getText().toString();
 
             //byte[] rawBytes = result.getRawBytes();
             //BarcodeFormat format = result.getBarcodeFormat();
@@ -38,11 +38,5 @@ public class qrReader extends CaptureActivity{
         catch (ChecksumException e) { e.printStackTrace(); }
         catch (FormatException e) { e.printStackTrace(); }
         return contents;
-    }
-    private static String byteArrayToHex(byte[] a) {
-        StringBuilder sb = new StringBuilder(a.length * 2);
-        for(byte b: a)
-            sb.append(String.format("%02x ", b));
-        return sb.toString();
     }
 }

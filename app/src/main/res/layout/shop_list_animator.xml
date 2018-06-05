@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/shopping_list_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:background="?attr/selectableItemBackground"
+                android:layout_centerVertical="true"
+                android:textColor="#fff"
+                android:paddingLeft="5dp"
+                android:text="선택 취소"
+                android:clickable="true"
+                 />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="장바구니"
+                android:layout_centerVertical="true"
+                android:textColor="#fff"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/shopping_item_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackground"
+                android:layout_centerVertical="true"
+                android:paddingRight="5dp"
+                android:textColor="#fff"
+                android:clickable="true"
+                android:text="항목 결제" />
+
+            <TextView
+                android:id="@+id/shopping_list_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/shopping_item_payment"
+                android:background="?attr/selectableItemBackground"
+                android:paddingRight="5dp"
+                android:layout_centerVertical="true"
+                android:textColor="#fff"
+                android:clickable="true"
+                android:text="항목 삭제" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <Button
+        android:id="@+id/shopping_item_allpayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전체 결제"
+        android:layout_alignBottom="@+id/list"
+        android:layout_centerHorizontal="true"
+        />
+    </RelativeLayout>
+
+</LinearLayout>
