@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".MainScreenActivity"
             android:label="@string/title_activity_main_screen"
@@ -39,7 +39,8 @@
         <activity android:name=".ShopSellActivity" />
         <activity android:name=".UserBuyActivity" />
         <activity android:name=".ShopSelectMenu" />
-        <activity android:name=".Shopping_list_acticity"></activity>
+        <activity android:name=".Shopping_list_acticity" />
+        <activity android:name=".ChartActivity"></activity>
     </application>
 
 </manifest>
