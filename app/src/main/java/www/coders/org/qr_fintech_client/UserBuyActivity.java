@@ -26,7 +26,6 @@ import retrofit2.Response;
 
 public class UserBuyActivity extends AppCompatActivity {
     ProgressDialog pDialog;
-    private static final String TAG_RESULT = "item_code";
     public static final String my_shared_preferences = "login_information";
     int amount;
     private JSONObject item_info;
@@ -91,8 +90,9 @@ public class UserBuyActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserBuyActivity.super.onBackPressed();
+                Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
                 finish();
+                startActivity(intent);
             }
         });
 
@@ -250,5 +250,12 @@ public class UserBuyActivity extends AppCompatActivity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
+        finish();
+        startActivity(intent);
     }
 }
