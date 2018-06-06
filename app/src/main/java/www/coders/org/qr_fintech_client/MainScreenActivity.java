@@ -19,6 +19,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,6 +52,7 @@ public class MainScreenActivity extends AppCompatActivity
     public final static String TAG_ID = "id";
     public final static String TAG_TYPE = "type";// 개인 0, 상인 1
     public final static String TAG_USER_NAME = "name";
+    public final static String TAG_REUSLT = "item_code";
 
 
     ///
@@ -140,13 +145,13 @@ public class MainScreenActivity extends AppCompatActivity
         sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //IntentIntegrator integrator = new IntentIntegrator(MainScreenActivity.this);
-                //integrator.setCaptureActivity( qrReader.class );
-                //integrator.setOrientationLocked(false);
-                //integrator.initiateScan();
-                Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
-                startActivity(intent);
-                finish();
+                IntentIntegrator integrator = new IntentIntegrator(MainScreenActivity.this);
+                integrator.setCaptureActivity( qrReader.class );
+                integrator.setOrientationLocked(false);
+                integrator.initiateScan();
+                //Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
+                //startActivity(intent);
+                //finish();
             }
         });
 
@@ -164,14 +169,14 @@ public class MainScreenActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         // QR코드/ 바코드를 스캔한 결과
-        /*
-            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null){
             Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
-            intent.putExtra(TAG_RESULT, result.getContents());
+            intent.putExtra(TAG_REUSLT, result.getContents());
             startActivity(intent);
-            */
 
-        //Toast.makeText(getApplicationContext(), result.getContents(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), result.getContents(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

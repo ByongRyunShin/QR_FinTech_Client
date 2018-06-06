@@ -24,6 +24,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+        final Intent intent = new Intent(this, MainActivity.class);
         if (Build.VERSION.SDK_INT >= 23)
         {
             if (CAMERA_PEMISSION != PackageManager.PERMISSION_GRANTED && READ_STORAGE_PERMISSION != PackageManager.PERMISSION_GRANTED &&
@@ -33,10 +34,30 @@ public class SplashActivity extends Activity {
             }
             else
             {
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("state", "launch");
-                startActivity(intent);
-                finish();
+                Thread timer= new Thread()
+                {
+                    public void run()
+                    {
+                        try
+                        {
+                            //Display for 3 seconds
+                            sleep(3000);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            // TODO: handle exception
+                            e.printStackTrace();
+                        }
+                        finally
+                        {
+                            intent.putExtra("state", "launch");
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                };
+                timer.start();
+
             }
         }
     }

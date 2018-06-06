@@ -35,7 +35,7 @@ public class UserBuyActivity extends AppCompatActivity {
     private int price;
     public final static String TAG_ID = "id";
     public final static String TAG_PASSWORD = "pw";
-    public final static String TAG_ITEM = "item";
+    public final static String TAG_ITEM = "item_code";
 
     private TextView item_name, item_price, item_count, total_price;
     private Button plus, minus, cancel, add_shoplist, payment;
@@ -60,9 +60,13 @@ public class UserBuyActivity extends AppCompatActivity {
         item_count = (TextView) findViewById(R.id.item_count);
         total_price = (TextView) findViewById(R.id.buy_item_total_price);
 
-        product_detail("a@a","a","1","2");
+        final String temp,item_code;
+        Bundle extras = getIntent().getExtras();
+        temp = extras.getString(TAG_ITEM);
+        item_code = temp.substring(1);
 
-        //// plus 카운트 추가할것
+        product_detail(item_code);
+
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,19 +136,19 @@ public class UserBuyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                product_payment(id,password,"1",Integer.toString(amount));
+                product_payment(id,password,item_code,Integer.toString(amount));
             }
         });
     }
 
-    private void product_detail(final String id, final String password, String num, String pNum) {
+    private void product_detail(String pNum) {
         //로딩창 띄우기
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("상품 조회 중 ...");
         showDialog();
 
-        NetRetrofit.getEndPoint().do_product_detail(id,password,num,pNum).enqueue(new Callback<JsonObject>() {
+        NetRetrofit.getEndPoint().do_product_detail(pNum).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {

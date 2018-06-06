@@ -1,6 +1,7 @@
 package www.coders.org.qr_fintech_client;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
@@ -25,15 +26,14 @@ public class ManageShopDetail extends AppCompatActivity {
     Button delete_button;
     Button modify_button;
     int mode;
-    String num, userid, userpw, delete_button_str;
+    String num, delete_button_str;
     EditText name_editText;
     EditText balance_editText;
     EditText place_editText;
     EditText about_editText;
     Button product_button;
-    private String PATH_READ;
-    private String PATH_APPLY;
-    private String PATH_DELETE ;
+    private String PATH_READ, PATH_APPLY, PATH_DELETE ;
+    public static final String my_shared_preferences = "login_information";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +61,6 @@ public class ManageShopDetail extends AppCompatActivity {
 
         intent = getIntent();
         mode = intent.getIntExtra("mode", 0);
-        userid = intent.getStringExtra("id");
-        userpw = intent.getStringExtra("pw");
 
         switch (mode)
         {
@@ -96,7 +94,6 @@ public class ManageShopDetail extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "액티비티 새로만들거나 없애거나 해야할듯 시간이많다면 완성예정...", Toast.LENGTH_LONG).show();
 
             /*
-
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_namagement_product_c_layout, new ManageProductFragment());
@@ -180,6 +177,10 @@ public class ManageShopDetail extends AppCompatActivity {
     {
         JSONObject jsonObject = new JSONObject();
         try {
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             jsonObject.accumulate("name", name_editText.getText().toString());
@@ -217,6 +218,10 @@ public class ManageShopDetail extends AppCompatActivity {
     {
         JSONObject jsonObject = new JSONObject();
         try {
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             jsonObject.accumulate("num", num);
@@ -256,6 +261,10 @@ public class ManageShopDetail extends AppCompatActivity {
         Log.e("hihi","delete");
         JSONObject jsonObject = new JSONObject();
         try {
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             jsonObject.accumulate("num", num);
@@ -298,6 +307,10 @@ public class ManageShopDetail extends AppCompatActivity {
     {
         JSONObject jsonObject = new JSONObject();
         try {
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             jsonObject.accumulate("num", num);
