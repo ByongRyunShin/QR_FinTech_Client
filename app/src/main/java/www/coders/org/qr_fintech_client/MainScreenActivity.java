@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class MainScreenActivity extends AppCompatActivity
     public final static String TAG_USER_NAME = "name";
     public final static String TAG_REUSLT = "item_code";
 
+    private Button chart_btn;
 
     ///
 
@@ -63,6 +65,15 @@ public class MainScreenActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //chart btn 생성
+        chart_btn = (Button)findViewById(R.id.chart_btn);
+        chart_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreenActivity.this, ChartActivity.class));
+            }
+            });
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -44,8 +44,7 @@ public class ManageProductFragment extends Fragment {
     ArrayList<ProductObject> products;
     ArrayList<ShopObject> shops;
     Button select_button, create_button;
-    String id, password;
-    String userid = "chulsoo@a.a", userpw = "dudgml";
+  //  String id, password;
     String selectedNum;
 
 
@@ -78,8 +77,8 @@ public class ManageProductFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         sharedpreferences = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-        id = sharedpreferences.getString(TAG_ID, null);
-        password = sharedpreferences.getString(TAG_PASSWORD, null);
+        //id = sharedpreferences.getString(TAG_ID, null);
+        //password = sharedpreferences.getString(TAG_PASSWORD, null);
 
         PATH_PRODUCT_ALL = getContext().getString(R.string.server_ip) + "/product_list_all";
         PATH_PRODUCT = getContext().getString(R.string.server_ip) + "/product_list";
@@ -183,6 +182,12 @@ public class ManageProductFragment extends Fragment {
         products = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         try {
+
+            SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
+
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
@@ -220,9 +225,6 @@ public class ManageProductFragment extends Fragment {
                 intent.putExtra("num", num);
                 intent.putExtra("pNum", ((ProductObject) adapter.getItem(position)).getpNum());
                 intent.putExtra("name", getShopNameByNum(num));
-
-                intent.putExtra("id", userid);
-                intent.putExtra("pw", userpw);
                 startActivityForResult(intent, CONST.REQUEST_UPDATE);
 
             }
@@ -242,8 +244,6 @@ public class ManageProductFragment extends Fragment {
         public void onClick(View v) {
             Intent intent = new Intent(getContext(), ManageProductDetail.class);
             intent.putExtra("mode", CONST.MODE_CREATE);
-            intent.putExtra("id", userid);
-            intent.putExtra("pw", userpw);
             intent.putExtra("num", selectedNum);
             if (selectedNum.compareTo(CONST.UNSELECTED) != 0) intent.putExtra("name", getShopNameByNum(selectedNum));
             startActivityForResult(intent, CONST.REQUEST_UPDATE);

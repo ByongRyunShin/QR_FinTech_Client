@@ -37,9 +37,9 @@ public class ManageShopFragment extends Fragment {
     private String mParam2;
     Button apply_button;
     TextView title_textView;
-    String userid = "chulsoo@a.a", userpw = "dudgml";
     ListView storeList;
     // ArrayList<String> stores;
+    public static final String my_shared_preferences = "login_information";
     ArrayList<ShopObject> stores;
 
     public ManageShopFragment() {
@@ -78,39 +78,26 @@ public class ManageShopFragment extends Fragment {
         pDialog.setCancelable(false);
         pDialog.setMessage("로그인 중 ...");
         showDialog(pDialog);
-
         hideDialog(pDialog);
-
         stores = new ArrayList<>();
-
-
         View layout = inflater.inflate(R.layout.fragment_manage_shop, container, false) ;
         title_textView = (TextView) layout.findViewById(R.id.title_textView);
-
-
-
         apply_button = (Button) layout.findViewById(R.id.apply_button);
         apply_button.setOnClickListener(mCreateClickListener);
-
         getStores();
         storeList = (ListView) layout.findViewById(R.id.store_listView);
-
         updateList();
-
-
         return layout;
 
     }
     void getStores()
     {
-
-        //SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-
-        //String userid = sp.getString("id", null);
-        //String userpw = sp.getString("pw", null);
-
         JSONObject jsonObject = new JSONObject();
         try {
+            SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
@@ -150,8 +137,6 @@ public class ManageShopFragment extends Fragment {
                 intent.putExtra("mode", CONST.MODE_UPDATE);
 
                 intent.putExtra("item", ((ShopObject) adapter.getItem(position)).getNum());
-                intent.putExtra("id", userid);
-                intent.putExtra("pw", userpw);
                 startActivityForResult(intent, CONST.REQUEST_UPDATE);
             }
         });
@@ -163,8 +148,6 @@ public class ManageShopFragment extends Fragment {
             // todo
             Intent intent = new Intent(getContext(), ManageShopDetail.class);
             intent.putExtra("mode", CONST.MODE_CREATE);
-            intent.putExtra("id", userid);
-            intent.putExtra("pw", userpw);
             startActivityForResult(intent, CONST.REQUEST_UPDATE);
         }
     };

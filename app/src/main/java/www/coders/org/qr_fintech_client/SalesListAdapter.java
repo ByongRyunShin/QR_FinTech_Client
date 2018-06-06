@@ -13,7 +13,7 @@ public class SalesListAdapter extends BaseAdapter{
 
     Context context;
     ArrayList<SalesObject> list_itemArrayList;
-    TextView price_textView, quantity_textView, total_textView, name_textView, buyer_textView, date_textView, pName_textView;
+    TextView price_textView, name_textView, pName_textView;
 
     public SalesListAdapter(Context context, ArrayList<SalesObject> list_itemArrayList) {
         this.context = context;
@@ -40,32 +40,32 @@ public class SalesListAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.fragment_sales_list, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.sales_list_item, null);
             pName_textView = (TextView) convertView.findViewById(R.id.pName_textView);
             price_textView = (TextView) convertView.findViewById(R.id.price_textView);
-            quantity_textView = (TextView) convertView.findViewById(R.id.quantity_textView);
-            total_textView = (TextView) convertView.findViewById(R.id.total_textView);
+         //   quantity_textView = (TextView) convertView.findViewById(R.id.quantity_textView);
+          //  total_textView = (TextView) convertView.findViewById(R.id.total_textView);
             name_textView = (TextView) convertView.findViewById(R.id.name_textView);
-            buyer_textView = (TextView) convertView.findViewById(R.id.buyer_textView);
-            date_textView = (TextView) convertView.findViewById(R.id.date_textView);
+          //  buyer_textView = (TextView) convertView.findViewById(R.id.buyer_textView);
+          //  date_textView = (TextView) convertView.findViewById(R.id.date_textView);
         }
 
         String price = list_itemArrayList.get(position).getPrice();
-        String quantity = list_itemArrayList.get(position).getAmount();
+        String quantity = list_itemArrayList.get(position).getQuantity();
         String total = Integer.toString(Integer.parseInt(price) * Integer.parseInt(quantity));
 
         //pName_textView.setText(list_itemArrayList.get(position).getpName());
         pName_textView.setText(list_itemArrayList.get(position).getpNum());
 
         price_textView.setText(price);
-        quantity_textView.setText(quantity);
-        total_textView.setText(total);
+ //       quantity_textView.setText(quantity);
+//        total_textView.setText(total);
 
         //name_textView.setText(list_itemArrayList.get(position).getName());
         name_textView.setText(list_itemArrayList.get(position).getNum());
 
-        buyer_textView.setText(list_itemArrayList.get(position).getBuyer());
-        date_textView.setText(list_itemArrayList.get(position).getDate());
+  //      buyer_textView.setText(list_itemArrayList.get(position).getBuyer());
+   //     date_textView.setText(list_itemArrayList.get(position).getDate());
         return convertView;
     }
 }

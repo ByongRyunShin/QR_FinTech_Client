@@ -8,7 +8,7 @@ public class SalesObject {
     String num;
     String buyer;
     String price;
-    String amount;
+    String quantity;
     String date;
     String pNum;
     String pName;
@@ -28,8 +28,8 @@ public class SalesObject {
         num = jsonObject.getString("shop_id");
         buyer = jsonObject.getString("buyer_id");
         price = jsonObject.getString("price");
-        amount = jsonObject.getString("amount");
-        pNum = jsonObject.getString("product_id");
+        quantity = jsonObject.getString("quantity");
+        pNum = jsonObject.getString("pNum");
         setDate(jsonObject.getString("date"));
         //// 정보없는거넘어오면 안됨
     }
@@ -74,12 +74,12 @@ public class SalesObject {
         this.price = price;
     }
 
-    public String getAmount() {
-        return amount;
+    public String getQuantity() {
+        return quantity;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 
     public String getDate() {

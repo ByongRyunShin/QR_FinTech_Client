@@ -1,7 +1,9 @@
 package www.coders.org.qr_fintech_client;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,9 +23,9 @@ import java.util.concurrent.ExecutionException;
 public class ShopSelectMenu extends AppCompatActivity {
 
     ListView shop_listView;
+    public static final String my_shared_preferences = "login_information";
     ArrayList<ShopObject> shops;
     private String PATH;
-    String userid = "chulsoo@a.a", userpw = "dudgml";
     String num, name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,10 @@ public class ShopSelectMenu extends AppCompatActivity {
     {
         JSONObject jsonObject = new JSONObject();
         try {
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
