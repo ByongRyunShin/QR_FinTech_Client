@@ -1,6 +1,8 @@
 package www.coders.org.qr_fintech_client;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,8 +24,7 @@ public class SalesListFragment extends Fragment {
     SalesListAdapter adapter;
     ArrayList<SalesObject> salesList;
     public static String PATH;
-    String userid = "a@a";
-    String userpw = "a";
+    public static final String my_shared_preferences = "login_information";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,9 @@ public class SalesListFragment extends Fragment {
         salesList = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         try {
+            SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
@@ -54,8 +58,8 @@ public class SalesListFragment extends Fragment {
             if (r == -1) getActivity().finish();
             JSONArray rSalesListJSONArray = rSalesList.getJSONArray("rows");
             for (int i = 0; i < rSalesListJSONArray.length(); i++) {
-                SalesObject salse = new SalesObject(rSalesListJSONArray.getJSONObject(i));
-                salesList.add(salse);
+                SalesObject sales = new SalesObject(rSalesListJSONArray.getJSONObject(i));
+                salesList.add(sales);
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -1,7 +1,9 @@
 package www.coders.org.qr_fintech_client;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,12 +27,13 @@ public class ManageProductDetail extends AppCompatActivity {
     Button modify_button;
     Button select_button;
     int mode;
-    String num, pNum, userid, userpw, delete_button_str, name;
+    String num, pNum, delete_button_str, name;
     EditText name_editText;
     EditText place_editText;
     EditText price_editText;
     EditText about_editText;
     Button product_button;
+    public static final String my_shared_preferences = "login_information";
 
     private String PATH_READ, PATH_CREATE, PATH_DELETE, PATH_UPDATE;
 
@@ -62,9 +65,6 @@ public class ManageProductDetail extends AppCompatActivity {
 
         intent = getIntent();
         mode = intent.getIntExtra("mode", 0);
-
-        userid = intent.getStringExtra("id");
-        userpw = intent.getStringExtra("pw");
 
         switch (mode) {
             case CONST.MODE_CREATE:
@@ -101,9 +101,7 @@ public class ManageProductDetail extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (mode == CONST.MODE_UPDATE) {
-                                deleteProductInfo();
-                            }
+                            if (mode == CONST.MODE_UPDATE) deleteProductInfo();
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener(){
@@ -164,6 +162,11 @@ public class ManageProductDetail extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "test5.", Toast.LENGTH_LONG).show();
         JSONObject jsonObject = new JSONObject();
         try {
+
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             jsonObject.accumulate("num", num);
@@ -198,6 +201,11 @@ public class ManageProductDetail extends AppCompatActivity {
     private void readProductInfo() {
         JSONObject jsonObject = new JSONObject();
         try {
+
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             jsonObject.accumulate("num", num);
@@ -241,6 +249,11 @@ public class ManageProductDetail extends AppCompatActivity {
     private int updateProductInfo() {
         JSONObject jsonObject = new JSONObject();
         try {
+
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             jsonObject.accumulate("num", num);
@@ -277,6 +290,11 @@ public class ManageProductDetail extends AppCompatActivity {
         Log.e("hihi","delete");
         JSONObject jsonObject = new JSONObject();
         try {
+
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
             jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
             jsonObject.accumulate("pw", userpw);
             jsonObject.accumulate("num", num);
