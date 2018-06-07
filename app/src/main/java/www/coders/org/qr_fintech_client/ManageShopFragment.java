@@ -75,13 +75,6 @@ public class ManageShopFragment extends Fragment {
         SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         String username = sp.getString("name", null);
         getActivity().setTitle(username + "의 상점 목록");
-        ProgressDialog pDialog;
-
-        pDialog = new ProgressDialog(getContext());
-        pDialog.setCancelable(false);
-        pDialog.setMessage("상점조회 중 ...");
-        showDialog(pDialog);
-        hideDialog(pDialog);
         shops = new ArrayList<>();
         View layout = inflater.inflate(R.layout.fragment_manage_shop, container, false) ;
         title_textView = (TextView) layout.findViewById(R.id.title_textView);
@@ -114,7 +107,6 @@ public class ManageShopFragment extends Fragment {
             if (r == -1) getActivity().finish();
             JSONArray rStoresJSONArray = rStores.getJSONArray("rows");
             for (int i = 0; i < rStoresJSONArray.length(); i++) {
-                Log.e("shops",rStoresJSONArray.getJSONObject(i).toString());
                 ShopObject store = new ShopObject(rStoresJSONArray.getJSONObject(i));
                 shops.add(store);
             }
@@ -156,16 +148,6 @@ public class ManageShopFragment extends Fragment {
             startActivityForResult(intent, CONST.REQUEST_UPDATE);
         }
     };
-
-    private void showDialog(ProgressDialog pDialog) {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hideDialog(ProgressDialog pDialog) {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

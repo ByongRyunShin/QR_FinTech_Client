@@ -158,6 +158,8 @@ public class ManageProductDetail extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CONST.PICK_FROM_ALBUM){
+            if (resultCode != RESULT_OK)
+                return;
             applyPicture(data.getData()); //갤러리에서 가져오기
         }else if(resultCode  == CONST.RESULT_FILTER_SELECTED){
             num = data.getStringExtra("num");
@@ -184,7 +186,7 @@ public class ManageProductDetail extends AppCompatActivity {
                     updateProductInfo();
                     break;
             }
-            finishWithResult();
+            //finishWithResult();
         }
     };
 
@@ -252,8 +254,7 @@ public class ManageProductDetail extends AppCompatActivity {
                         if (success == 1) {
                             Log.e("Successfully insert!", jObj.toString());
 
-                            Toast.makeText(getApplicationContext(),
-                                    "상품 등록이 완료되었습니다.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "상품 등록이 완료되었습니다.", Toast.LENGTH_LONG).show();
                             finishWithResult();
                         } else {
                             Toast.makeText(getApplicationContext(),
