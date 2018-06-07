@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String TAG_PASSWORD = "pw";
     public final static String TAG_TYPE = "type"; // 개인 0, 상인 1
     public final static String TAG_USER_NAME = "name";
+    public final static String TAG_USER_IMG= "img";
 
     public final static int a = 0;
     //------------------------------
@@ -153,9 +154,11 @@ public class MainActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = sharedpreferences.edit();
                             //editor.putBoolean(session_status, true);
                             String user_name = jObj.getString("name");
+                            String img_name= jObj.getString("img");
                             editor.putString(TAG_ID, id);
                             editor.putString(TAG_PASSWORD, password);
                             editor.putString(TAG_USER_NAME,user_name);
+                            editor.putString(TAG_USER_IMG,img_name);
                             editor.commit();
                             hideDialog();
 

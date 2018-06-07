@@ -7,14 +7,16 @@ public class ItemObject {
     private String init_date;
     private String owner_id;
     private int owner_shop;
+    private String image_name;
 
-    public ItemObject(int item_num, String item_name, int price, String init_date, String owner_id, int owner_shop) {
+    public ItemObject(int item_num, String item_name, int price, String init_date, String owner_id, int owner_shop, String image_name) {
         this.item_num = item_num;
         this.item_name = item_name;
         this.price = price;
         this.init_date = init_date;
         this.owner_id = owner_id;
         this.owner_shop = owner_shop;
+        this.image_name = image_name;
     }
 
     public int getItem_num() {
@@ -63,5 +65,14 @@ public class ItemObject {
 
     public void setOwner_shop(int owner_shop) {
         this.owner_shop = owner_shop;
+    }
+
+
+    public String getImage_name() {
+        return image_name;
+    }
+
+    public void setImage_name(String image_name) {
+        this.image_name = image_name;
     }
 }
