@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import static www.coders.org.qr_fintech_client.MainActivity.*;
-//import static www.coders.org.qr_fintech_client.MainActivity.TAG_PASSWORD;
-
 public class ManageProductFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,15 +42,7 @@ public class ManageProductFragment extends Fragment {
     ArrayList<ProductObject> products;
     ArrayList<ShopObject> shops;
     Button select_button, create_button;
-  //  String id, password;
     String selectedNum;
-
-
-    // 선택된 상점 리스트를 만들어서 empty면 모든상점 출력하고  아니면 리스트안에 있는 상점들의 물건 출력하게 바꿀예정....
-    // productdetail에 상점 선택기능 추가
-    // 물건추가클릭하거나 디테일에서 나올때 수정해야함
-
-
 
 
     public ManageProductFragment() {
@@ -77,8 +67,6 @@ public class ManageProductFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         sharedpreferences = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-        //id = sharedpreferences.getString(TAG_ID, null);
-        //password = sharedpreferences.getString(TAG_PASSWORD, null);
 
         PATH_PRODUCT_ALL = getContext().getString(R.string.server_ip) + "/product_list_all";
         PATH_PRODUCT = getContext().getString(R.string.server_ip) + "/product_list";
@@ -89,8 +77,6 @@ public class ManageProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getActivity().setTitle("Manage Item Fragment");
-
 
         View layout = inflater.inflate(R.layout.fragment_manage_product, container, false);
         productAll_listView = (ListView) layout.findViewById(R.id.product_all_listView);
@@ -99,18 +85,21 @@ public class ManageProductFragment extends Fragment {
         create_button.setOnClickListener(mCreateClickListener);
 
         select_button = (Button) layout.findViewById(R.id.select_button);
-        select_button.setOnClickListener(mFilterClickListener);
+        select_button.setOnClickListener(mSelectClickListener);
         shops = new ArrayList<>();
 
         //  num = ALL_SHOPS;
 
-        getShops();
-        getProducts();
+        readShops();
+        readProducts();
         connectListViewWithAdapter();
+
+        getActivity().setTitle(getShopNameByNum(selectedNum) + "상점의 물건목록");
+
         return layout;
     }
 
-    void getShops() {
+    void readShops() {
         JSONObject jsonObject = new JSONObject();
         try {
             SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
@@ -145,12 +134,12 @@ public class ManageProductFragment extends Fragment {
 
     String getShopNameByNum(String num) {
         for (int i = 0; i < shops.size(); i++) {
-            if (shops.get(i).getNum().compareTo(num) == 0) return shops.get(i).getName();
+            if (shops.get(i).getNum().equals(num)) return shops.get(i).getName();
         }
-        return "name";
+        return "전체";
     }
 
-    void getProducts(String num)
+    void readProducts(String num)
     {
         products = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
@@ -177,7 +166,7 @@ public class ManageProductFragment extends Fragment {
         }
     }
 
-    void getProducts()
+    void readProducts()
     {
         products = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
@@ -231,7 +220,7 @@ public class ManageProductFragment extends Fragment {
         });
     }
 
-    View.OnClickListener mFilterClickListener = new View.OnClickListener() {
+    View.OnClickListener mSelectClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), ShopSelectMenu.class);
@@ -257,13 +246,14 @@ public class ManageProductFragment extends Fragment {
         switch (resultCode) {
             case CONST.RESULT_FILTER_SELECTED: case CONST.RESULT_UPDATED:
                 selectedNum = data.getStringExtra("num");
-                getProducts(selectedNum);
+                readProducts(selectedNum);
                 break;
             case CONST.RESULT_FILTER_UNSELECTED:
-                getProducts();
+                readProducts();
                 selectedNum = CONST.UNSELECTED;
                 break;
         }
         connectListViewWithAdapter();
+        getActivity().setTitle(getShopNameByNum(selectedNum) + "상점의 물건목록");
     }
 }

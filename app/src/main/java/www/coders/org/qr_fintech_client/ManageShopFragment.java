@@ -31,22 +31,22 @@ public class ManageShopFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String PATH;
+    private String PATH, selectedNum;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     Button apply_button;
     TextView title_textView;
     ListView storeList;
-    // ArrayList<String> stores;
+    // ArrayList<String> shops;
     public static final String my_shared_preferences = "login_information";
-    ArrayList<ShopObject> stores;
+    ArrayList<ShopObject> shops;
 
     public ManageShopFragment() {
         // Required empty public constructor
     }
 
-    public ArrayList<ShopObject> getStoreList() { return stores; }
+    public ArrayList<ShopObject> getStoreList() { return shops; }
     // TODO: Rename and change types and number of parameters
     public static ManageShopFragment newInstance(String param1, String param2) {
         ManageShopFragment fragment = new ManageShopFragment();
@@ -71,7 +71,10 @@ public class ManageShopFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getActivity().setTitle("Manage Store Fragment");
+
+        SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        String username = sp.getString("name", null);
+        getActivity().setTitle(username + "의 상점 목록");
         ProgressDialog pDialog;
 
         pDialog = new ProgressDialog(getContext());
@@ -79,19 +82,20 @@ public class ManageShopFragment extends Fragment {
         pDialog.setMessage("로그인 중 ...");
         showDialog(pDialog);
         hideDialog(pDialog);
-        stores = new ArrayList<>();
+        shops = new ArrayList<>();
         View layout = inflater.inflate(R.layout.fragment_manage_shop, container, false) ;
         title_textView = (TextView) layout.findViewById(R.id.title_textView);
         apply_button = (Button) layout.findViewById(R.id.apply_button);
         apply_button.setOnClickListener(mCreateClickListener);
-        getStores();
+        readShops();
         storeList = (ListView) layout.findViewById(R.id.store_listView);
-        updateList();
+        connectListViewWithAdapter();
         return layout;
 
     }
-    void getStores()
+    void readShops()
     {
+        shops = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         try {
             SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
@@ -111,7 +115,7 @@ public class ManageShopFragment extends Fragment {
             JSONArray rStoresJSONArray = rStores.getJSONArray("rows");
             for (int i = 0; i < rStoresJSONArray.length(); i++) {
                 ShopObject store = new ShopObject(rStoresJSONArray.getJSONObject(i));
-                stores.add(store);
+                shops.add(store);
             }
             Log.e("hihi222",rStoresJSONArray.getJSONObject(0).getString("name"));
         } catch (JSONException e) {
@@ -123,8 +127,8 @@ public class ManageShopFragment extends Fragment {
         }
     }
 
-    public void updateList () {
-        final ArrayAdapter<ShopObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, stores);
+    public void connectListViewWithAdapter() {
+        final ArrayAdapter<ShopObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, shops);
         storeList.setAdapter(adapter);
 
 
@@ -162,13 +166,16 @@ public class ManageShopFragment extends Fragment {
             pDialog.dismiss();
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        getStoreList();
-        updateList();
+        switch (resultCode) {
+            case CONST.RESULT_FILTER_SELECTED: case CONST.RESULT_UPDATED:
+                readShops();
+                connectListViewWithAdapter();
+                break;
+        }
 
     }
 }

@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +49,8 @@ public class ManageOrderFragment extends Fragment {
     String id, password;
     String selectedNum;
     TextView total_textView;
-    View layout;
+    Button payment_button, select_button;
+
     public ManageOrderFragment() {
         // Required empty public constructor
     }
@@ -85,19 +88,42 @@ public class ManageOrderFragment extends Fragment {
         getActivity().setTitle("Manage Item Fragment");
 
 
-        layout = inflater.inflate(R.layout.fragment_manage_order, container, false);
+        View layout = inflater.inflate(R.layout.fragment_manage_order, container, false);
+
+        payment_button = (Button) layout.findViewById(R.id.payment_button);
+        payment_button.setOnClickListener(mPaymentClickListener);
+
+        select_button = (Button) layout.findViewById(R.id.select_button);
+        select_button.setOnClickListener(mSelectClickListener);
+
         productAll_listView = (ListView) layout.findViewById(R.id.order_listView);
         total_textView = (TextView) layout.findViewById(R.id.total_textView);
         total_textView.setText("0");
         shops = new ArrayList<>();
-
-        //  num = ALL_SHOPS;
 
         getShops();
         getProducts();
         connectListViewWithAdapter();
         return layout;
     }
+
+    View.OnClickListener mSelectClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), ShopSelectMenu.class);
+            startActivityForResult(intent, CONST.REQUEST_FILTER);
+            // startActivity(intent);
+        }
+    };
+    View.OnClickListener mPaymentClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            IntentIntegrator integrator = new IntentIntegrator(getActivity());
+            integrator.setCaptureActivity( qrReader.class );
+            integrator.setOrientationLocked(false);
+            integrator.initiateScan();
+        }
+    };
 
     void getShops() {
         JSONObject jsonObject = new JSONObject();
@@ -112,8 +138,6 @@ public class ManageOrderFragment extends Fragment {
             HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
             String result = httpTask.execute(PATH_SHOP).get();
 
-            Log.e("hihi3333",result);
-
             JSONObject rShops = new JSONObject(result);
             int r = Integer.parseInt(rShops.getString("result"));
             if (r == -1) getActivity().finish();
@@ -122,7 +146,6 @@ public class ManageOrderFragment extends Fragment {
                 ShopObject shop = new ShopObject(rStoresJSONArray.getJSONObject(i));
                 shops.add(shop);
             }
-            Log.e("hihi222",rStoresJSONArray.getJSONObject(0).getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -248,8 +271,6 @@ public class ManageOrderFragment extends Fragment {
     }
 
     public void setTotal(int change) {
-        //if (total_textView == null)
-        //    total_textView = (TextView) layout.findViewById(R.id.total_textView);
         int total = Integer.parseInt(total_textView.getText().toString()) + change;
         total_textView.setText(Integer.toString(total));
     }

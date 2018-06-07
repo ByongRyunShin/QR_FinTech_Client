@@ -32,7 +32,7 @@ public class ManageShopDetail extends AppCompatActivity {
     EditText place_editText;
     EditText about_editText;
     Button product_button;
-    private String PATH_READ, PATH_APPLY, PATH_DELETE ;
+    private String PATH_READ, PATH_APPLY, PATH_DELETE, PATH_UPDATE;
     public static final String my_shared_preferences = "login_information";
 
     @Override
@@ -53,10 +53,10 @@ public class ManageShopDetail extends AppCompatActivity {
         product_button = (Button) findViewById(R.id.product_button);
         product_button.setOnClickListener(mProductClickListener);
 
-
         Context context = this;
         PATH_READ = context.getString(R.string.server_ip) + "/shop_detail";
         PATH_APPLY = context.getString(R.string.server_ip) + "/shop_insert";
+        PATH_UPDATE = context.getString(R.string.server_ip) + "/shop_update";
         PATH_DELETE = context.getString(R.string.server_ip) + "/shop_delete";
 
         intent = getIntent();
@@ -74,27 +74,20 @@ public class ManageShopDetail extends AppCompatActivity {
                 delete_button_str = "취소";
                 delete_button.setText(delete_button_str);
                 break;
-
         }
-
     }
 
     View.OnClickListener mProductClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             /*
             Intent intent = new Intent(getApplicationContext(), ManageProductFragment.class);
             intent.putExtra("num", num);
-            intent.putExtra("id", userid);
-            intent.putExtra("pw", userpw);
             startActivity(intent);
             */
             // 액티비티 새로만들거나 없애거나 해야할듯
             Toast.makeText(getApplicationContext(), "액티비티 새로만들거나 없애거나 해야할듯 시간이많다면 완성예정...", Toast.LENGTH_LONG).show();
-
             /*
-
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_namagement_product_c_layout, new ManageProductFragment());
@@ -115,7 +108,9 @@ public class ManageShopDetail extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             if (mode == CONST.MODE_UPDATE) {
                                 deleteStoreInfo();
+                                finishWithResult();
                             }
+                            else finish();
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener(){
@@ -131,15 +126,7 @@ public class ManageShopDetail extends AppCompatActivity {
     View.OnClickListener mModifyClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (mode)
-            {
-                case CONST.MODE_CREATE:
-                    createStoreInfo();
-                    break;
-                case CONST.MODE_UPDATE:
-                    updateStoreInfo();
-                    break;
-            }
+            createOrUpdate();
             finish();
         }
     };
@@ -149,19 +136,11 @@ public class ManageShopDetail extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Closing Activity")
-                .setMessage("변경된 내용을 저장하시겠습니까??")
+                .setMessage("변경된 내용을 저장하시겠습니까?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (mode)
-                        {
-                            case CONST.MODE_CREATE:
-                                createStoreInfo();
-                                break;
-                            case CONST.MODE_UPDATE:
-                                updateStoreInfo();
-                                break;
-                        }
+                        createOrUpdate();
                         finishWithResult();
                     }
                 })
@@ -229,10 +208,8 @@ public class ManageShopDetail extends AppCompatActivity {
             jsonObject.accumulate("name", name_editText.getText().toString());
             jsonObject.accumulate("about", about_editText.getText().toString());
             HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
-            String result = httpTask.execute(PATH_APPLY).get();
-
+            String result = httpTask.execute(PATH_UPDATE).get();
             // Log.e("hihi3333",result);
-
             JSONObject store = new JSONObject(result);
             int r = Integer.parseInt(store.getString("result"));
             switch (r)
@@ -317,9 +294,7 @@ public class ManageShopDetail extends AppCompatActivity {
             jsonObject.accumulate("num", num);
             HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
             String result = httpTask.execute(PATH_READ).get();
-
             // Log.e("hihi3333",result);
-
             JSONObject store = new JSONObject(result);
             int r = Integer.parseInt(store.getString("result"));
             switch (r)
@@ -351,5 +326,17 @@ public class ManageShopDetail extends AppCompatActivity {
         intent.putExtra("num", num);
         setResult(CONST.RESULT_UPDATED, intent);
         finish();
+    }
+
+    void createOrUpdate() {
+        switch (mode)
+        {
+            case CONST.MODE_CREATE:
+                createStoreInfo();
+                break;
+            case CONST.MODE_UPDATE:
+                updateStoreInfo();
+                break;
+        }
     }
 }
