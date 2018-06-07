@@ -135,6 +135,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
                         android:layout_marginRight="40dp"
+                        android:inputType="numberDecimal"
                         android:text="1"
                         android:textColor="@color/colorPrimaryDark"
                         android:textStyle="bold" />

@@ -52,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sb.append(" OWNER_SHOP INTEGER, ");
         sb.append(" COUNT INTEGER, ");
         sb.append(" USER_ID TEXT, ");
+        sb.append(" IMG_NAME TEXT, ");
         sb.append(" BUY_DATE TEXT ) ");
         // SQLite Database로 쿼리 실행
         db.execSQL(sb.toString());
@@ -67,8 +68,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         StringBuffer sb = new StringBuffer();
         sb.append(" INSERT INTO SHOPPING_LIST ( ");
-        sb.append(" ITEM_NUM, ITEM_NAME, PRICE, INIT_DATE, OWNER_ID, OWNER_SHOP, COUNT, USER_ID, BUY_DATE ) ");
-        sb.append(" VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ) ");
+        sb.append(" ITEM_NUM, ITEM_NAME, PRICE, INIT_DATE, OWNER_ID, OWNER_SHOP, COUNT, USER_ID, IMG_NAME, BUY_DATE ) ");
+        sb.append(" VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ");
 
         ItemObject item = shopping_item.getItem();
         db.execSQL(sb.toString(),
@@ -80,6 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         item.getOwner_shop(),
                         shopping_item.getCount(),
                         shopping_item.getUser_id(),
+                        item.getItem_name(),
                         shopping_item.getBuy_date()});
     }
 
@@ -110,10 +112,11 @@ public class DBHelper extends SQLiteOpenHelper {
             String init_date  = cursor.getString(4);
             String owner_id  = cursor.getString(5);
             int owner_shop  = cursor.getInt(6);
-            ItemObject item = new ItemObject(item_num,item_name,price,init_date,owner_id,owner_shop);
+            String image_name = cursor.getString(9);
+            ItemObject item = new ItemObject(item_num,item_name,price,init_date,owner_id,owner_shop,image_name);
 
             int count = cursor.getInt(7);
-            String buy_date = cursor.getString(9);
+            String buy_date = cursor.getString(10);
             shoppingListObject = new ShoppingListObject(item,count,user_id,buy_date);
             shoppingList.add(shoppingListObject);
         }
