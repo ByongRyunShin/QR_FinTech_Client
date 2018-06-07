@@ -32,16 +32,13 @@ public class ShopListAdpater extends RecyclerView.Adapter<ShopListAdpater.ViewHo
     }
 
     @Override public void onBindViewHolder(ViewHolder holder, final int position) {
+        Picasso.get().load(R.drawable.eximg).into(holder.image);
         holder.name.setText(mDataSet.get(position).getItem().getItem_name());
         holder.date.setText(mDataSet.get(position).getBuy_date());
 
         int total_price = mDataSet.get(position).getItem().getPrice() * mDataSet.get(position).getCount();
         holder.price.setText(Integer.toString(total_price));
         holder.count.setText( Integer.toString(mDataSet.get(position).getCount()));
-
-        String image_name = mDataSet.get(position).getItem().getImage_name();
-        String img_url = CONST.IMG_URL + image_name;
-        Picasso.get().load(img_url).into(holder.image);
 
         cancel = (TextView) ((Activity) mContext).findViewById(R.id.shopping_list_cancel);
         payment = (TextView) ((Activity) mContext).findViewById(R.id.shopping_item_payment);

@@ -3,7 +3,6 @@ package www.coders.org.qr_fintech_client;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
@@ -25,7 +24,6 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.squareup.picasso.Picasso;
 
 public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,14 +48,12 @@ public class MainScreenActivity extends AppCompatActivity
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
     ///
-    private String id, type, name, img_name;
+    private String id, type, name;
     private TextView textView_id, textView_name;
-    private ImageView user_image;
     public final static String TAG_ID = "id";
     public final static String TAG_TYPE = "type";// 개인 0, 상인 1
     public final static String TAG_USER_NAME = "name";
     public final static String TAG_REUSLT = "item_code";
-    public final static String TAG_USER_IMG= "img";
 
     private Button chart_btn;
 
@@ -95,17 +91,12 @@ public class MainScreenActivity extends AppCompatActivity
         id = sharedpreferences.getString(TAG_ID, null);
         name = sharedpreferences.getString(TAG_USER_NAME, null);
         type = sharedpreferences.getString(TAG_TYPE, null);
-        img_name = sharedpreferences.getString(TAG_USER_IMG, null);
 
         View headerLayout = navigationView.getHeaderView(0);
         textView_id = (TextView)headerLayout.findViewById(R.id.nav_header_id);
         textView_name = (TextView)headerLayout.findViewById(R.id.nav_header_name);
-        user_image = (ImageView)headerLayout.findViewById(R.id.UserImage);
-        String img_url = CONST.IMG_URL + img_name;
-        Picasso.get().load(img_url).into(user_image);
         textView_id.setText(id);
         textView_name.setText(name + "님");
-
         /////////////////////////////////////////////////////////////////////////////////////
 
         manageStoreFragment = new ManageShopFragment();
@@ -165,13 +156,13 @@ public class MainScreenActivity extends AppCompatActivity
         sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //IntentIntegrator integrator = new IntentIntegrator(MainScreenActivity.this);
-                //integrator.setCaptureActivity( qrReader.class );
-                //integrator.setOrientationLocked(false);
-                //integrator.initiateScan();
-                Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
-                startActivity(intent);
-                finish();
+                IntentIntegrator integrator = new IntentIntegrator(MainScreenActivity.this);
+                integrator.setCaptureActivity( qrReader.class );
+                integrator.setOrientationLocked(false);
+                integrator.initiateScan();
+                //Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
+                //startActivity(intent);
+                //finish();
             }
         });
 

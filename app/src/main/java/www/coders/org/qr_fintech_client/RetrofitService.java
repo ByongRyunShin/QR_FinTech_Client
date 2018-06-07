@@ -43,17 +43,4 @@ public interface RetrofitService {
     @Multipart
     @POST("shop_insert")
     Call<JsonObject> do_shop_insert(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
-
-    @Multipart
-    @POST("shop_update")
-    Call<JsonObject> do_shop_update(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
-
-    @Multipart
-    @POST("product_insert")
-    Call<JsonObject> do_product_insert(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
-
-    @Multipart
-    @POST("product_update")
-    Call<JsonObject> do_product_update(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
-
 }

@@ -38,11 +38,10 @@ public class Shopping_list_acticity extends AppCompatActivity {
     public final static String TAG_ID = "id";
     public final static String TAG_PASSWORD = "pw";
     private String id, password;
-    private TextView cancel, payment, delete, sum_of_price;
+    private TextView cancel, payment, delete;
     private Button allPayment;
     private DBHelper db;
     private ShopListAdpater adapter;
-    private int sum = 0;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +60,6 @@ public class Shopping_list_acticity extends AppCompatActivity {
         cancel = (TextView) findViewById(R.id.shopping_list_cancel);
         payment = (TextView) findViewById(R.id.shopping_item_payment);
         delete = (TextView) findViewById(R.id.shopping_list_del);
-        sum_of_price = (TextView) findViewById(R.id.shopping_total_price);
-
         allPayment = (Button)findViewById(R.id.shopping_item_allpayment);
         cancel.setVisibility(View.GONE);
         payment.setVisibility(View.GONE);
@@ -86,15 +83,6 @@ public class Shopping_list_acticity extends AppCompatActivity {
         recyclerView.setItemAnimator(fadeIn);
         recyclerView.getItemAnimator().setAddDuration(500);
         recyclerView.getItemAnimator().setRemoveDuration(500);
-
-        for(int i = 0; i < adapter.getItemCount(); i++){
-            int price = adapter.getmDataSet().get(i).getItem().getPrice();
-            int count = adapter.getmDataSet().get(i).getCount();
-
-            int all_price = price*count;
-            sum += all_price;
-        }
-        sum_of_price.setText(Integer.toString(sum));
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

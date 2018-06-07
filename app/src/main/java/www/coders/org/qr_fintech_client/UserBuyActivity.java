@@ -9,12 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +39,7 @@ public class UserBuyActivity extends AppCompatActivity {
 
     private TextView item_name, item_price, item_count, total_price;
     private Button plus, minus, cancel, add_shoplist, payment;
-    private ImageView user_buy_item_image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,14 +59,13 @@ public class UserBuyActivity extends AppCompatActivity {
         item_price = (TextView) findViewById(R.id.user_buy_item_price);
         item_count = (TextView) findViewById(R.id.item_count);
         total_price = (TextView) findViewById(R.id.buy_item_total_price);
-        user_buy_item_image = (ImageView)findViewById(R.id.user_buy_item_image);
 
         final String temp,item_code;
-        //Bundle extras = getIntent().getExtras();
-        //temp = extras.getString(TAG_ITEM);
-        //item_code = temp.substring(1);
+        Bundle extras = getIntent().getExtras();
+        temp = extras.getString(TAG_ITEM);
+        item_code = temp.substring(1);
 
-        product_detail("8'");
+        product_detail(item_code);
 
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,8 +114,7 @@ public class UserBuyActivity extends AppCompatActivity {
                     String init_date = item_info.getString("init_date");
                     String owner_id = item_info.getString("owner_id");
                     int owner_shop = item_info.getInt("owner_shop");
-                    String image_name = item_info.getString("img");
-                    item = new ItemObject(item_num,item_name,price,init_date,owner_id,owner_shop,image_name);
+                    item = new ItemObject(item_num,item_name,price,init_date,owner_id,owner_shop);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -140,7 +136,7 @@ public class UserBuyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                product_payment(id,password,"8",Integer.toString(amount));
+                product_payment(id,password,item_code,Integer.toString(amount));
             }
         });
     }
@@ -168,10 +164,6 @@ public class UserBuyActivity extends AppCompatActivity {
                             item_info = jObj.getJSONArray("rows").getJSONObject(0);
                             name = jObj.getJSONArray("rows").getJSONObject(0).getString("name");
                             price = jObj.getJSONArray("rows").getJSONObject(0).getInt("price");
-
-                            String img_name = jObj.getJSONArray("rows").getJSONObject(0).getString("img");
-                            String img_url = CONST.IMG_URL + img_name;
-                            Picasso.get().load(img_url).into(user_buy_item_image);
 
                             item_name.setText(name);
                             item_price.setText(Integer.toString(price));

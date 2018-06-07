@@ -31,22 +31,22 @@ public class ManageShopFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String PATH, selectedNum;
+    private String PATH;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     Button apply_button;
     TextView title_textView;
     ListView storeList;
-    // ArrayList<String> shops;
+    // ArrayList<String> stores;
     public static final String my_shared_preferences = "login_information";
-    ArrayList<ShopObject> shops;
+    ArrayList<ShopObject> stores;
 
     public ManageShopFragment() {
         // Required empty public constructor
     }
 
-    public ArrayList<ShopObject> getStoreList() { return shops; }
+    public ArrayList<ShopObject> getStoreList() { return stores; }
     // TODO: Rename and change types and number of parameters
     public static ManageShopFragment newInstance(String param1, String param2) {
         ManageShopFragment fragment = new ManageShopFragment();
@@ -76,23 +76,22 @@ public class ManageShopFragment extends Fragment {
 
         pDialog = new ProgressDialog(getContext());
         pDialog.setCancelable(false);
-        pDialog.setMessage("상점조회 중 ...");
+        pDialog.setMessage("로그인 중 ...");
         showDialog(pDialog);
         hideDialog(pDialog);
-        shops = new ArrayList<>();
+        stores = new ArrayList<>();
         View layout = inflater.inflate(R.layout.fragment_manage_shop, container, false) ;
         title_textView = (TextView) layout.findViewById(R.id.title_textView);
         apply_button = (Button) layout.findViewById(R.id.apply_button);
         apply_button.setOnClickListener(mCreateClickListener);
-        readShops();
+        getStores();
         storeList = (ListView) layout.findViewById(R.id.store_listView);
-        connectListViewWithAdapter();
+        updateList();
         return layout;
 
     }
-    void readShops()
+    void getStores()
     {
-        shops = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         try {
             SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
@@ -111,9 +110,8 @@ public class ManageShopFragment extends Fragment {
             if (r == -1) getActivity().finish();
             JSONArray rStoresJSONArray = rStores.getJSONArray("rows");
             for (int i = 0; i < rStoresJSONArray.length(); i++) {
-                Log.e("shops",rStoresJSONArray.getJSONObject(i).toString());
                 ShopObject store = new ShopObject(rStoresJSONArray.getJSONObject(i));
-                shops.add(store);
+                stores.add(store);
             }
             Log.e("hihi222",rStoresJSONArray.getJSONObject(0).getString("name"));
         } catch (JSONException e) {
@@ -125,8 +123,8 @@ public class ManageShopFragment extends Fragment {
         }
     }
 
-    public void connectListViewWithAdapter() {
-        final ArrayAdapter<ShopObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, shops);
+    public void updateList () {
+        final ArrayAdapter<ShopObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, stores);
         storeList.setAdapter(adapter);
 
 
@@ -164,16 +162,13 @@ public class ManageShopFragment extends Fragment {
             pDialog.dismiss();
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (resultCode) {
-            case CONST.RESULT_FILTER_SELECTED: case CONST.RESULT_UPDATED:
-                readShops();
-                connectListViewWithAdapter();
-                break;
-        }
+        getStoreList();
+        updateList();
 
     }
 }
