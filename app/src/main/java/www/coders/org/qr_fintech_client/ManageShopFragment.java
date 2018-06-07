@@ -71,7 +71,10 @@ public class ManageShopFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getActivity().setTitle("Manage Store Fragment");
+
+        SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        String username = sp.getString("name", null);
+        getActivity().setTitle(username + "의 상점 목록");
         ProgressDialog pDialog;
 
         pDialog = new ProgressDialog(getContext());

@@ -8,12 +8,12 @@
 
     <ListView
         android:id="@+id/order_listView"
-        android:layout_width="371dp"
-        android:layout_height="418dp"
-        app:layout_constraintBottom_toBottomOf="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/divider2" />
+        app:layout_constraintTop_toTopOf="@+id/top_divider" />
 
     <Button
         android:id="@+id/payment_button"
@@ -24,10 +24,10 @@
         android:text="결제"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/bottom_divider" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/bottom_divider"
         android:layout_width="368dp"
         android:layout_height="1dp"
         android:layout_marginBottom="50dp"
@@ -61,7 +61,7 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/bottom_divider" />
 
     <TextView
         android:id="@+id/textView13"
@@ -76,11 +76,11 @@
         android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/payment_button"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/bottom_divider" />
 
     <View
-        android:id="@+id/divider2"
-        android:layout_width="368dp"
+        android:id="@+id/top_divider"
+        android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="50dp"
         android:background="?android:attr/listDivider"
@@ -97,18 +97,19 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="철수상점"
-        app:layout_constraintBottom_toBottomOf="@+id/divider2"
+        app:layout_constraintBottom_toBottomOf="@+id/top_divider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/select_button"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="상점 선택"
-        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        app:layout_constraintBottom_toTopOf="@+id/top_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

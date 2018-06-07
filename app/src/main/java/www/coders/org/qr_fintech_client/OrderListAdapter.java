@@ -1,29 +1,17 @@
 package www.coders.org.qr_fintech_client;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
-import java.util.List;
-
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 public class OrderListAdapter extends BaseAdapter {
     Context context;
@@ -66,36 +54,33 @@ public class OrderListAdapter extends BaseAdapter {
         pName_textView.setText(order.getpName());
         //pName_textView.setText(products.get(position).getpName());
         price_textView.setText(order.getPrice());
-        quantity_editText.setText("0");
-
 
         increase_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quantity_editText.setText(Integer.toString(order.getQuantity() + 1));
+                int q = order.getQuantity();
+                if (q < 100000) quantity_editText.setText(Integer.toString(q + 1));
             }
         });
 
         decrease_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quantity_editText.setText(Integer.toString(order.getQuantity() - 1));
+
+                int q = order.getQuantity();
+                if (q > 0) quantity_editText.setText(Integer.toString(q - 1));
             }
         });
 
         quantity_editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (s.toString().equals("")) return;
                 int before = order.getQuantity();
                 int after = Integer.parseInt(s.toString());
                 order.setQuantity(after);
@@ -103,11 +88,6 @@ public class OrderListAdapter extends BaseAdapter {
                 main.setTotal(change);
             }
         });
-
-
-
-
         return convertView;
-
     }
 }

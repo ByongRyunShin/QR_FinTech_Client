@@ -1,5 +1,7 @@
 package www.coders.org.qr_fintech_client;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,8 +23,8 @@ public class OrderObject extends ProductObject {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        if (quantity > 0 && quantity < 100000) this.quantity = quantity;
+    public void setQuantity(int q) {
+        if (q >= 0 && q <= 100000) quantity = q;
     }
 
     public int increaseQuantity() {
