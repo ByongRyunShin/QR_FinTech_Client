@@ -10,7 +10,9 @@ public class CONST {
     public static final int RESULT_FILTER_UNSELECTED = 11;
     public static final int RESULT_FILTER_SELECTED = 12;
     public static final int RESULT_UPDATED = 13;
-
+    public static final int PICK_FROM_ALBUM = 14;
+    public static final int RESULT_QR = 15;
+    public static final String IMG_URL = "http://49.173.132.147:9999/uploads/";
 
     public static final String UNSELECTED = "_@SELECTED_ALL_OF_SHOPS_";
 }

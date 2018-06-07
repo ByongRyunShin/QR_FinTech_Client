@@ -79,7 +79,7 @@ public class ManageShopFragment extends Fragment {
 
         pDialog = new ProgressDialog(getContext());
         pDialog.setCancelable(false);
-        pDialog.setMessage("로그인 중 ...");
+        pDialog.setMessage("상점조회 중 ...");
         showDialog(pDialog);
         hideDialog(pDialog);
         shops = new ArrayList<>();
@@ -114,6 +114,7 @@ public class ManageShopFragment extends Fragment {
             if (r == -1) getActivity().finish();
             JSONArray rStoresJSONArray = rStores.getJSONArray("rows");
             for (int i = 0; i < rStoresJSONArray.length(); i++) {
+                Log.e("shops",rStoresJSONArray.getJSONObject(i).toString());
                 ShopObject store = new ShopObject(rStoresJSONArray.getJSONObject(i));
                 shops.add(store);
             }

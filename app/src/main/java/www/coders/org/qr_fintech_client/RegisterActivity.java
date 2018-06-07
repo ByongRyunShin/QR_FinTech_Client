@@ -59,11 +59,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     ByteArrayOutputStream baos;
 
 
-    static final int PICK_FROM_CAMERA = 0;
-    static final int PICK_FROM_ALBUM = 1;
-    static final int CROP_FROM_IMAGE = 2;
-    Uri uri;
-
     int success;
     ConnectivityManager conMgr;
 
@@ -252,7 +247,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent,PICK_FROM_ALBUM);
+        startActivityForResult(intent,CONST.PICK_FROM_ALBUM);
     }
 
     private void sendPicture(Uri imgUri) {
@@ -311,8 +306,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         switch(requestCode)
         {
-            case PICK_FROM_ALBUM:
+            case CONST.PICK_FROM_ALBUM:
             {
+                //image_profile.setImageURI(data.getData());
                 sendPicture(data.getData()); //갤러리에서 가져오기
                 break;
             }

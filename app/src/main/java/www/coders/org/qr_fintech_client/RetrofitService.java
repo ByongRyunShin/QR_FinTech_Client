@@ -34,11 +34,26 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("product_detail")
-    Call<JsonObject> do_product_detail(@Field("id") String id, @Field("pw") String pw, @Field("num") String num, @Field("pNum") String pNum);
+    Call<JsonObject> do_product_detail(@Field("pNum") String pNum);
 
     @Multipart
     @POST("user_insert")
     Call<JsonObject> do_register(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
 
+    @Multipart
+    @POST("shop_insert")
+    Call<JsonObject> do_shop_insert(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
+
+    @Multipart
+    @POST("shop_update")
+    Call<JsonObject> do_shop_update(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
+
+    @Multipart
+    @POST("product_insert")
+    Call<JsonObject> do_product_insert(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
+
+    @Multipart
+    @POST("product_update")
+    Call<JsonObject> do_product_update(@PartMap() HashMap<String, RequestBody> partMap, @Part MultipartBody.Part file);
 
 }

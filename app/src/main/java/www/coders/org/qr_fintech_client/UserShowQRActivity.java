@@ -62,7 +62,6 @@ public class UserShowQRActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 UserShowQRActivity.super.onBackPressed();
-                finish();
             }
         });
 

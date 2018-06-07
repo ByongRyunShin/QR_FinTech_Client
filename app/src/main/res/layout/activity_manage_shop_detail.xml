@@ -8,7 +8,7 @@
     tools:context=".ManageShopDetail">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/shop_image"
         android:layout_width="122dp"
         android:layout_height="118dp"
         android:layout_marginLeft="16dp"
@@ -16,7 +16,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/user_icon_main"/>
+        app:srcCompat="@drawable/user_icon_main" />
 
     <EditText
         android:id="@+id/name_editText"
