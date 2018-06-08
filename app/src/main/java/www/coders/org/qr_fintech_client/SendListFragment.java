@@ -30,14 +30,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SendListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SendListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SendListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -235,7 +228,8 @@ public class SendListFragment extends Fragment {
     //천의 자리마다 콤마 표시하는 메소드
     public static String moneyFormatToWon(String inputMoney) {
         NumberFormat nf = NumberFormat.getNumberInstance();
-        String formattedMoney = (String)nf.format(Integer.parseInt(inputMoney));
+        Log.d("Money Value", inputMoney);
+        String formattedMoney = (String)nf.format(Long.parseLong(inputMoney));
         return formattedMoney;
     }
 
