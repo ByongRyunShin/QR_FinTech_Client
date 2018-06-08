@@ -19,6 +19,8 @@ public class ProductObject {
         this.num = jsonObject.getString("owner_shop");
         this.pName = jsonObject.getString("name");
         this.price = jsonObject.getString("price");
+        setInit_date(jsonObject.getString("init_date"));
+        setDel_date(jsonObject.getString("del_date"));
         //    this.name = jsonObject.getString("name");
 
         //// 정보없는거넘어오면 안됨
@@ -61,7 +63,23 @@ public class ProductObject {
     }
 
     public void setInit_date(String init_date) {
-        this.init_date = init_date;
+
+        String YY, MM, DD,TT, TH, TM;
+        String newDate;
+
+        //2018-05-29T10:25:04.000Z
+
+        YY = init_date.split("-")[0];
+        MM = init_date.split("-")[1];
+        DD = init_date.split("-")[2].split("T")[0];
+
+        TT = init_date.split("T")[1];
+        TH = TT.split(":")[0];
+        TM = TT.split(":")[1];
+
+        //2018.05.29 10:25 | 받음
+        newDate = YY + "." + MM + "." + DD + " " + TH + ":" + TM  + " | ";
+        this.init_date = newDate;
     }
 
     public String getDel_date() {
@@ -69,7 +87,24 @@ public class ProductObject {
     }
 
     public void setDel_date(String del_date) {
-        this.del_date = del_date;
+
+
+        String YY, MM, DD,TT, TH, TM;
+        String newDate;
+
+        //2018-05-29T10:25:04.000Z
+
+        YY = del_date.split("-")[0];
+        MM = del_date.split("-")[1];
+        DD = del_date.split("-")[2].split("T")[0];
+
+        TT = del_date.split("T")[1];
+        TH = TT.split(":")[0];
+        TM = TT.split(":")[1];
+
+        //2018.05.29 10:25 | 받음
+        newDate = YY + "." + MM + "." + DD + " " + TH + ":" + TM  + " | ";
+        this.del_date = newDate;
     }
 
     public String getOwner_id() {

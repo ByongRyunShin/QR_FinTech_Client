@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ManageShopFragment extends Fragment {
     private String PATH, selectedNum;
-
+    ShopListAdapter adapter;
     Button apply_button;
     TextView title_textView;
     ListView storeList;
@@ -108,7 +108,7 @@ public class ManageShopFragment extends Fragment {
     }
 
     public void connectListViewWithAdapter() {
-        final ArrayAdapter<ShopObject> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, shops);
+        adapter = new ShopListAdapter(getActivity(), shops);
         storeList.setAdapter(adapter);
 
         storeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

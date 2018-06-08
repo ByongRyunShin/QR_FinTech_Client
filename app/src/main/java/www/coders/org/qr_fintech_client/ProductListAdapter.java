@@ -41,7 +41,7 @@ public class ProductListAdapter extends BaseAdapter{
         final TextView name_textView = (TextView) convertView.findViewById(R.id.name_textView);
 
         pName_textView.setText(products.get(position).getpName());
-        price_textView.setText(products.get(position).getPrice());
+        price_textView.setText(products.get(position).getPrice() + " 원");
         name_textView.setText(products.get(position).getName());
 
         return convertView;
