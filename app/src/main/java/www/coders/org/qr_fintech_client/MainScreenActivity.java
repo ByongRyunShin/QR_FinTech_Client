@@ -89,6 +89,14 @@ public class MainScreenActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //////////////////////////////////////////////////////////////////////////////////////
+        /*
+        mWebView=(WebView)findViewById(R.id.WebView);
+        mWebView.setWebViewClient((new WebViewClient()));
+        mWebSetting = mWebView.getSettings();
+        mWebSetting.setJavaScriptEnabled(true);
+
+        mWebView.loadUrl("http://192.168.0.26:3000/about_mobile");
+        */
 
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         id = sharedpreferences.getString(TAG_ID, null);
