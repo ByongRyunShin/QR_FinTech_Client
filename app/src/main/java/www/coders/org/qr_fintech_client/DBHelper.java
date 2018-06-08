@@ -80,7 +80,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         item.getOwner_shop(),
                         shopping_item.getCount(),
                         shopping_item.getUser_id(),
-                        item.getItem_name(),
+                        item.getImage_name(),
                         shopping_item.getBuy_date()});
     }
 

@@ -2,6 +2,7 @@ package www.coders.org.qr_fintech_client;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,7 +108,7 @@ public class CartListAdpater extends RecyclerView.Adapter<CartListAdpater.ViewHo
 
         public ImageView image;
         public TextView name, price, count, date;
-        public LinearLayout genre;
+        public ConstraintLayout genre;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -116,7 +117,7 @@ public class CartListAdpater extends RecyclerView.Adapter<CartListAdpater.ViewHo
             price = (TextView) itemView.findViewById(R.id.shopping_list_item_price);
             count = (TextView) itemView.findViewById(R.id.shopping_list_item_count);
             date = (TextView) itemView.findViewById(R.id.shopping_list_item_date);
-            genre = (LinearLayout)itemView.findViewById(R.id.shopping_item_genre);
+            genre = (ConstraintLayout)itemView.findViewById(R.id.shopping_item_genre);
         }
     }
 
