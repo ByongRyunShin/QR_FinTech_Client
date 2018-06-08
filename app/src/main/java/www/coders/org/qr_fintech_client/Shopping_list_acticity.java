@@ -43,6 +43,7 @@ public class Shopping_list_acticity extends AppCompatActivity {
     private DBHelper db;
     private ShopListAdpater adapter;
     private int sum = 0;
+    private int balance;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +97,8 @@ public class Shopping_list_acticity extends AppCompatActivity {
         }
         sum_of_price.setText(Integer.toString(sum));
 
+        checkBalance(id,password);
+
         delete.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 int selectedItem = adapter.getSelectedPosition();
@@ -124,7 +127,12 @@ public class Shopping_list_acticity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<ShoppingListObject> dataset = adapter.getmDataSet();
-                all_product_payment(id,password,dataset,false);
+                if(balance >= sum){
+                    all_product_payment(id,password,dataset,false);
+                }else{
+                    Toast.makeText(getApplicationContext(), "잔액이 부족합니다.", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
     }
@@ -245,6 +253,42 @@ public class Shopping_list_acticity extends AppCompatActivity {
                 Log.e("item_buy", "Failed");
                 Toast.makeText(getApplicationContext() ,"지금은 서버 점검중입니다.", Toast.LENGTH_LONG).show();
                 hideDialog();
+            }
+        });
+    }
+
+    private void checkBalance(final String id, final String password) {
+        //로딩창 띄우기
+        NetRetrofit.getEndPoint().do_login(id,password).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    int success = 0;
+                    try {
+                        JSONObject jObj = new JSONObject(response.body().toString());
+                        success = jObj.getInt("result");
+                        if(success == 1)
+                        {
+                            balance = jObj.getInt("balance");
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), jObj.getString("msg"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    Log.e("login", "Failed");
+                    Toast.makeText(getApplicationContext() ,"지금은 서버 점검중입니다.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("login", "Failed");
+                Toast.makeText(getApplicationContext() ,"지금은 서버 점검중입니다.", Toast.LENGTH_LONG).show();
             }
         });
     }

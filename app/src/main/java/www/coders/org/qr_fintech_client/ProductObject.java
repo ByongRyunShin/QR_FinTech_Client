@@ -3,9 +3,10 @@ package www.coders.org.qr_fintech_client;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ProductObject {
+public class ProductObject implements Serializable {
 
     private String num, name, price, img, init_date, del_date, owner_id, pNum, isDelete, pName;
 

@@ -5,7 +5,9 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class OrderObject extends ProductObject {
+import java.io.Serializable;
+
+public class OrderObject extends ProductObject implements Serializable {
 
     int quantity;
 

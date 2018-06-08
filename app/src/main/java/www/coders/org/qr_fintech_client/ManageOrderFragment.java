@@ -13,8 +13,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import static www.coders.org.qr_fintech_client.MainActivity.*;
+import static www.coders.org.qr_fintech_client.MainScreenActivity.TAG_REUSLT;
 //import static www.coders.org.qr_fintech_client.MainActivity.TAG_PASSWORD;
 
 public class ManageOrderFragment extends Fragment {
@@ -34,6 +37,10 @@ public class ManageOrderFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG_USER_INFO = "user_info";
+    private static final String TAG_PRICE = "price";
+    private static final String TAG_ORDER_LIST = "order_list";
+
     private String PATH_SHOP;
     private String PATH_PRODUCT;
     private String PATH_PRODUCT_ALL;
@@ -118,7 +125,7 @@ public class ManageOrderFragment extends Fragment {
     View.OnClickListener mPaymentClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            IntentIntegrator integrator = new IntentIntegrator(getActivity());
+            FragmentIntentIntegrator integrator = new FragmentIntentIntegrator(ManageOrderFragment.this);
             integrator.setCaptureActivity( qrReader.class );
             integrator.setOrientationLocked(false);
             integrator.initiateScan();
@@ -244,34 +251,50 @@ public class ManageOrderFragment extends Fragment {
         });
     }
 
-    View.OnClickListener mFilterClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), ShopSelectMenu.class);
-            startActivityForResult(intent, CONST.REQUEST_FILTER);
-            // startActivity(intent);
-        }
-    };
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (resultCode) {
-            case CONST.RESULT_FILTER_SELECTED: case CONST.RESULT_UPDATED:
-                selectedNum = data.getStringExtra("num");
-                getProducts(selectedNum);
-                break;
-            case CONST.RESULT_FILTER_UNSELECTED:
-                getProducts();
-                selectedNum = CONST.UNSELECTED;
-                break;
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null){
+            Intent intent = new Intent(getActivity(), BuyRequestActivity.class);
+            intent.putExtra(TAG_PRICE, total_textView.getText().toString());
+            intent.putExtra(TAG_USER_INFO, result.getContents());
+            intent.putExtra(TAG_ORDER_LIST,products);
+
+            startActivity(intent);
+        }else{
+            switch (resultCode) {
+                case CONST.RESULT_FILTER_SELECTED: case CONST.RESULT_UPDATED:
+                    selectedNum = data.getStringExtra("num");
+                    getProducts(selectedNum);
+                    break;
+                case CONST.RESULT_FILTER_UNSELECTED:
+                    getProducts();
+                    selectedNum = CONST.UNSELECTED;
+                    break;
+            }
+            connectListViewWithAdapter();
         }
-        connectListViewWithAdapter();
     }
 
     public void setTotal(int change) {
         int total = Integer.parseInt(total_textView.getText().toString()) + change;
         total_textView.setText(Integer.toString(total));
+    }
+
+    private final class FragmentIntentIntegrator extends IntentIntegrator {
+
+        private final Fragment fragment;
+
+        public FragmentIntentIntegrator(Fragment fragment) {
+            super(fragment.getActivity());
+            this.fragment = fragment;
+        }
+
+        @Override
+        protected void startActivityForResult(Intent intent, int code) {
+            fragment.startActivityForResult(intent, code);
+        }
     }
 }
