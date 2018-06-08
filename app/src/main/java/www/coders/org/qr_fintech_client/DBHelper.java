@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +63,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addShoppingList(ShoppingListObject shopping_item) {
+    public void addShoppingList(CartObject shopping_item) {
         SQLiteDatabase db = getWritableDatabase();
         StringBuffer sb = new StringBuffer();
         sb.append(" INSERT INTO SHOPPING_LIST ( ");
@@ -104,7 +103,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(sb.toString(), null);
         List shoppingList = new ArrayList();
-        ShoppingListObject shoppingListObject = null; // moveToNext 다음에 데이터가 있으면 true 없으면 false
+        CartObject cartObject = null; // moveToNext 다음에 데이터가 있으면 true 없으면 false
         while (cursor.moveToNext()) {
             int item_num = cursor.getInt(1);
             String item_name = cursor.getString(2);
@@ -117,8 +116,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
             int count = cursor.getInt(7);
             String buy_date = cursor.getString(10);
-            shoppingListObject = new ShoppingListObject(item,count,user_id,buy_date);
-            shoppingList.add(shoppingListObject);
+            cartObject = new CartObject(item,count,user_id,buy_date);
+            shoppingList.add(cartObject);
         }
 
         return shoppingList;

@@ -1,12 +1,12 @@
 package www.coders.org.qr_fintech_client;
 
-public class ShoppingListObject {
+public class CartObject {
     private ItemObject item;
     private int count;
     private String user_id;
     private String buy_date;
 
-    public ShoppingListObject(ItemObject item, int count, String user_id, String buy_date) {
+    public CartObject(ItemObject item, int count, String user_id, String buy_date) {
         this.item = item;
         this.count = count;
         this.user_id = user_id;

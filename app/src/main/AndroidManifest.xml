@@ -39,7 +39,7 @@
         <activity android:name=".ShopSellActivity" />
         <activity android:name=".UserBuyActivity" />
         <activity android:name=".ShopSelectMenu" />
-        <activity android:name=".Shopping_list_acticity" />
+        <activity android:name=".CartActicity" />
         <activity android:name=".ChartActivity" />
         <activity android:name=".BuyRequestActivity"></activity>
     </application>

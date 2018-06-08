@@ -3,10 +3,8 @@ package www.coders.org.qr_fintech_client;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -253,7 +251,7 @@ public class MainScreenActivity extends AppCompatActivity
         } else if (id == R.id.nav_manageOrder) {
             transaction.replace(R.id.container, manageOrderFragment);
         }else if (id == R.id.nav_shoppingList) {
-            Intent intent = new Intent(MainScreenActivity.this, Shopping_list_acticity.class);
+            Intent intent = new Intent(MainScreenActivity.this, CartActicity.class);
             finish();
             startActivity(intent);
         }

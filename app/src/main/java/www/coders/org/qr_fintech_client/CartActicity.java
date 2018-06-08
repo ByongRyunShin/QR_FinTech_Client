@@ -30,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class Shopping_list_acticity extends AppCompatActivity {
+public class CartActicity extends AppCompatActivity {
     ProgressDialog pDialog;
     private BaseItemAnimator fadeIn = new FadeInAnimator();
     public static final String my_shared_preferences = "login_information";
@@ -41,13 +41,13 @@ public class Shopping_list_acticity extends AppCompatActivity {
     private TextView cancel, payment, delete, sum_of_price;
     private Button allPayment;
     private DBHelper db;
-    private ShopListAdpater adapter;
+    private CartListAdpater adapter;
     private int sum = 0;
     private int balance;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shop_list_animator);
+        setContentView(R.layout.cart_animator);
 
         db = DBHelper.getInstance(this);
 
@@ -82,7 +82,7 @@ public class Shopping_list_acticity extends AppCompatActivity {
         recyclerView.setItemAnimator(new SlideInLeftAnimator());
 
         List shoppingList = DBHelper.getInstance(this).getShoppingList(id);
-        adapter = new ShopListAdpater(Shopping_list_acticity.this,shoppingList);
+        adapter = new CartListAdpater(CartActicity.this,shoppingList);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(fadeIn);
         recyclerView.getItemAnimator().setAddDuration(500);
@@ -102,8 +102,8 @@ public class Shopping_list_acticity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 int selectedItem = adapter.getSelectedPosition();
-                ShoppingListObject shoppingListObject = adapter.getItem(selectedItem);
-                db.removeItem(shoppingListObject.getBuy_date());
+                CartObject cartObject = adapter.getItem(selectedItem);
+                db.removeItem(cartObject.getBuy_date());
                 adapter.remove(selectedItem);
             }
         });
@@ -117,8 +117,8 @@ public class Shopping_list_acticity extends AppCompatActivity {
         payment.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 int selectedItem = adapter.getSelectedPosition();
-                ShoppingListObject shoppingListObject = adapter.getItem(selectedItem);
-                product_payment(id,password,shoppingListObject,selectedItem);
+                CartObject cartObject = adapter.getItem(selectedItem);
+                product_payment(id,password, cartObject,selectedItem);
 
             }
         });
@@ -126,7 +126,7 @@ public class Shopping_list_acticity extends AppCompatActivity {
         allPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<ShoppingListObject> dataset = adapter.getmDataSet();
+                List<CartObject> dataset = adapter.getmDataSet();
                 if(balance >= sum){
                     all_product_payment(id,password,dataset,false);
                 }else{
@@ -137,7 +137,7 @@ public class Shopping_list_acticity extends AppCompatActivity {
         });
     }
 
-    private void all_product_payment(final String id, final String password, final List<ShoppingListObject> dataset, boolean doing) {
+    private void all_product_payment(final String id, final String password, final List<CartObject> dataset, boolean doing) {
         //로딩창 띄우기
         if(doing == false){
             pDialog = new ProgressDialog(this);
@@ -148,17 +148,17 @@ public class Shopping_list_acticity extends AppCompatActivity {
 
         if (dataset.size() == 0) {
             Toast.makeText(getApplicationContext(), "상품이 결제 되었습니다", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(Shopping_list_acticity.this, MainScreenActivity.class);
+            Intent intent = new Intent(CartActicity.this, MainScreenActivity.class);
             finish();
             hideDialog();
             startActivity(intent);
             return;
         }
 
-        ShoppingListObject shoppingListObject = dataset.get(0);
-        String item_code = Integer.toString(shoppingListObject.getItem().getItem_num());
-        String amount = Integer.toString(shoppingListObject.getCount());
-        final String date = shoppingListObject.getBuy_date();
+        CartObject cartObject = dataset.get(0);
+        String item_code = Integer.toString(cartObject.getItem().getItem_num());
+        String amount = Integer.toString(cartObject.getCount());
+        final String date = cartObject.getBuy_date();
 
         NetRetrofit.getEndPoint().do_buy(id, password, item_code, amount).enqueue(new Callback<JsonObject>() {
             @Override
@@ -200,16 +200,16 @@ public class Shopping_list_acticity extends AppCompatActivity {
 
     }
 
-    private void product_payment(final String id, final String password, ShoppingListObject shoppingListObject, final int selectedItem) {
+    private void product_payment(final String id, final String password, CartObject cartObject, final int selectedItem) {
         //로딩창 띄우기
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.setMessage("결제중 ...");
         showDialog();
 
-        String item_code = Integer.toString(shoppingListObject.getItem().getItem_num());
-        String amount = Integer.toString(shoppingListObject.getCount());
-        final String date = shoppingListObject.getBuy_date();
+        String item_code = Integer.toString(cartObject.getItem().getItem_num());
+        String amount = Integer.toString(cartObject.getCount());
+        final String date = cartObject.getBuy_date();
 
         NetRetrofit.getEndPoint().do_buy(id,password,item_code,amount).enqueue(new Callback<JsonObject>() {
             @Override
@@ -226,7 +226,7 @@ public class Shopping_list_acticity extends AppCompatActivity {
                         {
                             hideDialog();
                             Toast.makeText(getApplicationContext(), "상품이 결제 되었습니다", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(Shopping_list_acticity.this, MainScreenActivity.class);
+                            Intent intent = new Intent(CartActicity.this, MainScreenActivity.class);
                             db.removeItem(date);
                             adapter.remove(selectedItem);
                             finish();
@@ -295,7 +295,7 @@ public class Shopping_list_acticity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Shopping_list_acticity.this, MainScreenActivity.class);
+        Intent intent = new Intent(CartActicity.this, MainScreenActivity.class);
         finish();
         startActivity(intent);
     }

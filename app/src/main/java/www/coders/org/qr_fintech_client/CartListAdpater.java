@@ -14,20 +14,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ShopListAdpater extends RecyclerView.Adapter<ShopListAdpater.ViewHolder> {
+public class CartListAdpater extends RecyclerView.Adapter<CartListAdpater.ViewHolder> {
 
     private Context mContext;
-    private List<ShoppingListObject> mDataSet;
+    private List<CartObject> mDataSet;
     private int selectedPosition = -1;
     private TextView cancel, payment, delete;
 
-    public ShopListAdpater(Context context, List<ShoppingListObject> dataSet) {
+    public CartListAdpater(Context context, List<CartObject> dataSet) {
         mContext = context;
         mDataSet = dataSet;
     }
 
     @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.shopping_list_item, parent, false);
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.cart_list_item, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -81,12 +81,12 @@ public class ShopListAdpater extends RecyclerView.Adapter<ShopListAdpater.ViewHo
         notifyItemRemoved(position);
     }
 
-    public void add(ShoppingListObject shoppingListObject, int position) {
-        mDataSet.add(position, shoppingListObject);
+    public void add(CartObject cartObject, int position) {
+        mDataSet.add(position, cartObject);
         notifyItemInserted(position);
     }
 
-    public ShoppingListObject getItem(int position){
+    public CartObject getItem(int position){
         if(position != -1) return mDataSet.get(position);
         else return null;
     }
@@ -100,7 +100,7 @@ public class ShopListAdpater extends RecyclerView.Adapter<ShopListAdpater.ViewHo
         this.selectedPosition = selectedPosition;
     }
 
-    public List<ShoppingListObject> getmDataSet(){
+    public List<CartObject> getmDataSet(){
         return mDataSet;
     }
     static class ViewHolder extends RecyclerView.ViewHolder {

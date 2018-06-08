@@ -107,7 +107,7 @@ public class UserBuyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(UserBuyActivity.this, Shopping_list_acticity.class);
+                Intent intent = new Intent(UserBuyActivity.this, CartActicity.class);
                 ItemObject item = null;
                 //디비에추가할것
                 try {
@@ -127,8 +127,8 @@ public class UserBuyActivity extends AppCompatActivity {
                 Date date = new Date(now);
                 SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 String formatDate = sdfNow.format(date);
-                ShoppingListObject shoppingListObject = new ShoppingListObject(item,Integer.parseInt(item_count.getText().toString()),id,formatDate);
-                db.addShoppingList(shoppingListObject);
+                CartObject cartObject = new CartObject(item,Integer.parseInt(item_count.getText().toString()),id,formatDate);
+                db.addShoppingList(cartObject);
 
                 Log.e("add","success");
                 finish();
