@@ -19,8 +19,8 @@ public class ProductObject {
         this.num = jsonObject.getString("owner_shop");
         this.pName = jsonObject.getString("name");
         this.price = jsonObject.getString("price");
-        setInit_date(jsonObject.getString("init_date"));
-        setDel_date(jsonObject.getString("del_date"));
+  //      setInit_date(jsonObject.getString("init_date"));
+//        setDel_date(jsonObject.getString("del_date"));
         //    this.name = jsonObject.getString("name");
 
         //// 정보없는거넘어오면 안됨
