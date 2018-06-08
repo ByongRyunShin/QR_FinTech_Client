@@ -89,7 +89,7 @@ public class ManageProductFragment extends Fragment {
         shops = new ArrayList<>();
 
         //  num = ALL_SHOPS;
-
+        selectAllOfShops();
         readShops();
         readProducts();
         connectListViewWithAdapter();
@@ -139,9 +139,32 @@ public class ManageProductFragment extends Fragment {
         return "전체";
     }
 
+    boolean setShopSelect(String num) {
+        boolean result = false;
+        for (int i = 0; i < shops.size(); i++) {
+            if (shops.get(i).getNum().equals(num)) {
+                shops.get(i).setSelected(true);
+                result = true;
+            }
+            else shops.get(i).setSelected(false);
+        }
+        return result;
+    }
+    void selectAllOfShops() {
+        for (int i = 0; i < shops.size(); i++) {
+            shops.get(i).setSelected(true);
+        }
+    }
+    int getShopIndexByNum(String num) {
+        for (int i = 0; i < shops.size(); i++) {
+            if (shops.get(i).getNum().equals(num)) return i;
+        }
+        return -1;
+    }
+
     void readProducts(String num)
     {
-        products = new ArrayList<>();
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.accumulate("num", num);// 아이디 비번 받아와야함
@@ -154,8 +177,11 @@ public class ManageProductFragment extends Fragment {
             JSONArray rProductsJSONArray = rProducts.getJSONArray("rows");
             for (int i = 0; i < rProductsJSONArray.length(); i++) {
                 ProductObject product = new ProductObject(rProductsJSONArray.getJSONObject(i));
-                product.setName(getShopNameByNum(num));
-                products.add(product);
+                int idx = getShopIndexByNum(num);
+                if (idx >= 0 && shops.get(idx).isSelected()) {
+                    product.setName(shops.get(getShopIndexByNum(num)).getName());
+                    products.add(product);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -169,34 +195,9 @@ public class ManageProductFragment extends Fragment {
     void readProducts()
     {
         products = new ArrayList<>();
-        JSONObject jsonObject = new JSONObject();
-        try {
-
-            SharedPreferences sp = getActivity().getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
-
-            String userid = sp.getString("id", null);
-            String userpw = sp.getString("pw", null);
-
-            jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
-            jsonObject.accumulate("pw", userpw);
-            HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
-            String result = httpTask.execute(PATH_PRODUCT_ALL).get();
-
-            JSONObject rProducts = new JSONObject(result);
-            int r = Integer.parseInt(rProducts.getString("result"));
-            if (r == -1) getActivity().finish();
-            JSONArray rProductsJSONArray = rProducts.getJSONArray("rows");
-            for (int i = 0; i < rProductsJSONArray.length(); i++) {
-                ProductObject product = new ProductObject(rProductsJSONArray.getJSONObject(i));
-                product.setName(getShopNameByNum(rProductsJSONArray.getJSONObject(i).getString("owner_shop")));
-                products.add(product);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        int len = shops.size();
+        for (int i = 0; i < len; i++) {
+            readProducts(shops.get(i).getNum());
         }
     }
 
@@ -246,9 +247,12 @@ public class ManageProductFragment extends Fragment {
         switch (resultCode) {
             case CONST.RESULT_FILTER_SELECTED: case CONST.RESULT_UPDATED:
                 selectedNum = data.getStringExtra("num");
+                products = new ArrayList<>();
+                setShopSelect(selectedNum);
                 readProducts(selectedNum);
                 break;
             case CONST.RESULT_FILTER_UNSELECTED:
+                selectAllOfShops();
                 readProducts();
                 selectedNum = CONST.UNSELECTED;
                 break;

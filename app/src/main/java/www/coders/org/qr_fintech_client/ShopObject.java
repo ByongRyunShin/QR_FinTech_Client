@@ -8,7 +8,16 @@ public class ShopObject {
     private String name, marketplace, about;
     private int balance;
     */
-    String num, userId, name, about, marketplace, img, balance, isDelete;
+    private String num, userId, name, about, marketplace, img, balance, isDelete;
+    private boolean selected;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     @Override
     public String toString() { return name; }
@@ -19,6 +28,7 @@ public class ShopObject {
         this.name = jsonObject.getString("name");
         this.about = jsonObject.getString("about");
         this.img = jsonObject.getString("img");
+        selected = true;
 
         //// 정보없는거넘어오면 안됨
     }

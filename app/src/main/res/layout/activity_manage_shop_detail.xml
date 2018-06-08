@@ -10,119 +10,101 @@
     <ImageView
         android:id="@+id/shop_image"
         android:layout_width="122dp"
-        android:layout_height="118dp"
+        android:layout_height="116dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
         app:srcCompat="@drawable/user_icon_main" />
 
     <EditText
         android:id="@+id/name_editText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="상점이름"
         android:inputType="textPersonName"
         android:textColor="@color/colorDark"
         android:textColorHint="@color/colorDark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/shop_image"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <EditText
         android:id="@+id/balance_editText"
-        android:layout_width="116dp"
-        android:layout_height="45dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:editable="false"
         android:ems="10"
+        android:enabled="false"
         android:hint="잔액"
         android:inputType="textPersonName"
         android:text="0"
         android:textColor="@color/colorDark"
         android:textColorHint="@color/colorDark"
         app:layout_constraintEnd_toStartOf="@+id/charge_button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/shop_image"
+        app:layout_constraintTop_toBottomOf="@+id/name_editText" />
 
     <EditText
         android:id="@+id/place_exitText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="16dp"
+
         android:ems="10"
         android:hint="장소"
-        android:textColor="@color/colorDark"
-
-        android:textColorHint="@color/colorDark"
         android:inputType="textPersonName"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
+        app:layout_constraintEnd_toStartOf="@+id/product_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/shop_image" />
 
     <EditText
         android:id="@+id/about_editText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="설명"
-        android:textColor="@color/colorDark"
 
-        android:textColorHint="@color/colorDark"
+        android:hint="설명"
         android:inputType="textPersonName"
+        android:textColor="@color/colorDark"
+        android:textColorHint="@color/colorDark"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/place_exitText" />
-
-    <Button
-        android:id="@+id/delete_button"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="104dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/delete_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/modify_button"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/save_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.135"
-        app:layout_constraintStart_toEndOf="@+id/delete_button"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/charge_button"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="444dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/topup_small_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_editText" />
 
     <Button
         android:id="@+id/product_button"
@@ -130,9 +112,52 @@
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/search_item_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/charge_button" />
+        app:layout_constraintTop_toBottomOf="@+id/shop_image" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+
+            android:background="@drawable/delete_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/modify_button"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:background="@drawable/save_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="상세정보 조회"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

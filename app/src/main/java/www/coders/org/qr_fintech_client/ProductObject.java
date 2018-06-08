@@ -3,10 +3,9 @@ package www.coders.org.qr_fintech_client;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ProductObject implements Serializable {
+public class ProductObject {
 
     private String num, name, price, img, init_date, del_date, owner_id, pNum, isDelete, pName;
 
@@ -20,6 +19,7 @@ public class ProductObject implements Serializable {
         this.num = jsonObject.getString("owner_shop");
         this.pName = jsonObject.getString("name");
         this.price = jsonObject.getString("price");
+        //    this.name = jsonObject.getString("name");
 
         //// 정보없는거넘어오면 안됨
     }

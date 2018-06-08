@@ -16,9 +16,6 @@ import java.util.ArrayList;
 public class OrderListAdapter extends BaseAdapter {
     Context context;
     ArrayList<OrderObject> products;
-    TextView pName_textView, price_textView;
-    Button decrease_button, increase_button;
-    EditText quantity_editText;
     static ManageOrderFragment main;
 
     public OrderListAdapter(Context context, ArrayList<OrderObject> list, ManageOrderFragment main) {

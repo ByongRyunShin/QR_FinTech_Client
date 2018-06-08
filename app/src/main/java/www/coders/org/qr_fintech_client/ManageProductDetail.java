@@ -113,7 +113,7 @@ public class ManageProductDetail extends AppCompatActivity {
                 readProductInfo();
                 break;
         }
-        Toast.makeText(getApplicationContext(), "test1.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "test1.", Toast.LENGTH_LONG).show();
     }
 
     private String findShopNumByName(int name) {
@@ -150,7 +150,7 @@ public class ManageProductDetail extends AppCompatActivity {
 
             Intent intent = new Intent(ManageProductDetail.this, ShopSelectMenu.class);
             startActivityForResult(intent, CONST.REQUEST_FILTER);
-            Toast.makeText(getApplicationContext(), "test2.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "test2.", Toast.LENGTH_LONG).show();
         }
     };
 
@@ -167,7 +167,7 @@ public class ManageProductDetail extends AppCompatActivity {
             place_editText.setText(name);
         }else if(requestCode ==  CONST.RESULT_FILTER_UNSELECTED){
         }
-        Toast.makeText(getApplicationContext(), "test4.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "test4.", Toast.LENGTH_LONG).show();
     }
 
 
@@ -176,7 +176,7 @@ public class ManageProductDetail extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            Toast.makeText(getApplicationContext(), "test000.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "test000.", Toast.LENGTH_LONG).show();
             switch (mode)
             {
                 case CONST.MODE_CREATE:

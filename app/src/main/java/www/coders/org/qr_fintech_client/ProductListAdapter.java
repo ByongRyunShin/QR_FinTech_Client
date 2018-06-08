@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class ProductListAdapter extends BaseAdapter{
     Context context;
     ArrayList<ProductObject> products;
-    TextView pName_textView, price_textView, name_textView;
 
     public ProductListAdapter(Context context, ArrayList<ProductObject> list) {
         this.context = context;
@@ -35,14 +34,13 @@ public class ProductListAdapter extends BaseAdapter{
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.product_list_item, null);
 
-            pName_textView = (TextView) convertView.findViewById(R.id.pName_textView);
-            price_textView = (TextView) convertView.findViewById(R.id.price_textView);
-            name_textView = (TextView) convertView.findViewById(R.id.name_textView);
         }
 
-        String temp = products.get(position).getpName();
-        pName_textView.setText(temp);
-        //pName_textView.setText(products.get(position).getpName());
+        final TextView pName_textView = (TextView) convertView.findViewById(R.id.pName_textView);
+        final TextView price_textView = (TextView) convertView.findViewById(R.id.price_textView);
+        final TextView name_textView = (TextView) convertView.findViewById(R.id.name_textView);
+
+        pName_textView.setText(products.get(position).getpName());
         price_textView.setText(products.get(position).getPrice());
         name_textView.setText(products.get(position).getName());
 

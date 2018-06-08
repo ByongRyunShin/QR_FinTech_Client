@@ -62,7 +62,7 @@ public class ManageShopDetail extends AppCompatActivity {
     String imagePath;
     private static final String TAG_SUCCESS = "result";
     private static final String TAG_MESSAGE = "msg";
-    private String PATH_READ, PATH_APPLY, PATH_DELETE;
+    private String PATH_READ, PATH_APPLY, PATH_UPDATE, PATH_DELETE;
     public static final String my_shared_preferences = "login_information";
 
     @Override
@@ -89,6 +89,7 @@ public class ManageShopDetail extends AppCompatActivity {
         Context context = this;
         PATH_READ = context.getString(R.string.server_ip) + "/shop_detail";
         PATH_APPLY = context.getString(R.string.server_ip) + "/shop_insert";
+        PATH_UPDATE = context.getString(R.string.server_ip) + "/shop_update";
         PATH_DELETE = context.getString(R.string.server_ip) + "/shop_delete";
 
         intent = getIntent();
@@ -157,7 +158,7 @@ public class ManageShopDetail extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             createOrUpdate();
-            finish();
+            finishWithResult();
         }
     };
 
@@ -432,12 +433,10 @@ public class ManageShopDetail extends AppCompatActivity {
                         if (success == 1) {
                             Log.e("Successfully insert!", jObj.toString());
 
-                            Toast.makeText(getApplicationContext(),
-                                    "상점 등록이 완료되었습니다.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "상점 등록이 완료되었습니다.", Toast.LENGTH_LONG).show();
                             finishWithResult();
                         } else {
-                            Toast.makeText(getApplicationContext(),
-                                    jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
