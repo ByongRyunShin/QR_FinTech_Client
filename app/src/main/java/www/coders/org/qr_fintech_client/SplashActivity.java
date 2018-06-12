@@ -25,7 +25,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         init();
         final Intent intent = new Intent(this, MainActivity.class);
-        if (Build.VERSION.SDK_INT >= 15) //23이었음
+        if (Build.VERSION.SDK_INT >= 23) 
         {
             if (CAMERA_PEMISSION != PackageManager.PERMISSION_GRANTED && READ_STORAGE_PERMISSION != PackageManager.PERMISSION_GRANTED &&
                     WRITE_STORAGE_PERMISSION != PackageManager.PERMISSION_GRANTED && LOCATION_PERMISSION != PackageManager.PERMISSION_GRANTED)

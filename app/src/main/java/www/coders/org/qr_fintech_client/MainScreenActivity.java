@@ -439,7 +439,7 @@ public class MainScreenActivity extends AppCompatActivity
         dataSets.add(set);
 
 
-        mChart.animateXY(2000, 2500); //animation 효과 , x , y
+        mChart.animateXY(2000, 2000); //animation 효과 , x , y
 
         mChart.getDescription().setText(""); //description label 글씨 없애기
 
