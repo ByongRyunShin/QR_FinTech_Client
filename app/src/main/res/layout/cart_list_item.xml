@@ -5,6 +5,7 @@
     android:id="@+id/shopping_item_genre"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:layout_margin="2dp">
 
     <ImageView

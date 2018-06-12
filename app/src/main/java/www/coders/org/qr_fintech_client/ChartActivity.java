@@ -36,6 +36,7 @@ public class ChartActivity extends AppCompatActivity {
     private LineChart mChart;
     private Thread thread;
     public static final String my_shared_preferences = "login_information";
+    private Integer indexSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +52,15 @@ public class ChartActivity extends AppCompatActivity {
         mChart.setScaleEnabled(false);
 
         ArrayList<Entry> yValues = new ArrayList<>();
-        ArrayList<String> labels = new ArrayList<String>();
+      //  ArrayList<String> labels = new ArrayList<String>();
+
+        String[] labels = new String[1000];
+
 
         SharedPreferences sp = this.getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
 
         String loginID = sp.getString("id", null);
         String password = sp.getString("pw", null);
-
 
 
 
@@ -79,9 +82,12 @@ public class ChartActivity extends AppCompatActivity {
 
             String result1 = json.getString("result");
 
+
             if (result1.equals("1")) {
 
                 ListViewAdapter mAdapter = new ListViewAdapter();
+
+                indexSize = rows.length() - 1;
 
                 for(int i = 0; i < rows.length(); i++) {
 
@@ -104,7 +110,9 @@ public class ChartActivity extends AppCompatActivity {
                         }
                         //받음
                     }
-                   labels.add(makeDate(date));
+
+                    labels[i] = makeDate(date);
+                    //labels.add(makeDate(date));
                     yValues.add(new Entry(i, Float.parseFloat(bal)));
                 }
 
@@ -125,19 +133,19 @@ public class ChartActivity extends AppCompatActivity {
 
         }
 
-        LineDataSet set = new LineDataSet(yValues, "잔액");
+        LineDataSet set = new LineDataSet(yValues, null);
 
         set.setFillAlpha(110);
         set.setDrawCircles(true);
         /////테마 설정 ////////////
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
-        set.setCircleColor(Color.BLUE);
+        set.setCircleColor(ColorTemplate.getHoloBlue());
         set.setLineWidth(3f);
-        set.setCircleRadius(4f);
+        set.setCircleRadius(5f);
         set.setFillAlpha(65);
         set.setFillColor(ColorTemplate.getHoloBlue());
-        set.enableDashedLine(10f, 5f, 0f);
+      //  set.enableDashedLine(10f, 5f, 0f);
         set.setHighlightEnabled(false);
        // set.enableDashedHighlightLine(10f, 5f, 0f);
        // set.setHighLightColor(Color.RED);
@@ -145,60 +153,51 @@ public class ChartActivity extends AppCompatActivity {
         set.setDrawValues(true);
         set.setDrawFilled(true);
         set.setValueTextColor(Color.BLACK);
+        //set.setDrawCubic(true);
 
+        set.setMode(LineDataSet.Mode.CUBIC_BEZIER); //곡선으로 그려지게
         ////////////////////////////
 
         MyYAxisValueFormatter myYAxisValueFormatter = new MyYAxisValueFormatter();
-
+        MyXAxisValueFormatter myXAxisValueFormatter = new MyXAxisValueFormatter(labels);
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(10f);
         xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1); // minimum axis-step (interval) is 1
+        xAxis.setValueFormatter(myXAxisValueFormatter);
+
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setValueFormatter(myYAxisValueFormatter);
         leftAxis.setDrawGridLines(false);
         leftAxis.setAxisMinimum(0);
+        leftAxis.setEnabled(false);
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setEnabled(false);
 
-      //  LineData data = new LineData(labels, set);
+
+
+
+     //   LineData data = new LineData(labels, set);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set);
-        mChart.animateXY(2000, 2000);
 
-        mChart.getDescription().setText("");
+
+        mChart.animateXY(2000, 2000); //animation 효과 , x , y
+
+        mChart.getDescription().setText(""); //description label 글씨 없애기
 
 
 
         LineData data = new LineData(dataSets);
         mChart.setData(data);
-        ///여기서부터 주석처리
+        mChart.getLegend().setEnabled(false);
+        mChart.setVisibleXRangeMaximum(5); //최대 5개만 화면에 보내게
+        mChart.moveViewToX(indexSize);
 
-        /*
-        mChart.animateX(1000);
-
-        XAxis xAxis = mChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(10f);
-        xAxis.setDrawGridLines(false);
-
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setDrawGridLines(false);
-
-        YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setEnabled(false);
-
-        LineData data = new LineData();
-        mChart.setData(data);
-        */
-        //////////////
-
-
-
-    //    feedMultiple();
 
     }
 
@@ -220,91 +219,12 @@ public class ChartActivity extends AppCompatActivity {
 
         //2018.05.29 10:25 | 받음
         //newDate = YY + "." + MM + "." + DD + " " + TH + ":" + TM  + " | ";
-        newDate = MM +"/"+ DD;
+        //newDate = MM +"/"+ DD + " " + TH + ":" + TM  ;
+        newDate = MM +"/"+ DD ;
 
         return newDate;
     }
 
-
-    private void addEntry(){
-        LineData data = mChart.getData();
-
-        if(data != null){
-            ILineDataSet set = data.getDataSetByIndex(0);
-
-            if(set == null){
-                set = createSet();
-                data.addDataSet(set);
-            }
-
-            data.addEntry(new Entry(set.getEntryCount(), 30f), 0);
-           // data.addEntry(new Entry(20f, 40f), 1);
-           // data.addEntry(new Entry(20f, 40f), 2);
-
-            //   data.addEntry(new Entry(set.getEntryCount(), (float)(Math.random()*40 ) + 30f), 0);
-            data.notifyDataChanged();
-
-            mChart.notifyDataSetChanged();
-            mChart.setVisibleXRangeMaximum(10);
-            mChart.moveViewToX(data.getEntryCount());
-        }
-    }
-
-    private LineDataSet createSet(){
-        LineDataSet set = new LineDataSet(null, "잔액");
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        set.setColor(ColorTemplate.getHoloBlue());
-        set.setCircleColor(Color.WHITE);
-        set.setLineWidth(2f);
-        set.setCircleRadius(4f);
-        set.setFillAlpha(65);
-        set.setFillColor(ColorTemplate.getHoloBlue());
-        set.setHighLightColor(Color.rgb(244,117,117));
-        set.setValueTextColor(Color.WHITE);
-        set.setValueTextSize(9f);
-        set.setDrawValues(false);
-        return set;
-    }
-
-    private void feedMultiple(){
-        if(thread != null){
-            thread.interrupt();
-        }
-
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                addEntry();
-            }
-        };
-
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    runOnUiThread(runnable);
-
-                    try{
-                        thread.sleep(100);
-                    }
-                    catch (InterruptedException ie){
-                        ie.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        thread.start();
-
-    }
-
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        if(thread != null)
-            thread.interrupt();
-    }
 
 
 }

@@ -81,7 +81,7 @@ private  View sendMoneyFragmentView;
         View view = inflater.inflate(R.layout.fragment_send_money, container, false);
         sendMoneyFragmentView = view;
         // Inflate the layout for this fragment
-        getActivity().setTitle("                송금 하기");
+        getActivity().setTitle("               송금 하기");
 
         send_to_text = (EditText)view.findViewById(R.id.send_id_text);
         //id_text = (EditText)view.findViewById(R.id.my_id_text);

@@ -83,7 +83,7 @@ public class SendListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_send_list, container, false);
 
-        getActivity().setTitle("                거래 내역");
+        getActivity().setTitle("               거래 내역");
 
         ListView listView = (ListView)view.findViewById(R.id.send_listView);
         TextView balance = (TextView)view.findViewById(R.id.balance_send);
