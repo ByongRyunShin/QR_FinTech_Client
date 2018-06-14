@@ -3,8 +3,12 @@ package www.coders.org.qr_fintech_client;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -25,6 +29,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.renderer.XAxisRenderer;
+import com.github.mikephil.charting.utils.MPPointF;
+import com.github.mikephil.charting.utils.Transformer;
+import com.github.mikephil.charting.utils.Utils;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.squareup.picasso.Picasso;
@@ -60,6 +69,7 @@ public class MainScreenActivity extends AppCompatActivity
 
     ImageView userimg;
 
+
     private ManageShopFragment manageStoreFragment;
     private ManageProductFragment manageItemFragment;
     private SendMoneyFragment sendMoneyFragment;
@@ -71,6 +81,9 @@ public class MainScreenActivity extends AppCompatActivity
     private Calendar calendar;
     private Integer expenseTotal, incomeTotal;
 
+
+    private int balance_count = 0;
+    private int total_bal = -1;
     private LineChart mChart;
 
     private Thread thread;
@@ -144,7 +157,6 @@ public class MainScreenActivity extends AppCompatActivity
         expense_text = (TextView)findViewById(R.id.expense_main);
         income_text = (TextView)findViewById(R.id.income_main);
 
-        calendar = Calendar.getInstance(); // 오늘 날짜 받아오기.
 
         String img_url = CONST.IMG_URL + img_name;
         Picasso.get().load(img_url).into(user_image);
@@ -232,8 +244,6 @@ public class MainScreenActivity extends AppCompatActivity
 
         mChart = (LineChart)findViewById(R.id.linechart) ;
 
-        //   mChart.setOnChartGestureListener(false);
-        //  mChart.setOnChartValueSelectedListener(ChartActivity.this);
 
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(false);
@@ -272,8 +282,8 @@ public class MainScreenActivity extends AppCompatActivity
                 String balance1 = json.getString("balance");
 
                 String formattedBal = moneyFormatToWon(balance1);
-
-                balance_text.setText(formattedBal + "원");
+                total_bal = Integer.parseInt(balance1);
+               // balance_text.setText(formattedBal + "원");
 
             } else {
 
@@ -319,6 +329,7 @@ public class MainScreenActivity extends AppCompatActivity
                 indexSize = rows.length() - 1;
 
                 //0으로 초기화 해주기//
+
                 expenseTotal = 0;
                 incomeTotal = 0;
 
@@ -345,13 +356,16 @@ public class MainScreenActivity extends AppCompatActivity
 
                         if (from_user_id.equals(loginID)) { //보냄 (지출)
                             bal = from_val;
-
                             if(isSameDate(date)) { //참일 때 -> 일일 지출 내역에 추가
+                               // Log.d("expense", "from" + from_user_id + "to"  + to_user_id + "date" + date + "bal" + bal + "val" +value);
+                               // Toast.makeText(this, " +++ from" + from_user_id + "to"  + to_user_id + "date" + date + "bal" + bal + "val" +value, Toast.LENGTH_SHORT).show();
                                 expenseTotal += value_tmp;
                             }
 
                         } else if (to_user_id.equals(loginID)) {//받음 (수입)
                             if(isSameDate(date)) { //참일 때 -> 일일 수입 내역에 추가
+                               // Log.d("income", "from" + from_user_id + "to"  + to_user_id + "date" + date + "bal" + bal + "val" +value);
+                               // Toast.makeText(this, " --- from" + from_user_id + "to"  + to_user_id + "date" + date + "bal" + bal + "val" +value, Toast.LENGTH_SHORT).show();
                                 incomeTotal += value_tmp;
 
                             }
@@ -392,21 +406,23 @@ public class MainScreenActivity extends AppCompatActivity
         set.setDrawCircles(true);
         /////테마 설정 ////////////
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        set.setColor(ColorTemplate.getHoloBlue());
-        set.setCircleColor(ColorTemplate.getHoloBlue());
+        //set.setColor(Color.argb(255, 76, 175, 159));
+        set.setColor(Color.WHITE);
+        set.setCircleColor(Color.WHITE);
+        //set.setCircleColor(Color.argb(255, 76, 175, 159));
         set.setLineWidth(3f);
-        set.setCircleRadius(5f);
+        set.setCircleRadius(6f);
         set.setFillAlpha(65);
-        set.setFillColor(ColorTemplate.getHoloBlue());
+        set.setFillColor(Color.argb(100, 255,255,255));
         //  set.enableDashedLine(10f, 5f, 0f);
         set.setHighlightEnabled(false);
         // set.enableDashedHighlightLine(10f, 5f, 0f);
         // set.setHighLightColor(Color.RED);
-        set.setValueTextSize(9f);
+        set.setValueTextSize(12f);
         set.setDrawValues(true);
         set.setDrawFilled(true);
-        set.setValueTextColor(Color.BLACK);
-        //set.setDrawCubic(true);
+        set.setValueTextColor(Color.WHITE);
+        //set.setValueTextColor(Color.argb(255, 76, 175, 159));
 
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER); //곡선으로 그려지게
         ////////////////////////////
@@ -414,14 +430,15 @@ public class MainScreenActivity extends AppCompatActivity
         MyYAxisValueFormatter myYAxisValueFormatter = new MyYAxisValueFormatter();
         MyXAxisValueFormatter myXAxisValueFormatter = new MyXAxisValueFormatter(labels);
 
+
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(10f);
+        xAxis.setTextSize(12f);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1); // minimum axis-step (interval) is 1
         xAxis.setValueFormatter(myXAxisValueFormatter);
-
-
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setDrawAxisLine(false);
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setValueFormatter(myYAxisValueFormatter);
         leftAxis.setDrawGridLines(false);
@@ -430,27 +447,24 @@ public class MainScreenActivity extends AppCompatActivity
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setEnabled(false);
 
-
-
-
-        //   LineData data = new LineData(labels, set);
-
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set);
-
 
         mChart.animateXY(2000, 2000); //animation 효과 , x , y
 
         mChart.getDescription().setText(""); //description label 글씨 없애기
 
-
+        mChart.setExtraOffsets(35, 0, 35, 20);
 
         LineData data = new LineData(dataSets);
         mChart.setData(data);
         mChart.getLegend().setEnabled(false);
-        mChart.setVisibleXRangeMaximum(5); //최대 5개만 화면에 보내게
-        mChart.moveViewToX(indexSize);
 
+        mChart.setXAxisRenderer(new CustomXAxisRenderer(mChart.getViewPortHandler(), mChart.getXAxis(), mChart.getTransformer(YAxis.AxisDependency.LEFT)));
+
+        mChart.setVisibleXRangeMaximum(4); //최대 5개만 화면에 보내게
+        mChart.moveViewToX(indexSize);
+        mChart.invalidate();
         ////////chart data ///////////
 
     }
@@ -555,8 +569,8 @@ public class MainScreenActivity extends AppCompatActivity
 
         //2018.05.29 10:25 | 받음
         //newDate = YY + "." + MM + "." + DD + " " + TH + ":" + TM  + " | ";
-        //newDate = MM +"/"+ DD + " " + TH + ":" + TM  ;
-        newDate = MM +"/"+ DD ;
+        newDate = MM +"/"+ DD + " " + TH + ":" + TM  ;
+       // newDate = MM +"/"+ DD ;
 
         return newDate;
     }
@@ -565,13 +579,21 @@ public class MainScreenActivity extends AppCompatActivity
     private boolean isSameDate(String date){
 
         String YY, MM, DD;
+        calendar = Calendar.getInstance();// 오늘 날짜 받아오기.
+
+        Integer c_year, c_month, c_date;
+
+        c_year = calendar.get(Calendar.YEAR);
+        c_month = calendar.get(Calendar.MONTH) + 1;
+        c_date = calendar.get(Calendar.DATE);
 
         YY = date.split("-")[0];
         MM = date.split("-")[1];
         DD = date.split("-")[2].split("T")[0];
 
-       if(Calendar.YEAR == Integer.parseInt(YY) && (Calendar.MONTH+1) == Integer.parseInt(MM) && Calendar.DATE == Integer.parseInt(DD))
+        if(c_year == Integer.parseInt(YY) && c_month == Integer.parseInt(MM) && c_date == Integer.parseInt(DD)){
             return true;
+        }
         else return false;
     }
 
@@ -582,5 +604,62 @@ public class MainScreenActivity extends AppCompatActivity
         String formattedMoney = (String)nf.format(Long.parseLong(inputMoney));
         return formattedMoney;
     }
+
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            updateThread();
+        }
+
+    };
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Thread myThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try{
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(10);
+                    }catch (Throwable t){
+
+                    }
+                }
+            }
+        });
+        myThread.start();
+    }
+
+    private void updateThread(){
+
+        if(total_bal != -1) {
+            if (balance_count <= total_bal) {
+                balance_count = balance_count + total_bal/100;
+                balance_text.setText(moneyFormatToWon(String.valueOf(balance_count)) + "원");
+            }
+            else{
+                balance_text.setText(moneyFormatToWon(String.valueOf(total_bal)) + "원");
+            }
+
+        }
+
+    }
+
+    public class CustomXAxisRenderer extends XAxisRenderer {
+        public CustomXAxisRenderer(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans) {
+            super(viewPortHandler, xAxis, trans);
+        }
+
+        @Override
+        protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
+            String line[] = formattedLabel.split(" ");
+            Utils.drawXAxisValue(c, line[0], x, y, mAxisLabelPaint, anchor, angleDegrees);
+            Utils.drawXAxisValue(c, line[1], x + mAxisLabelPaint.getTextSize(), y + mAxisLabelPaint.getTextSize(), mAxisLabelPaint, anchor, angleDegrees);
+        }
+    }
+
 
 }

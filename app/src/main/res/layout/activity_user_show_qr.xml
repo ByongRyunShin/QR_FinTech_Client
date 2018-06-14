@@ -13,7 +13,7 @@
         android:layout_height="23dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="52dp"
         android:text="사용자 QR 입니다"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
@@ -28,11 +28,11 @@
         android:layout_height="196dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        app:srcCompat="@android:color/background_light"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/show_user_QR" />
+        app:layout_constraintTop_toBottomOf="@+id/show_user_QR"
+        app:srcCompat="@android:color/background_light" />
 
     <TextView
         android:id="@+id/textView4"
@@ -41,7 +41,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:text="고객 Id"
+        android:text="내 ID"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,13 +64,13 @@
 
     <Button
         android:id="@+id/user_show_cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="취소"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/cancel_btn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_show_id"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/user_show_id" />
 
 
 

@@ -2,6 +2,7 @@ package www.coders.org.qr_fintech_client;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -61,7 +62,10 @@ public class UserShowQRActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                UserShowQRActivity.super.onBackPressed();
+               // UserShowQRActivity.super.onBackPressed();
+                Intent intent = new Intent(UserShowQRActivity.this, MainScreenActivity.class);
+                finish();
+                startActivity(intent);
             }
         });
 

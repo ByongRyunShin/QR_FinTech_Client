@@ -169,6 +169,7 @@ public class SendListFragment extends Fragment {
                     String value = rows.getJSONObject(i).getString("value"); //수정하기
                     String from_val = rows.getJSONObject(i).getString("from_result");
 
+                    String transaction = "";
                     String state = "";
                     //천의 자리마다 콤마 표시하기
                     String tmp_val = moneyFormatToWon(value);
@@ -176,20 +177,22 @@ public class SendListFragment extends Fragment {
                     if(from_val.equals("-1")){ // 충전 (채움)
                         String tmp = moneyFormatToWon(bal);
                         from_user_id = "잔액 충전";
-                        to_user_id = "+" + tmp_val;
+                        //to_user_id = "+" + tmp_val;
+                        transaction = "+" + tmp_val;
                         bal = tmp + "원";
                         state = "채움";
                     }
                     else{ //받음 | 보냄
 
                         if(to_user_id.equals(loginID)){ //받음
-                            to_user_id = "+" + tmp_val;
+                            transaction = "+" + tmp_val;
                             String tmp = moneyFormatToWon(bal);
                             bal  = tmp + "원";
                             state = "받음";
                         }
                         else if(from_user_id.equals(loginID)){ //보냄
-                            to_user_id = "-" + tmp_val;
+                            transaction = "-" + tmp_val;
+                            from_user_id = to_user_id;
                             String tmp = moneyFormatToWon(from_val);
                             bal = tmp + "원";
                             state = "보냄";
@@ -198,7 +201,7 @@ public class SendListFragment extends Fragment {
 
                     }
 
-                    mAdapter.addItem(from_user_id, to_user_id,date, state, bal);
+                    mAdapter.addItem(from_user_id, transaction, date, state, bal);
                 }
 
                 listView.setAdapter(mAdapter);

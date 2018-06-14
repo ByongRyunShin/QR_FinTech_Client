@@ -40,8 +40,7 @@
         <activity android:name=".UserBuyActivity" />
         <activity android:name=".ShopSelectMenu" />
         <activity android:name=".CartActicity" />
-        <activity android:name=".ChartActivity" />
-        <activity android:name=".BuyRequestActivity"></activity>
+        <activity android:name=".BuyRequestActivity" />
     </application>
 
 </manifest>
