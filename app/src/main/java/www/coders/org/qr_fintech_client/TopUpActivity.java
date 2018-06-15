@@ -34,7 +34,7 @@ public class TopUpActivity extends AppCompatActivity {
         money_text = (EditText)findViewById(R.id.money_text);
         pw_text = (EditText)findViewById(R.id.password);
 
-        text_result = (TextView)findViewById(R.id.text_result) ;
+     //   text_result = (TextView)findViewById(R.id.text_result) ;
 
         topup_btn = (Button)findViewById(R.id.topup_btn);
 
@@ -91,10 +91,9 @@ public class TopUpActivity extends AppCompatActivity {
                         money_text.setText("");
                         pw_text.setText("");
 
-                       // Intent intent = new Intent(TopUpActivity.this, TopUpFinishActivity.class);
-
-                        //finish();
-                        //startActivity(intent); // 충전 완료 -> 잔액 화면 뜨게!
+                        Intent intent = new Intent(TopUpActivity.this, FinishTopupActivity.class);
+                        finish();
+                        startActivity(intent);
 
                     }
                     else { //충전 실패했을 경우

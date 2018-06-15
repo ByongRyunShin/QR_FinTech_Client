@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:layout_marginTop="15dp"
             android:text="상품정보"
             android:textColor="#fff"
             android:textSize="20sp"/>
@@ -27,9 +28,9 @@
         android:id="@+id/user_buy_cancel_button"
         android:layout_width="15dp"
         android:layout_height="25dp"
-        android:layout_marginEnd="352dp"
+        android:layout_marginEnd="332dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="352dp"
+        android:layout_marginRight="332dp"
         android:background="@drawable/arrow_icon_wt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -228,8 +229,8 @@
 
         <Button
             android:id="@+id/add_shoplist_button"
-            android:layout_width="110dp"
-            android:layout_height="50dp"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="64dp"
             android:layout_marginRight="8dp"
@@ -237,23 +238,23 @@
             android:background="@drawable/add_to_cart_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/payment_button"
-            app:layout_constraintHorizontal_bias="0.388"
+            app:layout_constraintHorizontal_bias="0.857"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.893" />
+            app:layout_constraintVertical_bias="0.927" />
 
 
         <Button
             android:id="@+id/payment_button"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="68dp"
-            android:layout_marginRight="68dp"
+            android:layout_width="130dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
             android:background="@drawable/paynow_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.893" />
+            app:layout_constraintVertical_bias="0.927" />
 
 
     </android.support.constraint.ConstraintLayout>

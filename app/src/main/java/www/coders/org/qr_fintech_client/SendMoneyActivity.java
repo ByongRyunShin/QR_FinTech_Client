@@ -111,4 +111,11 @@ public class SendMoneyActivity extends AppCompatActivity implements View.OnClick
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SendMoneyActivity.this, MainScreenActivity.class);
+        finish();
+        startActivity(intent);
+    }
 }
