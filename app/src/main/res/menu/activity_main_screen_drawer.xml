@@ -17,15 +17,9 @@
             app:itemTextColor="@color/colorDark"
             app:itemIconTint="@color/colorDark"/>
         <item
-            android:id="@+id/nav_sendMoney"
-            android:icon="@drawable/money_dash_icon"
-            android:title="송금"
-            app:itemTextColor="@color/colorDark"
-            app:itemIconTint="@color/colorDark"/>
-        <item
             android:id="@+id/nav_sendList"
             android:icon="@drawable/send_dash_icon"
-            android:title="송금 내역"
+            android:title="거래 내역"
             app:itemTextColor="@color/colorDark"
             app:itemIconTint="@color/colorDark"/>
         <item

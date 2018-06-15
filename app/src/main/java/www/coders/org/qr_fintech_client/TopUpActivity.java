@@ -86,7 +86,7 @@ public class TopUpActivity extends AppCompatActivity {
 
                         Toast.makeText(TopUpActivity.this, "충전이 완료되었습니다. 잔액: " + balance + "원", Toast.LENGTH_SHORT).show();
 
-                        text_result.setText("잔액: " + balance + "원");
+                      //  text_result.setText("잔액: " + balance + "원");
 
                         money_text.setText("");
                         pw_text.setText("");
@@ -121,6 +121,11 @@ public class TopUpActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(TopUpActivity.this, MainScreenActivity.class);
+        finish();
+        startActivity(intent);
+    }
 
 }

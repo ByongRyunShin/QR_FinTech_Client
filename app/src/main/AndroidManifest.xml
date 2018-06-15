@@ -41,6 +41,9 @@
         <activity android:name=".ShopSelectMenu" />
         <activity android:name=".CartActicity" />
         <activity android:name=".BuyRequestActivity" />
+        <activity android:name=".SendMoneyActivity" />
+        <activity android:name=".FinishSendActivity" />
+        <activity android:name=".FinishTopupActivity"></activity>
     </application>
 
 </manifest>

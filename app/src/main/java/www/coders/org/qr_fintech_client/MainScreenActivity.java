@@ -72,7 +72,6 @@ public class MainScreenActivity extends AppCompatActivity
 
     private ManageShopFragment manageStoreFragment;
     private ManageProductFragment manageItemFragment;
-    private SendMoneyFragment sendMoneyFragment;
     private SendListFragment sendListFragment;
     private SalesListFragment salseListFragment;
     private ManageOrderFragment manageOrderFragment;
@@ -92,7 +91,7 @@ public class MainScreenActivity extends AppCompatActivity
 
     private Boolean isFabOpen = false;
 
-    private FloatingActionButton floatingButton, buyButton, sellButton, topupButton;
+    private FloatingActionButton floatingButton, buyButton, sellButton, sendButton;
 
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
@@ -100,6 +99,7 @@ public class MainScreenActivity extends AppCompatActivity
     private String id, type, name, img_name;
     private TextView textView_id, textView_name, balance_text, expense_text, income_text;
     private ImageView user_image;
+    private Button topup;
     public final static String TAG_ID = "id";
     public final static String TAG_TYPE = "type";// 개인 0, 상인 1
     public final static String TAG_USER_NAME = "name";
@@ -167,7 +167,6 @@ public class MainScreenActivity extends AppCompatActivity
 
         manageStoreFragment = new ManageShopFragment();
         manageItemFragment = new ManageProductFragment();
-        sendMoneyFragment = new SendMoneyFragment();
         sendListFragment = new SendListFragment();
         salseListFragment = new SalesListFragment();
         manageOrderFragment = new ManageOrderFragment();
@@ -181,28 +180,29 @@ public class MainScreenActivity extends AppCompatActivity
         floatingButton = (FloatingActionButton)findViewById(R.id.fab);
         buyButton = (FloatingActionButton)findViewById(R.id.fab1); //내 QR 보여주기
         sellButton = (FloatingActionButton)findViewById(R.id.fab2); //물건 QR 찍기
-        topupButton = (FloatingActionButton)findViewById(R.id.fab3); //잔액 충전하기
+        sendButton = (FloatingActionButton)findViewById(R.id.fab3); //잔액 충전하기
 
+        topup = (Button)findViewById(R.id.topup_icon);
 
         floatingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.fab:
                         if (!isFabOpen) {
-                            topupButton.startAnimation(fab_open);
+                            sendButton.startAnimation(fab_open);
                             sellButton.startAnimation(fab_open);
                             buyButton.startAnimation(fab_open);
                             floatingButton.startAnimation(rotate_forward);
-                            topupButton.setClickable(true);
+                            sendButton.setClickable(true);
                             sellButton.setClickable(true);
                             buyButton.setClickable(true);
                             isFabOpen = true;
                         } else {
-                            topupButton.startAnimation(fab_close);
+                            sendButton.startAnimation(fab_close);
                             sellButton.startAnimation(fab_close);
                             buyButton.startAnimation(fab_close);
                             floatingButton.startAnimation(rotate_backward);
-                            topupButton.setClickable(false);
+                            sendButton.setClickable(false);
                             sellButton.setClickable(false);
                             buyButton.setClickable(false);
                             isFabOpen = false;
@@ -232,11 +232,24 @@ public class MainScreenActivity extends AppCompatActivity
             }
         });
 
-        topupButton.setOnClickListener(new View.OnClickListener(){
+        //topup 을 송금하기로 바꾸기 .. fab에서 빼기
+       sendButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                startActivity(new Intent(MainScreenActivity.this, TopUpActivity.class));
+                Intent intent = new Intent(MainScreenActivity.this, SendMoneyActivity.class);
+                startActivity(intent);
+                finish();
             }
+        });
+
+
+       //topup (잔액 충전)을 메인화면으로 옮기기
+        topup.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(MainScreenActivity.this, TopUpActivity.class);
+                startActivity(intent);
+                finish();            }
         });
 
 
@@ -528,8 +541,6 @@ public class MainScreenActivity extends AppCompatActivity
             transaction.replace(R.id.container, manageStoreFragment);
         } else if (id == R.id.nav_manageItem) {
             transaction.replace(R.id.container, manageItemFragment);
-        } else if (id == R.id.nav_sendMoney) {
-            transaction.replace(R.id.container, sendMoneyFragment);
         } else if (id == R.id.nav_sendList) {
             transaction.replace(R.id.container, sendListFragment);
         } else if (id == R.id.nav_salseList) {

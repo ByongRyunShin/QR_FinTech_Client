@@ -36,26 +36,26 @@
 
     <Button
         android:id="@+id/select_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="상점 선택"
+        android:background="@drawable/shop_choose_btn"
         app:layout_constraintBottom_toTopOf="@+id/top_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/create_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="물건 추가"
+        android:background="@drawable/add_product_btn"
         app:layout_constraintBottom_toTopOf="@+id/top_divider"
         app:layout_constraintEnd_toStartOf="@+id/select_button"
         app:layout_constraintTop_toTopOf="parent" />
