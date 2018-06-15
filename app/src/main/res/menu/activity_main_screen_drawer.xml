@@ -8,7 +8,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_manageStore"
-            android:icon="@drawable/manage_dash_icon"
+            android:icon="@drawable/shop_dash_icon"
             android:title="상점관리" />
         <item
             android:id="@+id/nav_manageItem"
@@ -18,7 +18,7 @@
             app:itemIconTint="@color/colorDark"/>
         <item
             android:id="@+id/nav_sendList"
-            android:icon="@drawable/send_dash_icon"
+            android:icon="@drawable/payment_dash_icon"
             android:title="거래 내역"
             app:itemTextColor="@color/colorDark"
             app:itemIconTint="@color/colorDark"/>
@@ -30,14 +30,14 @@
             app:itemIconTint="@color/colorDark"/>
         <item
             android:id="@+id/nav_manageOrder"
-            android:icon="@drawable/send_dash_icon"
+            android:icon="@drawable/order_manage_dash_icon"
             android:title="주문 관리"
             app:itemTextColor="@color/colorDark"
             app:itemIconTint="@color/colorDark"/>
 
         <item
             android:id="@+id/nav_shoppingList"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/cart_dash_icon"
             android:title="장바구니"
             app:itemTextColor="@color/colorDark"
             app:itemIconTint="@color/colorDark"/>

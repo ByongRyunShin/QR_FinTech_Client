@@ -22,7 +22,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main_screen" />
-
+    <!-- 송금하는 액티비티 -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab3"
         android:layout_width="wrap_content"
@@ -36,6 +36,7 @@
         app:elevation="6dp"
         app:pressedTranslationZ="12dp" />
 
+    <!-- 결제하는 액티비티 -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"
         android:layout_width="wrap_content"
@@ -49,6 +50,7 @@
         app:elevation="6dp"
         app:pressedTranslationZ="12dp" />
 
+    <!-- 내 qr 보여주는 액티비티 -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab1"
         android:layout_width="wrap_content"
@@ -56,7 +58,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="90dp"
         android:layout_marginRight="@dimen/fab_margin"
-        android:src="@drawable/manage_fab"
+        android:src="@drawable/qr_fab_icon"
         android:visibility="invisible"
         app:backgroundTint="@android:color/white"
         app:elevation="6dp"

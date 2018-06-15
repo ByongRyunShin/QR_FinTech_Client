@@ -87,7 +87,7 @@ public class UserBuyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 int count = Integer.parseInt(item_count.getText().toString());
-                count -= 1;
+                if(count > 1) count -= 1;
                 item_count.setText(Integer.toString(count));
                 int sum_price = count* price;
                 total_price.setText(Integer.toString(sum_price));

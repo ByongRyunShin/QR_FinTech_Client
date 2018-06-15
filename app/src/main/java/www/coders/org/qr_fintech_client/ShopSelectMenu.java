@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,7 +39,8 @@ public class ShopSelectMenu extends AppCompatActivity {
         getStores();
         final ArrayAdapter<ShopObject> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, shops);
         shop_listView.setAdapter(adapter);
-
+        //안보여서,,배경색 입힘
+        shop_listView.setBackgroundColor(Color.rgb(79,108,141));
 
         shop_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

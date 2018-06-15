@@ -64,7 +64,7 @@ public class ManageShopFragment extends Fragment {
         getActivity().setTitle(username + "의 상점 목록");
         shops = new ArrayList<>();
         View layout = inflater.inflate(R.layout.fragment_manage_shop, container, false) ;
-        title_textView = (TextView) layout.findViewById(R.id.title_textView);
+        //title_textView = (TextView) layout.findViewById(R.id.title_textView);
         apply_button = (Button) layout.findViewById(R.id.apply_button);
         apply_button.setOnClickListener(mCreateClickListener);
         readShops();

@@ -28,7 +28,7 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".MainScreenActivity"
-            android:label="       DGBPay"
+            android:label="                DGBPay"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TopUpActivity" />
         <activity android:name=".ManageShopDetail" />
