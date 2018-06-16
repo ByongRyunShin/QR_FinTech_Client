@@ -45,7 +45,7 @@ public class ManageProductFragment extends Fragment {
     ArrayList<ShopObject> shops;
     Button select_button, create_button;
     String selectedNum;
-
+    TextView mTitle;
 
     public ManageProductFragment() {
         // Required empty public constructor
@@ -97,7 +97,7 @@ public class ManageProductFragment extends Fragment {
         connectListViewWithAdapter();
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(getShopNameByNum(selectedNum) + "상점의 물건목록");
 
         return layout;
@@ -262,6 +262,6 @@ public class ManageProductFragment extends Fragment {
                 break;
         }
         connectListViewWithAdapter();
-        getActivity().setTitle(getShopNameByNum(selectedNum) + "상점의 물건목록");
+        mTitle.setText(getShopNameByNum(selectedNum) + "상점의 물건목록");
     }
 }

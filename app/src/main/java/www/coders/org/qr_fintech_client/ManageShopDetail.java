@@ -1,6 +1,5 @@
 package www.coders.org.qr_fintech_client;
 
-import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -12,8 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -80,7 +77,7 @@ public class ManageShopDetail extends AppCompatActivity {
         modify_button = (Button) findViewById(R.id.modify_button);
         modify_button.setOnClickListener(mModifyClickListener);
 
-        product_button = (Button) findViewById(R.id.product_button);
+        product_button = (Button) findViewById(R.id.place_button);
         product_button.setOnClickListener(mProductClickListener);
 
         shop_image = (ImageView) findViewById(R.id.shop_image);
