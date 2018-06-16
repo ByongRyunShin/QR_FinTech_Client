@@ -97,9 +97,9 @@ public class UserBuyActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
+                //Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
                 finish();
-                startActivity(intent);
+               // startActivity(intent);
             }
         });
 
@@ -231,9 +231,9 @@ public class UserBuyActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), jObj.getString("msg"), Toast.LENGTH_LONG).show();
                         }
                         hideDialog();
-                        Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
+                        //Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
                         finish();
-                        startActivity(intent);
+                        //startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -266,8 +266,8 @@ public class UserBuyActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
+        //Intent intent = new Intent(UserBuyActivity.this, MainScreenActivity.class);
         finish();
-        startActivity(intent);
+        //startActivity(intent);
     }
 }

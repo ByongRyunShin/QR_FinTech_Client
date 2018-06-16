@@ -148,10 +148,10 @@ public class CartActicity extends AppCompatActivity {
 
         if (dataset.size() == 0) {
             Toast.makeText(getApplicationContext(), "상품이 결제 되었습니다", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(CartActicity.this, MainScreenActivity.class);
+            //Intent intent = new Intent(CartActicity.this, MainScreenActivity.class);
             finish();
             hideDialog();
-            startActivity(intent);
+            //startActivity(intent);
             return;
         }
 
@@ -295,9 +295,9 @@ public class CartActicity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(CartActicity.this, MainScreenActivity.class);
+        //Intent intent = new Intent(CartActicity.this, MainScreenActivity.class);
         finish();
-        startActivity(intent);
+        //startActivity(intent);
     }
 
     private void showDialog() {

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +84,10 @@ public class SendListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_send_list, container, false);
 
-        getActivity().setTitle("               거래 내역");
+        //getActivity().setTitle("               거래 내역");
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        mTitle.setText("거래 내역");
 
         ListView listView = (ListView)view.findViewById(R.id.send_listView);
         TextView balance = (TextView)view.findViewById(R.id.balance_send);

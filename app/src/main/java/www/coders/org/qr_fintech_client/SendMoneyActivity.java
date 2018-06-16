@@ -86,9 +86,9 @@ public class SendMoneyActivity extends AppCompatActivity implements View.OnClick
                 pw_text.setText("");
 
 
-                Intent intent = new Intent(SendMoneyActivity.this, FinishSendActivity.class);
+                //Intent intent = new Intent(SendMoneyActivity.this, FinishSendActivity.class);
                 finish();
-                startActivity(intent);
+                //startActivity(intent);
 
             }
 
@@ -114,8 +114,8 @@ public class SendMoneyActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(SendMoneyActivity.this, MainScreenActivity.class);
+        //Intent intent = new Intent(SendMoneyActivity.this, MainScreenActivity.class);
         finish();
-        startActivity(intent);
+        //startActivity(intent);
     }
 }

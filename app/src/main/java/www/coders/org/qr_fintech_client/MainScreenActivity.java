@@ -1,4 +1,4 @@
-package www.coders.org.qr_fintech_client;
+    package www.coders.org.qr_fintech_client;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -113,7 +114,19 @@ public class MainScreenActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+
         setSupportActionBar(toolbar);
+        mTitle.setText("DGBPay");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        getSupportFragmentManager().addOnBackStackChangedListener(
+                new FragmentManager.OnBackStackChangedListener() {
+                    public void onBackStackChanged() {
+                        if(getSupportFragmentManager().getBackStackEntryCount() == 0)
+                            mTitle.setText("DGBPay");
+                    }
+                });
 
         /*
         ActionBar actionBar = getSupportActionBar();
@@ -228,7 +241,7 @@ public class MainScreenActivity extends AppCompatActivity
                 //integrator.initiateScan();
                 Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
@@ -238,7 +251,7 @@ public class MainScreenActivity extends AppCompatActivity
             public void onClick(View view){
                 Intent intent = new Intent(MainScreenActivity.this, SendMoneyActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
@@ -249,7 +262,8 @@ public class MainScreenActivity extends AppCompatActivity
             public void onClick(View view){
                 Intent intent = new Intent(MainScreenActivity.this, TopUpActivity.class);
                 startActivity(intent);
-                finish();            }
+                //finish();
+            }
         });
 
 
@@ -482,6 +496,7 @@ public class MainScreenActivity extends AppCompatActivity
 
     }
 
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
@@ -549,10 +564,8 @@ public class MainScreenActivity extends AppCompatActivity
             transaction.replace(R.id.container, manageOrderFragment);
         }else if (id == R.id.nav_shoppingList) {
             Intent intent = new Intent(MainScreenActivity.this, CartActicity.class);
-            finish();
             startActivity(intent);
         }
-
 
         transaction.addToBackStack(null);
         transaction.commit();
@@ -611,7 +624,7 @@ public class MainScreenActivity extends AppCompatActivity
     //천의 자리마다 콤마 표시하는 메소드
     public static String moneyFormatToWon(String inputMoney) {
         NumberFormat nf = NumberFormat.getNumberInstance();
-        Log.d("Money Value", inputMoney);
+        //Log.d("Money Value", inputMoney);
         String formattedMoney = (String)nf.format(Long.parseLong(inputMoney));
         return formattedMoney;
     }

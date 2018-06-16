@@ -122,9 +122,9 @@ public class TopUpActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(TopUpActivity.this, MainScreenActivity.class);
+        //Intent intent = new Intent(TopUpActivity.this, MainScreenActivity.class);
         finish();
-        startActivity(intent);
+        //startActivity(intent);
     }
 
 }

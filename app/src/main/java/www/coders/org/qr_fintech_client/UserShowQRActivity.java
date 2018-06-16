@@ -62,7 +62,8 @@ public class UserShowQRActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                UserShowQRActivity.super.onBackPressed();
+                //UserShowQRActivity.super.onBackPressed();
+                finish();
                 /*Intent intent = new Intent(UserShowQRActivity.this, MainScreenActivity.class);
                 finish();
                 startActivity(intent);*/
