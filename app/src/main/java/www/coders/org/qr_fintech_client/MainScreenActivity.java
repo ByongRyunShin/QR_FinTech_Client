@@ -1,6 +1,7 @@
     package www.coders.org.qr_fintech_client;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -550,7 +552,22 @@ public class MainScreenActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+            new AlertDialog.Builder(MainScreenActivity.this)
+                    .setIcon(R.drawable.dgbpay_icon)
+                    .setTitle("알림")
+                    .setMessage("DGBPay를 종료하시겠습니까?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        }
+        else{
             super.onBackPressed();
         }
     }
