@@ -140,7 +140,7 @@ public class UserBuyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                product_payment(id,password,"8",Integer.toString(amount));
+                product_payment(id,password,item_code,Integer.toString(amount));
             }
         });
     }
