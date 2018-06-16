@@ -64,11 +64,11 @@ public class UserBuyActivity extends AppCompatActivity {
         user_buy_item_image = (ImageView)findViewById(R.id.user_buy_item_image);
 
         final String temp,item_code;
-        //Bundle extras = getIntent().getExtras();
-        //temp = extras.getString(TAG_ITEM);
-        //item_code = temp.substring(1);
+        Bundle extras = getIntent().getExtras();
+        temp = extras.getString(TAG_ITEM);
+        item_code = temp.substring(1);
 
-        product_detail("8'");
+        product_detail(item_code);
 
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +221,7 @@ public class UserBuyActivity extends AppCompatActivity {
                     int success = 0;
                     try {
                         JSONObject jObj = new JSONObject(response.body().toString());
+                        Log.e("request buy",response.body().toString());
                         success = jObj.getInt("result");
                         if(success == 1)
                         {

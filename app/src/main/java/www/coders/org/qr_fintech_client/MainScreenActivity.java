@@ -239,12 +239,12 @@ public class MainScreenActivity extends AppCompatActivity
         sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //IntentIntegrator integrator = new IntentIntegrator(MainScreenActivity.this);
-                //integrator.setCaptureActivity( qrReader.class );
-                //integrator.setOrientationLocked(false);
-                //integrator.initiateScan();
-                Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
-                startActivity(intent);
+                IntentIntegrator integrator = new IntentIntegrator(MainScreenActivity.this);
+                integrator.setCaptureActivity( qrReader.class );
+                integrator.setOrientationLocked(false);
+                integrator.initiateScan();
+                //Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
+                //startActivity(intent);
                 //finish();
             }
         });
@@ -542,8 +542,6 @@ public class MainScreenActivity extends AppCompatActivity
             Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
             intent.putExtra(TAG_REUSLT, result.getContents());
             startActivity(intent);
-
-            Toast.makeText(getApplicationContext(), result.getContents(), Toast.LENGTH_LONG).show();
         }
     }
 
