@@ -261,12 +261,14 @@ public class ManageOrderFragment extends Fragment {
 
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null){
-            Intent intent = new Intent(getActivity(), BuyRequestActivity.class);
-            intent.putExtra(TAG_PRICE, total_textView.getText().toString());
-            intent.putExtra(TAG_USER_INFO, result.getContents());
-            intent.putExtra(TAG_ORDER_LIST,products);
+            if(result.getContents() != null){
+                Intent intent = new Intent(getActivity(), BuyRequestActivity.class);
+                intent.putExtra(TAG_PRICE, total_textView.getText().toString());
+                intent.putExtra(TAG_USER_INFO, result.getContents());
+                intent.putExtra(TAG_ORDER_LIST,products);
 
-            startActivity(intent);
+                startActivity(intent);
+            }
         }else{
             switch (resultCode) {
                 case CONST.RESULT_FILTER_SELECTED: case CONST.RESULT_UPDATED:

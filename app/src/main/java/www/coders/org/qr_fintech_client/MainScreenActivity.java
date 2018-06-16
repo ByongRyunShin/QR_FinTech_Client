@@ -779,13 +779,14 @@ public class MainScreenActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-
         // QR코드/ 바코드를 스캔한 결과
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null){
-            Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
-            intent.putExtra(TAG_REUSLT, result.getContents());
-            startActivity(intent);
+            if(result.getContents() != null){
+                Intent intent = new Intent(MainScreenActivity.this, UserBuyActivity.class);
+                intent.putExtra(TAG_REUSLT, result.getContents());
+                startActivity(intent);
+            }
         }
     }
 

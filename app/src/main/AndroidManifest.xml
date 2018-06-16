@@ -35,7 +35,6 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".qrReader" />
         <activity android:name=".UserShowQRActivity" />
-        <activity android:name=".ShopSellActivity" />
         <activity android:name=".UserBuyActivity" />
         <activity android:name=".ShopSelectMenu" />
         <activity android:name=".CartActicity" />
