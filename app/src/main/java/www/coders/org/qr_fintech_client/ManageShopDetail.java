@@ -449,7 +449,51 @@ public class ManageShopDetail extends AppCompatActivity {
     }
 
     private void updateStoreInfo() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
 
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
+            jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
+            jsonObject.accumulate("pw", userpw);
+            jsonObject.accumulate("num", num);
+            jsonObject.accumulate("name", name_editText.getText().toString());
+            jsonObject.accumulate("about", about_editText.getText().toString());
+            HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
+            String result = httpTask.execute(PATH_UPDATE).get();
+
+            // Log.e("hihi3333",result);
+
+            JSONObject store = new JSONObject(result);
+            int r = Integer.parseInt(store.getString("result"));
+
+            switch (r) {
+                case 1:
+                    Toast.makeText(getApplicationContext(), "수정 완료!", Toast.LENGTH_LONG).show();
+                    finishWithResult();
+                    break;
+                case -1:
+                    Toast.makeText(getApplicationContext(), "로그인 되어있지 않습니다.", Toast.LENGTH_LONG).show();
+                    finish();
+                    break;
+                case -2:
+                    Toast.makeText(getApplicationContext(), "삭제 불가능 : 잔액이 남아있습니다.", Toast.LENGTH_LONG).show();
+                    break;
+                case -3:
+                    Toast.makeText(getApplicationContext(), "삭제 불가능 : 잘못된 상점번호입니다.", Toast.LENGTH_LONG).show();
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+/*
         SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
 
         String id = sp.getString("id", null);
@@ -501,7 +545,7 @@ public class ManageShopDetail extends AppCompatActivity {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e("model", "Failed");
             }
-        });
+        });*/
     }
 
 }
