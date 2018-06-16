@@ -102,7 +102,7 @@ public class MainScreenActivity extends AppCompatActivity
     private String id, type, name, img_name;
     private TextView textView_id, textView_name, balance_text, expense_text, income_text;
     private ImageView user_image;
-    private Button topup, homeButton;
+    private Button topup, homeButton, logOut;
     public final static String TAG_ID = "id";
     public final static String TAG_TYPE = "type";// 개인 0, 상인 1
     public final static String TAG_USER_NAME = "name";
@@ -168,6 +168,7 @@ public class MainScreenActivity extends AppCompatActivity
         textView_id = (TextView)headerLayout.findViewById(R.id.nav_header_id);
         textView_name = (TextView)headerLayout.findViewById(R.id.nav_header_name);
         user_image = (ImageView)headerLayout.findViewById(R.id.UserImage);
+        logOut = (Button)headerLayout.findViewById(R.id.logout_button);
 
         balance_text = (TextView)findViewById(R.id.balance_main);
         expense_text = (TextView)findViewById(R.id.expense_main);
@@ -275,6 +276,15 @@ public class MainScreenActivity extends AppCompatActivity
                 FragmentManager fm = getSupportFragmentManager();
                 while(fm.getBackStackEntryCount() != 0)
                     fm.popBackStackImmediate();
+            }
+        });
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainScreenActivity.this, MainActivity.class);
+                finish();
+                startActivity(intent);
             }
         });
 
@@ -438,6 +448,20 @@ public class MainScreenActivity extends AppCompatActivity
 
 
         /// chart data
+        if(yValues.size() < 2){
+            if(yValues.isEmpty()){
+                labels[0] = "거래정보 없음";
+                yValues.add(new Entry(0, Float.parseFloat("0")));
+                labels[1] = "거래정보 없음";
+                yValues.add(new Entry(1, Float.parseFloat("0")));
+            }else
+            {
+                labels[1] = labels[0];
+                yValues.add(new Entry(1, Float.parseFloat(Integer.toString(total_bal))));
+            }
+
+        }
+
         LineDataSet set = new LineDataSet(yValues, null);
 
         set.setFillAlpha(110);
