@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
@@ -100,7 +102,7 @@ public class MainScreenActivity extends AppCompatActivity
     private String id, type, name, img_name;
     private TextView textView_id, textView_name, balance_text, expense_text, income_text;
     private ImageView user_image;
-    private Button topup;
+    private Button topup, homeButton;
     public final static String TAG_ID = "id";
     public final static String TAG_TYPE = "type";// 개인 0, 상인 1
     public final static String TAG_USER_NAME = "name";
@@ -114,6 +116,7 @@ public class MainScreenActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         final TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
 
         setSupportActionBar(toolbar);
@@ -136,7 +139,7 @@ public class MainScreenActivity extends AppCompatActivity
       //  actionBar.setHomeAsUpIndicator(R.drawable.button_back); //뒤로가기 버튼을 본인이 만든 아이콘으로 하기 위해 필요
 */
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -169,7 +172,7 @@ public class MainScreenActivity extends AppCompatActivity
         balance_text = (TextView)findViewById(R.id.balance_main);
         expense_text = (TextView)findViewById(R.id.expense_main);
         income_text = (TextView)findViewById(R.id.income_main);
-
+        homeButton = (Button)toolbar.findViewById(R.id.home_button);
 
         String img_url = CONST.IMG_URL + img_name;
         Picasso.get().load(img_url).into(user_image);
@@ -266,6 +269,14 @@ public class MainScreenActivity extends AppCompatActivity
             }
         });
 
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                while(fm.getBackStackEntryCount() != 0)
+                    fm.popBackStackImmediate();
+            }
+        });
 
         ////////chart data ///////////
 
@@ -520,28 +531,6 @@ public class MainScreenActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
