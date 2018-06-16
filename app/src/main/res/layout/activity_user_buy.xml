@@ -53,10 +53,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="96dp"
-            android:background="@drawable/user_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/user_img" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/labelContainer"
@@ -138,7 +138,6 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="center"
-                android:text="철수책상"
                 android:textColor="@color/colorDark"
                 android:textColorHint="@color/colorDark"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -153,7 +152,6 @@
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:text="10000원"
                 android:textColor="@color/colorDark"
                 android:textColorHint="@color/colorDark"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -220,7 +218,6 @@
                 android:layout_marginTop="16dp"
                 android:ems="10"
                 android:gravity="center"
-                android:text="10000원"
                 android:textColor="@color/colorDark"
                 android:textColorHint="@color/colorDark"
                 app:layout_constraintLeft_toLeftOf="parent"

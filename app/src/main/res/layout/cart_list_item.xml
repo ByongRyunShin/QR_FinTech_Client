@@ -13,12 +13,12 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="12dp"
-        android:background="#11000000"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="#11000000" />
 
     <TextView
         android:id="@+id/shopping_list_item_name"

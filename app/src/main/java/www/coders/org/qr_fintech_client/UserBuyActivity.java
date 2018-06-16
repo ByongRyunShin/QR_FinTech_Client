@@ -182,6 +182,7 @@ public class UserBuyActivity extends AppCompatActivity {
                         else
                         {
                             Toast.makeText(getApplicationContext(), jObj.getString("msg"), Toast.LENGTH_LONG).show();
+                            finish();
                             hideDialog();
                         }
                     } catch (JSONException e) {

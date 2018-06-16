@@ -38,8 +38,6 @@ public class TopUpActivity extends AppCompatActivity {
 
         topup_btn = (Button)findViewById(R.id.topup_btn);
 
-
-
         final Context context = this;
 
         topup_btn.setOnClickListener(new View.OnClickListener() {
