@@ -533,6 +533,248 @@ public class MainScreenActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mChart = (LineChart)findViewById(R.id.linechart) ;
+
+
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(false);
+
+        ArrayList<Entry> yValues = new ArrayList<>();
+        //  ArrayList<String> labels = new ArrayList<String>();
+
+        String[] labels = new String[1000];
+
+
+        SharedPreferences sp = this.getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+        String loginID = sp.getString("id", null);
+        String password = sp.getString("pw", null);
+
+
+        // 잔액 받아오기
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            //로그인 아이디 받아오기
+
+            jsonObject.accumulate("id", loginID);
+            jsonObject.accumulate("pw", password);
+            HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
+
+            String result = httpTask.execute(this.getString(R.string.server_ip) + "/user/").get();
+
+            JSONObject json = new JSONObject(result);
+
+            String result1 = json.getString("result");
+
+            if (result1.equals("1")) {
+
+
+                String balance1 = json.getString("balance");
+
+                String formattedBal = moneyFormatToWon(balance1);
+                total_bal = Integer.parseInt(balance1);
+                // balance_text.setText(formattedBal + "원");
+
+            } else {
+
+                String msg = json.getString("msg");
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+
+        }
+
+
+        //일일 수입, 일일 지출 받아오기
+
+        JSONObject jsonObject2 = new JSONObject();
+        try {
+
+            //  jsonObject.accumulate("id", id_text.getText());
+            jsonObject2.accumulate("id", loginID);
+            jsonObject2.accumulate("pw", password);
+            HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject2);
+
+            String result = httpTask.execute(this.getString(R.string.server_ip) + "/send/list/" + loginID).get();
+
+            JSONObject json = new JSONObject(result);
+
+            JSONArray rows = json.getJSONArray("rows");
+
+            String result1 = json.getString("result");
+
+
+            if (result1.equals("1")) {
+
+                ListViewAdapter mAdapter = new ListViewAdapter();
+
+                indexSize = rows.length() - 1;
+
+                //0으로 초기화 해주기//
+
+                expenseTotal = 0;
+                incomeTotal = 0;
+
+                for(int i = 0; i < rows.length(); i++) {
+
+                    String from_user_id = rows.getJSONObject(i).getString("from_user_id");
+                    String to_user_id = rows.getJSONObject(i).getString("to_user_id");
+                    String date = rows.getJSONObject(i).getString("time");
+                    String bal = rows.getJSONObject(i).getString("to_result"); //수정하기
+                    String value = rows.getJSONObject(i).getString("value"); //수정하기
+                    String from_val = rows.getJSONObject(i).getString("from_result");
+
+
+                    String tmp_val = moneyFormatToWon(value);
+
+
+                    Integer value_tmp;
+                    value_tmp = Integer.parseInt(value);
+
+                    if(from_val.equals("-1")){ // 충전 (채움)
+                        //신경 쓰지 말기!
+                    }
+                    else { //받음 | 보냄
+
+                        if (from_user_id.equals(loginID)) { //보냄 (지출)
+                            bal = from_val;
+                            if(isSameDate(date)) { //참일 때 -> 일일 지출 내역에 추가
+                                // Log.d("expense", "from" + from_user_id + "to"  + to_user_id + "date" + date + "bal" + bal + "val" +value);
+                                // Toast.makeText(this, " +++ from" + from_user_id + "to"  + to_user_id + "date" + date + "bal" + bal + "val" +value, Toast.LENGTH_SHORT).show();
+                                expenseTotal += value_tmp;
+                            }
+
+                        } else if (to_user_id.equals(loginID)) {//받음 (수입)
+                            if(isSameDate(date)) { //참일 때 -> 일일 수입 내역에 추가
+                                // Log.d("income", "from" + from_user_id + "to"  + to_user_id + "date" + date + "bal" + bal + "val" +value);
+                                // Toast.makeText(this, " --- from" + from_user_id + "to"  + to_user_id + "date" + date + "bal" + bal + "val" +value, Toast.LENGTH_SHORT).show();
+                                incomeTotal += value_tmp;
+
+                            }
+                        }
+                    }
+
+
+                    labels[i] = makeDate(date);
+                    //labels.add(makeDate(date));
+                    yValues.add(new Entry(i, Float.parseFloat(bal)));
+                }
+
+                expense_text.setText("-" + moneyFormatToWon(Integer.toString(expenseTotal)) + "원");
+                income_text.setText("+" + moneyFormatToWon(Integer.toString(incomeTotal)) + "원");
+
+            } else {
+
+                String msg = json.getString("msg");
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+
+        }
+
+
+        /// chart data
+        if(yValues.size() < 2){
+            if(yValues.isEmpty()){
+                labels[0] = "거래정보 없음";
+                yValues.add(new Entry(0, Float.parseFloat("0")));
+                labels[1] = "거래정보 없음";
+                yValues.add(new Entry(1, Float.parseFloat("0")));
+            }else
+            {
+                labels[1] = labels[0];
+                yValues.add(new Entry(1, Float.parseFloat(Integer.toString(total_bal))));
+            }
+
+        }
+
+        LineDataSet set = new LineDataSet(yValues, null);
+
+        set.setFillAlpha(110);
+        set.setDrawCircles(true);
+        /////테마 설정 ////////////
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        //set.setColor(Color.argb(255, 76, 175, 159));
+        set.setColor(Color.WHITE);
+        set.setCircleColor(Color.WHITE);
+        //set.setCircleColor(Color.argb(255, 76, 175, 159));
+        set.setLineWidth(3f);
+        set.setCircleRadius(6f);
+        set.setFillAlpha(65);
+        set.setFillColor(Color.argb(100, 255,255,255));
+        //  set.enableDashedLine(10f, 5f, 0f);
+        set.setHighlightEnabled(false);
+        // set.enableDashedHighlightLine(10f, 5f, 0f);
+        // set.setHighLightColor(Color.RED);
+        set.setValueTextSize(12f);
+        set.setDrawValues(true);
+        set.setDrawFilled(true);
+        set.setValueTextColor(Color.WHITE);
+        //set.setValueTextColor(Color.argb(255, 76, 175, 159));
+
+        set.setMode(LineDataSet.Mode.CUBIC_BEZIER); //곡선으로 그려지게
+        ////////////////////////////
+
+        MyYAxisValueFormatter myYAxisValueFormatter = new MyYAxisValueFormatter();
+        MyXAxisValueFormatter myXAxisValueFormatter = new MyXAxisValueFormatter(labels);
+
+
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(12f);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1); // minimum axis-step (interval) is 1
+        xAxis.setValueFormatter(myXAxisValueFormatter);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setDrawAxisLine(false);
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setValueFormatter(myYAxisValueFormatter);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setAxisMinimum(0);
+        leftAxis.setEnabled(false);
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setEnabled(false);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set);
+
+        mChart.animateXY(2000, 2000); //animation 효과 , x , y
+
+        mChart.getDescription().setText(""); //description label 글씨 없애기
+
+        mChart.setExtraOffsets(35, 0, 35, 20);
+
+        LineData data = new LineData(dataSets);
+        mChart.setData(data);
+        mChart.getLegend().setEnabled(false);
+
+        mChart.setXAxisRenderer(new CustomXAxisRenderer(mChart.getViewPortHandler(), mChart.getXAxis(), mChart.getTransformer(YAxis.AxisDependency.LEFT)));
+
+        mChart.setVisibleXRangeMaximum(4); //최대 5개만 화면에 보내게
+        mChart.moveViewToX(indexSize);
+        mChart.invalidate();
+        ////////chart data ///////////
+    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
