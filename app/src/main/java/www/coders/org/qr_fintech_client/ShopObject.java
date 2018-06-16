@@ -28,6 +28,7 @@ public class ShopObject {
         this.name = jsonObject.getString("name");
         this.about = jsonObject.getString("about");
         this.img = jsonObject.getString("img");
+        this.balance = jsonObject.getString("balance");
         selected = true;
 
         //// 정보없는거넘어오면 안됨

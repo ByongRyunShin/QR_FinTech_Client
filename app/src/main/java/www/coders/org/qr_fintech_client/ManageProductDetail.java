@@ -58,7 +58,7 @@ public class ManageProductDetail extends AppCompatActivity {
     EditText place_editText;
     EditText price_editText;
     EditText about_editText;
-    Button product_button;
+//    Button product_button;
     ImageView product_image;
     public static final String my_shared_preferences = "login_information";
     private static final String TAG_SUCCESS = "result";
@@ -74,6 +74,7 @@ public class ManageProductDetail extends AppCompatActivity {
 
         PATH_READ = getString(R.string.server_ip) + "/product_detail";
         PATH_DELETE = getString(R.string.server_ip) + "/product_delete";
+        PATH_UPDATE = getString(R.string.server_ip) + "/product_update";
 
 
         delete_button = (Button) findViewById(R.id.delete_button);
@@ -199,6 +200,40 @@ public class ManageProductDetail extends AppCompatActivity {
                     .show();
         }
     };
+
+    public void onBackPressed() {
+        // TODO Auto-generated method stub
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Closing Activity")
+                .setMessage("변경된 내용을 저장하시겠습니까?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        createOrUpdate();
+                        finishWithResult();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .show();
+    }
+
+
+    void createOrUpdate() {
+        switch (mode) {
+            case CONST.MODE_CREATE:
+                createProductInfo();
+                break;
+            case CONST.MODE_UPDATE:
+                updateProductInfo();
+                break;
+        }
+    }
 
     private void createProductInfo()  {
 
@@ -326,6 +361,44 @@ public class ManageProductDetail extends AppCompatActivity {
 
     private void updateProductInfo()  {
 
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+
+            String userid = sp.getString("id", null);
+            String userpw = sp.getString("pw", null);
+            jsonObject.accumulate("id", userid);// 아이디 비번 받아와야함
+            jsonObject.accumulate("pw", userpw);
+            jsonObject.accumulate("num", num);
+            jsonObject.accumulate("pNum", pNum);
+            jsonObject.accumulate("price", price_editText.getText().toString());
+            HttpAsyncTask httpTask = new HttpAsyncTask(jsonObject);
+            String result = httpTask.execute(PATH_UPDATE).get();
+
+            JSONObject store = new JSONObject(result);
+            int r = Integer.parseInt(store.getString("result"));
+
+            switch (r) {
+                case 1:
+                    Toast.makeText(getApplicationContext(), "수정 완료!", Toast.LENGTH_LONG).show();
+                    finishWithResult();
+                    break;
+                case -1:
+                    Toast.makeText(getApplicationContext(), "로그인 되어있지 않습니다.", Toast.LENGTH_LONG).show();
+                    finish();
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+/*
         SharedPreferences sp = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
 
         String id = sp.getString("id", null);
@@ -378,6 +451,7 @@ public class ManageProductDetail extends AppCompatActivity {
                 Log.e("model", "Failed");
             }
         });
+        */
     }
 
     private void deleteProductInfo() {
