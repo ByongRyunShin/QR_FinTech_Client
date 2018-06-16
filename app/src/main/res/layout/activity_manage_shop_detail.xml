@@ -87,6 +87,7 @@
         android:enabled="false"
         android:hint="상점 잔액"
         android:inputType="textPersonName"
+        android:text="0"
         android:textColor="@color/colorDark"
         android:textColorHint="@color/colorDark"
         app:layout_constraintEnd_toStartOf="@+id/charge_button"
