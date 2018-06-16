@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.057"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="#11000000" />
+        app:srcCompat="?android:attr/searchWidgetCorpusItemBackground" />
 
     <TextView
         android:id="@+id/shopping_list_item_name"
