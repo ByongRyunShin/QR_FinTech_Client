@@ -69,6 +69,8 @@ import java.util.concurrent.ExecutionException;
 public class MainScreenActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int RC_OCR_CAPTURE = 9003;
+
     public static final String my_shared_preferences = "login_information";
     SharedPreferences sharedpreferences;
 
@@ -836,6 +838,12 @@ public class MainScreenActivity extends AppCompatActivity
         }else if (id == R.id.nav_shoppingList) {
             Intent intent = new Intent(MainScreenActivity.this, CartActicity.class);
             startActivity(intent);
+        }else if(id==R.id.nav_enrollCard){
+            Intent intent = new Intent(this, OcrCaptureActivity.class);
+            intent.putExtra(OcrCaptureActivity.AutoFocus, true);
+            intent.putExtra(OcrCaptureActivity.UseFlash, false);
+
+            startActivityForResult(intent, RC_OCR_CAPTURE);
         }
 
         transaction.addToBackStack(null);

@@ -41,6 +41,12 @@
             android:title="장바구니"
             app:itemTextColor="@color/colorDark"
             app:itemIconTint="@color/colorDark"/>
+        <item
+            android:id="@+id/nav_enrollCard"
+            android:icon="@drawable/ic_credit_card_black_24dp"
+            android:title="카드등록"
+            app:itemTextColor="@color/colorDark"
+            app:itemIconTint="@color/colorDark"/>
     </group>
 
 

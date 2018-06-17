@@ -41,7 +41,9 @@
         <activity android:name=".BuyRequestActivity" />
         <activity android:name=".SendMoneyActivity" />
         <activity android:name=".FinishSendActivity" />
-        <activity android:name=".FinishTopupActivity"></activity>
+        <activity android:name=".FinishTopupActivity"/>
+        <activity android:name=".OcrCaptureActivity">
+        </activity>
     </application>
 
 </manifest>
