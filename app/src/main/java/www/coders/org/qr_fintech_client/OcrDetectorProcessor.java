@@ -15,11 +15,15 @@
  */
 package www.coders.org.qr_fintech_client;
 
+import android.util.Log;
 import android.util.SparseArray;
 
 import www.coders.org.qr_fintech_client.camera.GraphicOverlay;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.text.TextBlock;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A very simple Processor which receives detected TextBlocks and adds them to the overlay
@@ -43,11 +47,29 @@ public class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
     @Override
     public void receiveDetections(Detector.Detections<TextBlock> detections) {
         mGraphicOverlay.clear();
+
+        Pattern pCardNumber = Pattern.compile("(^[0-9]{4}\\s[0-9]{4}\\s[0-9]{4}\\s[0-9]{4}$)");
+        Pattern pVaildDate = Pattern.compile("(^[0-9]{2}/[0-9]{2})");
+
         SparseArray<TextBlock> items = detections.getDetectedItems();
         for (int i = 0; i < items.size(); ++i) {
             TextBlock item = items.valueAt(i);
-            OcrGraphic graphic = new OcrGraphic(mGraphicOverlay, item);
-            mGraphicOverlay.add(graphic);
+            Log.d("Card", item.getValue());
+            Matcher m = pCardNumber.matcher(item.getValue());
+
+            if(m.find())
+            {
+                OcrGraphic graphic = new OcrGraphic(mGraphicOverlay, item);
+                mGraphicOverlay.add(graphic);
+            }
+            m = pVaildDate.matcher(item.getValue());
+
+            if(m.find())
+            {
+                OcrGraphic graphic = new OcrGraphic(mGraphicOverlay, item);
+                mGraphicOverlay.add(graphic);
+            }
+
         }
     }
 

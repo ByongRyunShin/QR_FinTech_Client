@@ -33,14 +33,14 @@
             android:padding="16dp"
             android:text="카드를 사각형안으로 위치시키세요."
             android:textColor="#ffffff"
-            android:textSize="18sp"
+            android:textSize="17sp"
             app:textAllCaps="true" />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="1234   5678   9123   4567"
+            android:text=""
             android:textSize="24sp" />
     </LinearLayout>
 
